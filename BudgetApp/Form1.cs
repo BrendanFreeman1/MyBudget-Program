@@ -50,7 +50,7 @@ namespace BudgetApp
 
             //Saves the current row and column, indexing starts at 1
             int Col = 1;
-            int Row = 1; 
+            int Row = 2; //Start from second row
 
             PopulateHeaders(Col);
 
@@ -77,17 +77,18 @@ namespace BudgetApp
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
         }
 
+        //Adds columns and their headers to the DataGridView
         private void PopulateHeaders(int iCol)
         {
-            //Adds columns and their headers to the DataGridView
+            //While there is data in the cells
             while (xlWorkSheet.Cells[1, iCol].value != null)
             {
                 //Create new column object
                 DataGridViewColumn col = new DataGridViewTextBoxColumn();
-                //Get the header value from the current column and set it as our new columns header text
+                //Get the header value from the current column in the sheet and set it as our new columns headertext
                 col.HeaderText = xlWorkSheet.Cells[1, iCol].value;
                 //Add the new column
-                dataGridView.Columns.Add(col);     // ADD A NEW COLUMN.
+                dataGridView.Columns.Add(col);//Add the new column
                 iCol++;
             }
         }
@@ -96,8 +97,21 @@ namespace BudgetApp
         {
             Transaction transaction = new Transaction();
 
-            transaction.Description = xlWorkSheet.Cells[row, 2].value;         
+            ////DATE
+            transaction.Date = Convert.ToString(xlWorkSheet.Cells[row, 1].value);
 
+            //DESCRIPTION
+            transaction.Description = xlWorkSheet.Cells[row, 2].value;
+
+            //CREDIT OR DEBIT
+            if(xlWorkSheet.Cells[row, 3].value != null)
+            {
+                transaction.value = xlWorkSheet.Cells[row, 3].value;
+            }
+            else
+            {
+                transaction.value = xlWorkSheet.Cells[row, 4].value;
+            }
 
             return transaction;
 
@@ -107,7 +121,7 @@ namespace BudgetApp
         {
             foreach(Transaction transaction in transactions)
             {
-                string[] currentRow = { transaction.Description };                
+                string[] currentRow = { transaction.Date, transaction.Description, transaction.value.ToString()};                
                 
                 dataGridView.Rows.Add(currentRow);
             }
