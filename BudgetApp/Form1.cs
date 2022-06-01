@@ -13,6 +13,8 @@ namespace BudgetApp
         Excel.Workbook xlWorkBook;
         Excel.Worksheet xlWorkSheet;
 
+        List<Transaction> transactions = new List<Transaction>();
+
         public Form1()
         {
             InitializeComponent();
@@ -37,60 +39,77 @@ namespace BudgetApp
                     readExcel(sFileName);
                 }
             }
+        }
 
-            //Get the data from the selected excel and populate the combo box
-            void readExcel(string sFile)
+        //Get the data from the selected excel and populate the combo box
+        private void readExcel(string sFile)
+        {
+            xlApp = new Excel.Application();
+            xlWorkBook = xlApp.Workbooks.Open(sFile);//Workbook to open the excel file
+            xlWorkSheet = xlWorkBook.ActiveSheet; //Gets the excels active sheet
+
+            //Saves the current row and column, indexing starts at 1
+            int Col = 1;
+            int Row = 1; 
+
+            PopulateHeaders(Col);
+
+            //Continue while there are still rows in the excel with data
+            while(xlWorkSheet.Cells[Row, 1].value != null)
             {
-                xlApp = new Excel.Application();
-                xlWorkBook = xlApp.Workbooks.Open(sFile);//Workbook to open the excel file
-                xlWorkSheet = xlWorkBook.ActiveSheet; //Gets the excels active sheet
+                transactions.Add(GetTransactionData(Row));
 
-                //Saves the current row and column
-                int iCol = 1; //Indexing starts at 1
-                int iRow = 2; //Start from the second row
+                Row++;
+            }
 
-                //Adds columns and their headers
-                while (xlWorkSheet.Cells[1, iCol].value != null)
-                {
-                    //Create new column object
-                    DataGridViewColumn col = new DataGridViewTextBoxColumn();
-                    //Get the header value from the current column and set it as our new columns header text
-                    col.HeaderText = xlWorkSheet.Cells[1, iCol].value;
-                    //Add the new column
-                    dataGridView.Columns.Add(col);     // ADD A NEW COLUMN.
-                    iCol++;
-                }
+            PopulateDataGridView(transactions);
+
+            //cleanup  
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkSheet);
+            xlWorkBook.Close();
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkBook);
+            xlApp.Quit();
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
+        }
+
+        private void PopulateHeaders(int iCol)
+        {
+            //Adds columns and their headers to the DataGridView
+            while (xlWorkSheet.Cells[1, iCol].value != null)
+            {
+                //Create new column object
+                DataGridViewColumn col = new DataGridViewTextBoxColumn();
+                //Get the header value from the current column and set it as our new columns header text
+                col.HeaderText = xlWorkSheet.Cells[1, iCol].value;
+                //Add the new column
+                dataGridView.Columns.Add(col);     // ADD A NEW COLUMN.
+                iCol++;
+            }
+        }
+
+        private Transaction GetTransactionData(int row)
+        {
+            Transaction transaction = new Transaction();
+
+            transaction.Description = xlWorkSheet.Cells[row, 2].value;         
 
 
+            return transaction;
 
-                //Add rows and their values
-                for (iRow = 2; iRow <= xlWorkSheet.Rows.Count; iRow++)  // START FROM THE SECOND ROW.
-                {
-                    if (xlWorkSheet.Cells[iRow, 1].value == null)
-                    {
-                        break;      // BREAK LOOP.
-                    }
-                    else
-                    {
+        }
 
-                        string[] row = { xlWorkSheet.Cells[iRow, 2].value };
-
-                        // ADD A NEW ROW TO THE GRID USING THE ARRAY DATA.
-                        dataGridView.Rows.Add(row);
-                    }
-                }
-
-                //cleanup  
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkSheet);
-                xlWorkBook.Close();
-
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkBook);
-                xlApp.Quit();
-
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
+        private void PopulateDataGridView(List<Transaction> transactions)
+        {
+            foreach(Transaction transaction in transactions)
+            {
+                string[] currentRow = { transaction.Description };                
+                
+                dataGridView.Rows.Add(currentRow);
             }
         }
     }
