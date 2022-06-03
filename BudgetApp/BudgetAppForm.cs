@@ -6,61 +6,62 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace BudgetApp
 {
-    public partial class Form1 : Form
+    public partial class BudgetApp : Form
     {
+        private readonly List<Transaction> transactions = new List<Transaction>();
+
         //Create excel objects
         Excel.Application xlApp;
         Excel.Workbook xlWorkBook;
-        Excel.Worksheet xlWorkSheet;
+        Excel.Worksheet xlWorkSheet;        
 
-        List<Transaction> transactions = new List<Transaction>();
-
-        public Form1()
+        public BudgetApp()
         {
             InitializeComponent();
         }
 
-        private void Importbtn_Click(object sender, EventArgs e)
+        //Called when the 'Import Excel File" button is clicked
+        void Importbtn_Click(object sender, EventArgs e)
         {
-            string sFileName;
-            openFileDialog.Title = "Excel File to Edit";
+            //Set the file name to null to begin with
             openFileDialog.FileName = "";
+            //Restrict the file types we can attempt to open
             openFileDialog.Filter = "Excel File|*.xlsx;*.xls;*.csv";
 
             //If the openFileDialog works, continue
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                //Save the name of the file we're trying to open
-                sFileName = openFileDialog.FileName;
-
-                //If the file name contains something, run the readExcel method on that file
-                if (sFileName.Trim() != "")
+                //If the file name has been updated from null to something, run the readExcel method on that file
+                if (openFileDialog.FileName.Trim() != "")
                 {
-                    readExcel(sFileName);
+                    ReadExcel(openFileDialog.FileName);
                 }
             }
         }
 
-        //Get the data from the selected excel and populate the combo box
-        private void readExcel(string sFile)
+        //Gets the data from the selected excel and populates the dataGridView
+        void ReadExcel(string sFile)
         {
-            xlApp = new Excel.Application();
+            xlApp = new Excel.Application();//Create new excel app object
             xlWorkBook = xlApp.Workbooks.Open(sFile);//Workbook to open the excel file
             xlWorkSheet = xlWorkBook.ActiveSheet; //Gets the excels active sheet
 
-            //Saves the current row and column, indexing starts at 1
-            int Col = 1;
-            int Row = 2; //Start from second row
+            //Saves the row and column we're up to, indexing starts at 1
+            int col = 1;
+            int row = 2; //Start from second row
 
-            PopulateHeaders(Col);
+            PopulateHeaders(col);
 
-            //Continue while there are still rows in the excel with data
-            while(xlWorkSheet.Cells[Row, 1].value != null)
+            //While there are still rows in the excel with data
+            while(xlWorkSheet.Cells[row, 1].value != null)
             {
-                transactions.Add(GetTransactionData(Row));
+                transactions.Add(GetTransactionData(row));
 
-                Row++;
+                row++;
             }
+
+            //ImportDataForm newImportDataform = new ImportDataForm;
+            //newImportDataform.Show();
 
             PopulateDataGridView(transactions);
 
@@ -78,26 +79,26 @@ namespace BudgetApp
         }
 
         //Adds columns and their headers to the DataGridView
-        private void PopulateHeaders(int iCol)
+        void PopulateHeaders(int col)
         {
-            //While there is data in the cells
-            while (xlWorkSheet.Cells[1, iCol].value != null)
+            //While there are still columns in the excel with data
+            while (xlWorkSheet.Cells[1, col].value != null)
             {
                 //Create new column object
-                DataGridViewColumn col = new DataGridViewTextBoxColumn();
+                DataGridViewColumn column = new DataGridViewTextBoxColumn();
                 //Get the header value from the current column in the sheet and set it as our new columns headertext
-                col.HeaderText = xlWorkSheet.Cells[1, iCol].value;
+                column.HeaderText = xlWorkSheet.Cells[1, col].value;
                 //Add the new column
-                dataGridView.Columns.Add(col);//Add the new column
-                iCol++;
+                dataGridView.Columns.Add(column);
+                col++;
             }
         }
 
-        private Transaction GetTransactionData(int row)
+        Transaction GetTransactionData(int row)
         {
             Transaction transaction = new Transaction();
 
-            ////DATE
+            //DATE
             transaction.Date = Convert.ToString(xlWorkSheet.Cells[row, 1].value);
 
             //DESCRIPTION
@@ -117,11 +118,11 @@ namespace BudgetApp
 
         }
 
-        private void PopulateDataGridView(List<Transaction> transactions)
+        void PopulateDataGridView(List<Transaction> transactions)
         {
             foreach(Transaction transaction in transactions)
             {
-                string[] currentRow = { transaction.Date, transaction.Description, transaction.value.ToString()};                
+                string[] currentRow = { transaction.Date, transaction.Description, null, null, transaction.value.ToString() };                
                 
                 dataGridView.Rows.Add(currentRow);
             }

@@ -1,6 +1,6 @@
 ﻿namespace BudgetApp
 {
-    partial class Form1
+    partial class BudgetApp
     {
         /// <summary>
         /// Required designer variable.
@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             this.Importbtn = new System.Windows.Forms.Button();
-            this.dataGridView = new System.Windows.Forms.DataGridView();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // Importbtn
@@ -44,28 +42,20 @@
             this.Importbtn.UseVisualStyleBackColor = true;
             this.Importbtn.Click += new System.EventHandler(this.Importbtn_Click);
             // 
-            // dataGridView
-            // 
-            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Location = new System.Drawing.Point(13, 42);
-            this.dataGridView.Name = "dataGridView";
-            this.dataGridView.Size = new System.Drawing.Size(850, 1000);
-            this.dataGridView.TabIndex = 1;
-            // 
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
-            // Form1
+            // BudgetApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(890, 1052);
-            this.Controls.Add(this.dataGridView);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.ClientSize = new System.Drawing.Size(809, 806);
             this.Controls.Add(this.Importbtn);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.Name = "BudgetApp";
+            this.Text = "BudgetApp";
             this.ResumeLayout(false);
 
         }
@@ -73,7 +63,6 @@
         #endregion
 
         private System.Windows.Forms.Button Importbtn;
-        private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
