@@ -8,7 +8,7 @@ namespace BudgetApp
         public string Date { get; set; }
         public Category Category { get; set; }
         public string Description { get; set; }
-        public double value { get; set; }
+        public double Value { get; set; }
 
     }
 }

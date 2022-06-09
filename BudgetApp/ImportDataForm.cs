@@ -6,7 +6,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 namespace BudgetApp
 {
     /// <summary>
-    /// Takes data from selected Form as seperate 'Transaction' objects
+    /// Takes data from selected form as seperate 'Transaction' objects
     /// Allows the user to categorise each transaction in the imported data
     /// Saves each Transaction to a list
     /// Saves the finished list to the users database
@@ -15,6 +15,7 @@ namespace BudgetApp
     {
         //List to hold the imported transactions
         private readonly List<Transaction> transactionList = new List<Transaction>();
+        private readonly Transaction transaction = null;
 
         //Create excel objects
         Excel.Application xlApp;
@@ -24,10 +25,8 @@ namespace BudgetApp
         public ImportDataForm()
         {
             InitializeComponent();
-        }
 
-        private void ImportDataForm_Load(object sender, EventArgs e)
-        {
+            comboBox.DataSource = Enum.GetValues(typeof(Category));
         }
 
         //Gets the data from the selected excel and populates the dataGridView
@@ -37,11 +36,10 @@ namespace BudgetApp
             xlWorkBook = xlApp.Workbooks.Open(sFile);//Workbook to open the excel file
             xlWorkSheet = xlWorkBook.ActiveSheet; //Gets the excels active sheet
 
-            //Variables to save the row and column we're up to, indexing starts at 1
-            int col = 1;
+            //Variable to save the row we're up to, indexing starts at 1
             int row = 2; //Start from second row
 
-            PopulateHeaders(col);
+            PopulateColumns();
 
             //While there are still rows in the excel with data
             while (xlWorkSheet.Cells[row, 1].value != null)
@@ -51,9 +49,56 @@ namespace BudgetApp
                 row++;
             }
 
-            PopulateDataGridView(transactionList);
 
-            //cleanup  
+            CleanUpExcelObjects();
+        }
+
+
+        //Adds columns and their headers to the DataGridView
+        void PopulateColumns()
+        {            
+            for(int i=0; i<3; i++)           
+            {
+                //Create new column object
+                DataGridViewColumn column = new DataGridViewTextBoxColumn();
+
+                //Add the new column
+                dataGridView.Columns.Add(column);
+            }
+        } 
+
+        Transaction GetTransactionData(int row)
+        {
+            //DATE
+            transaction.Date = Convert.ToString(xlWorkSheet.Cells[row, 1].value);
+
+            //DESCRIPTION
+            transaction.Description = xlWorkSheet.Cells[row, 2].value;          
+
+            //CREDIT OR DEBIT
+            if (xlWorkSheet.Cells[row, 3].value != null)
+            {
+                transaction.Value = xlWorkSheet.Cells[row, 3].value;
+            }
+            else
+            {
+                transaction.Value = xlWorkSheet.Cells[row, 4].value;
+            }
+
+            //POPULATE THE TRANSACTIONSLIST FIRST, THEN PROMPT THE USER TO CATEGORISE EACH TRANSACTION AFTER THAT
+
+            string[] currentRow = { transaction.Date, transaction.Description, transaction.Value.ToString() };
+
+            dataGridView.Rows.Clear();
+
+            dataGridView.Rows.Add(currentRow);
+
+            return transaction;
+
+        }
+
+        private void CleanUpExcelObjects()
+        { 
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
@@ -66,62 +111,9 @@ namespace BudgetApp
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
         }
 
-        //Adds columns and their headers to the DataGridView
-        void PopulateHeaders(int col)
+        private void ConfirmCategoryBtn_Click(object sender, EventArgs e)
         {
-            //While there are still columns in the excel with data
-            while (xlWorkSheet.Cells[1, col].value != null)
-            {
-                //Create new column object
-                DataGridViewColumn column = new DataGridViewTextBoxColumn();
-                //Get the header value from the current column in the sheet and set it as our new columns headertext
-                column.HeaderText = xlWorkSheet.Cells[1, col].value;
-                //Add the new column
-                dataGridView.Columns.Add(column);
-                col++;
-            }
-        }
-
-        Transaction GetTransactionData(int row)
-        {
-            Transaction transaction = new Transaction();
-
-            //DATE
-            transaction.Date = Convert.ToString(xlWorkSheet.Cells[row, 1].value);
-
-            //DESCRIPTION
-            transaction.Description = xlWorkSheet.Cells[row, 2].value;
-
-            //CREDIT OR DEBIT
-            if (xlWorkSheet.Cells[row, 3].value != null)
-            {
-                transaction.value = xlWorkSheet.Cells[row, 3].value;
-            }
-            else
-            {
-                transaction.value = xlWorkSheet.Cells[row, 4].value;
-            }
-
-            comboBox.DataSource = Enum.GetValues(typeof(Category));
-
-            transaction.Category = (Category) comboBox.SelectedValue;
-
-            return transaction;
-
-        }
-
-        void PopulateDataGridView(List<Transaction> transactions)
-        {
-            foreach (Transaction transaction in transactions)
-            {
-                string[] currentRow = { transaction.Date, transaction.Description, transaction.Category.ToString(), transaction.value.ToString() };
-
-                dataGridView.Rows.Add(currentRow);
-            }
-        }
-
-        private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            transaction.Category = (Category)comboBox.SelectedValue;
 
         }
     }
