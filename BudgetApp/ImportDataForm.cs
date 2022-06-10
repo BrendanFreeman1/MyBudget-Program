@@ -15,7 +15,6 @@ namespace BudgetApp
     {
         //List to hold the imported transactions
         private readonly List<Transaction> transactionList = new List<Transaction>();
-        private readonly Transaction transaction = null;
 
         //Create excel objects
         Excel.Application xlApp;
@@ -25,8 +24,6 @@ namespace BudgetApp
         public ImportDataForm()
         {
             InitializeComponent();
-
-            comboBox.DataSource = Enum.GetValues(typeof(Category));
         }
 
         //Gets the data from the selected excel and populates the dataGridView
@@ -39,25 +36,28 @@ namespace BudgetApp
             //Variable to save the row we're up to, indexing starts at 1
             int row = 2; //Start from second row
 
-            PopulateColumns();
+            CreateColumns();
 
             //While there are still rows in the excel with data
             while (xlWorkSheet.Cells[row, 1].value != null)
             {
+                //Get the data from the excel and add it to our transactionList
                 transactionList.Add(GetTransactionData(row));
 
                 row++;
             }
 
+            PopulateDataGridView();
 
             CleanUpExcelObjects();
         }
 
 
         //Adds columns and their headers to the DataGridView
-        void PopulateColumns()
-        {            
-            for(int i=0; i<3; i++)           
+        void CreateColumns()
+        {
+            //Add first four columns
+            for (int i = 0; i <= 3; i++)
             {
                 //Create new column object
                 DataGridViewColumn column = new DataGridViewTextBoxColumn();
@@ -65,10 +65,22 @@ namespace BudgetApp
                 //Add the new column
                 dataGridView.Columns.Add(column);
             }
+
+            //Add Combobox column
+            DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
+            comboBoxColumn.DataSource = Enum.GetValues(typeof(Category));
+            dataGridView.Columns.Add(comboBoxColumn);
+
+            //NEED TO TRY BINDING DATA IN THE ROWS SO THAT WHEN INFORMATION IS UPDATED, IT UPDATES IT IN ITS CORRESPONDING TRANSACTION OBJECT
+
         } 
 
+        //Get the transaction data from the excel sheet and put it into Transaction objects
         Transaction GetTransactionData(int row)
         {
+            //Create a new Transaction object
+            Transaction transaction = new Transaction();
+
             //DATE
             transaction.Date = Convert.ToString(xlWorkSheet.Cells[row, 1].value);
 
@@ -85,20 +97,27 @@ namespace BudgetApp
                 transaction.Value = xlWorkSheet.Cells[row, 4].value;
             }
 
-            //POPULATE THE TRANSACTIONSLIST FIRST, THEN PROMPT THE USER TO CATEGORISE EACH TRANSACTION AFTER THAT
-
-            string[] currentRow = { transaction.Date, transaction.Description, transaction.Value.ToString() };
-
-            dataGridView.Rows.Clear();
-
-            dataGridView.Rows.Add(currentRow);
-
             return transaction;
+        }
 
+        void PopulateDataGridView()
+        {
+            foreach (Transaction transaction in transactionList)
+            {
+                string[] currentRow = { transaction.ID.ToString(), transaction.Date, transaction.Description, transaction.Value.ToString(), transaction.Category.ToString() };
+
+                dataGridView.Rows.Add(currentRow);
+            }
+        }
+
+        private void ConfirmCategoryBtn_Click(object sender, EventArgs e)
+        {
+            //User sets the category value for each transaction, when they press okay this method is fired
+            //Loop through the transactions list and using the index in the table, set the transaction.Category to the value selected in the combobox. 
         }
 
         private void CleanUpExcelObjects()
-        { 
+        {
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
@@ -111,10 +130,10 @@ namespace BudgetApp
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
         }
 
-        private void ConfirmCategoryBtn_Click(object sender, EventArgs e)
+        private void DataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            transaction.Category = (Category)comboBox.SelectedValue;
-
+            //Prevent System.ArgumentException: DataGridViewComboBoxCell value is not valid
+            e.Cancel = true;
         }
     }
 }
