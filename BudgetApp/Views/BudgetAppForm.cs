@@ -1,13 +1,14 @@
-﻿using System;
+﻿using BudgetApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace BudgetApp
 {
     public partial class BudgetApp : Form
-    { 
+    {
+        List<Transaction> transactions = new List<Transaction>();
+
         public BudgetApp()
         {
             InitializeComponent();
@@ -36,6 +37,9 @@ namespace BudgetApp
             }
         }
 
-        
+        void LoadTransactionsList()
+        {
+            transactions = SqliteDataAccess.LoadTransactions();
+        }
     }
 }

@@ -191,7 +191,6 @@
             this.Controls.Add(this.dataGridView);
             this.Name = "ImportDataForm";
             this.Text = "ImportDataForm";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

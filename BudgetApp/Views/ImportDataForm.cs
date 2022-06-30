@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -148,19 +149,21 @@ namespace BudgetApp
                 //Add it as the next row to our DataGridView
                 dataGridView.Rows.Add(currentRow);
 
+                listIndex++;
                 //Display the next row from the excel for the user to view and select a category for
                 DisplayNextRowLabels();
-
-                listIndex++;
             }
         }
 
         void DisplayNextRowLabels()
         {
             ///Populate the labels in the form with the current Transaction objects information
-            dateLabel.Text = transactionList[listIndex].Date.ToString();
-            descriptionLabel.Text = transactionList[listIndex].Description;
-            valueLabel.Text = transactionList[listIndex].Value.ToString();
+            if (listIndex < transactionList.Count)
+            {
+                dateLabel.Text = transactionList[listIndex].Date.ToString();
+                descriptionLabel.Text = transactionList[listIndex].Description;
+                valueLabel.Text = transactionList[listIndex].Value.ToString();
+            }
         }
         #endregion
 
@@ -178,9 +181,16 @@ namespace BudgetApp
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
         }
 
-        private void FinishButton_Click(object sender, EventArgs e)
-        {
-            ///Save data in transactionsList to users database
+        void FinishButton_Click(object sender, EventArgs e)
+        {            
+            foreach (Transaction transaction in transactionList)
+            {
+                SqliteDataAccess.SaveTransaction(transaction);
+            }
+
+            this.Close();
         }
+
+        
     }
 }
