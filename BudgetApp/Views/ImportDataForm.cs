@@ -189,8 +189,6 @@ namespace BudgetApp
             }
 
             this.Close();
-        }
-
-        
+        }        
     }
 }
