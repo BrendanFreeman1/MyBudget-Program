@@ -1,4 +1,4 @@
-﻿namespace BudgetApp
+﻿namespace BudgetApp.Views
 {
     partial class ImportDataForm
     {
@@ -53,7 +53,7 @@
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.ColumnHeadersVisible = false;
-            this.dataGridView.Location = new System.Drawing.Point(12, 122);
+            this.dataGridView.Location = new System.Drawing.Point(15, 122);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowHeadersWidth = 4;
@@ -109,7 +109,7 @@
             this.valueText.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.valueText.AutoSize = true;
             this.valueText.ForeColor = System.Drawing.Color.Snow;
-            this.valueText.Location = new System.Drawing.Point(803, 39);
+            this.valueText.Location = new System.Drawing.Point(809, 39);
             this.valueText.Name = "valueText";
             this.valueText.Size = new System.Drawing.Size(34, 13);
             this.valueText.TabIndex = 8;
@@ -120,11 +120,11 @@
             this.valueLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.valueLabel.AutoSize = true;
             this.valueLabel.ForeColor = System.Drawing.Color.Snow;
-            this.valueLabel.Location = new System.Drawing.Point(803, 73);
+            this.valueLabel.Location = new System.Drawing.Point(809, 73);
             this.valueLabel.Name = "valueLabel";
-            this.valueLabel.Size = new System.Drawing.Size(34, 13);
+            this.valueLabel.Size = new System.Drawing.Size(68, 13);
             this.valueLabel.TabIndex = 12;
-            this.valueLabel.Text = "Value";
+            this.valueLabel.Text = "CurrentValue";
             // 
             // dateLabel
             // 
@@ -134,9 +134,9 @@
             this.dateLabel.ForeColor = System.Drawing.Color.Snow;
             this.dateLabel.Location = new System.Drawing.Point(12, 73);
             this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(30, 13);
+            this.dateLabel.Size = new System.Drawing.Size(64, 13);
             this.dateLabel.TabIndex = 11;
-            this.dateLabel.Text = "Date";
+            this.dateLabel.Text = "CurrentDate";
             // 
             // descriptionLabel
             // 
@@ -145,9 +145,9 @@
             this.descriptionLabel.ForeColor = System.Drawing.Color.Snow;
             this.descriptionLabel.Location = new System.Drawing.Point(176, 73);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(60, 13);
+            this.descriptionLabel.Size = new System.Drawing.Size(94, 13);
             this.descriptionLabel.TabIndex = 10;
-            this.descriptionLabel.Text = "Description";
+            this.descriptionLabel.Text = "CurrentDescription";
             // 
             // Heading
             // 
@@ -191,6 +191,7 @@
             this.Controls.Add(this.dataGridView);
             this.Name = "ImportDataForm";
             this.Text = "ImportDataForm";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

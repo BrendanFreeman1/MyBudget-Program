@@ -24,8 +24,12 @@ namespace BudgetApp.Models
             //Connect to the Transactionsdb Database
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                cnn.Execute("insert into Transactions (Date, Description, Value, Category) values (@Date, @Description, @Value, @Category)", transaction);
-            }
+                if (transaction.Category != Category.Ignore.ToString())
+                {
+                    cnn.Execute("insert into Transactions (Date, Description, Value, Category) values (@Date, @Description, @Value, @Category)", transaction);
+                }
+
+        }
         }
 
         private static string LoadConnectionString(string id = "Default")

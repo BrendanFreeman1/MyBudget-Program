@@ -1,4 +1,5 @@
 ﻿using BudgetApp.Models;
+using BudgetApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ namespace BudgetApp
         public BudgetApp()
         {
             InitializeComponent();
+            LoadTransactionsList();
         }
 
         //Called when the 'Import Excel File" button is clicked

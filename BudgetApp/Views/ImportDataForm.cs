@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
-namespace BudgetApp
+namespace BudgetApp.Views
 {
     /// <summary>
     /// Takes data from selected excel form as seperate 'Transaction' objects
@@ -15,10 +15,7 @@ namespace BudgetApp
     public partial class ImportDataForm : Form
     {
         #region Initialise variables
-
-        //List to hold the imported transactions
         private readonly List<Transaction> transactionList = new List<Transaction>();
-        //Index to track where through the transactionList we are currently
         private int listIndex = 0;
 
         //Create excel objects
@@ -31,50 +28,38 @@ namespace BudgetApp
         public ImportDataForm()
         {
             InitializeComponent();
-
-            //Set the data source of the combo box
             categoryComboBox.DataSource = Enum.GetValues(typeof(Category));
         }
 
         ///<summary>
         ///This method is called once an excel file is chosen from the BudgetAppForm
-        ///Gets the data from the selected excel, creates transaction objects and puts them into the list       
+        ///Gets the data from the selected excel, creates transaction objects and puts them into the transactionList       
         ///</summary>
         public void ReadExcel(string sFile)
         {
             int row = 2; //Start from second row
-            xlApp = new Excel.Application(); //Create new excel app object
+            xlApp = new Excel.Application(); //Excel app object
             xlWorkBook = xlApp.Workbooks.Open(sFile); //Workbook to open the excel file
             xlWorkSheet = xlWorkBook.ActiveSheet; //Gets the excels active sheet   
 
             //While there are still rows in the excel with data
             while (xlWorkSheet.Cells[row, 1].value != null)
             {
-                //Get the data from the excel, create a transaction object and add it to our transactionList
                 transactionList.Add(GetTransactionData(row));
 
-                //Move to the next row in the excel
                 row++;
             }
 
-            //Create the needed columns in our DataGridView
             CreateDataGridViewColumns();
 
-            //Close excel objects and garbage collect
             CleanUpExcelObjects();
         }
 
         void CreateDataGridViewColumns()
-        {
-            ///Adds columns and their headers to the DataGridView
-
-            //Add four columns
+        {           
             for (int i = 0; i <= 3; i++)
-            {
-                //Create new column object
-                DataGridViewColumn column = new DataGridViewTextBoxColumn();
-
-                //Add the new column
+            {                
+                DataGridViewColumn column = new DataGridViewTextBoxColumn();                
                 dataGridView.Columns.Add(column);
             }
 
@@ -94,9 +79,6 @@ namespace BudgetApp
         
         Transaction GetTransactionData(int row)
         {
-            ///Get the transaction data from the excel sheet and put it into Transaction objects
-
-            //Create a new Transaction object
             Transaction transaction = new Transaction();
 
             //Date
@@ -105,64 +87,55 @@ namespace BudgetApp
 
             if (currentDate is string)
             {
-                //Convert the string to a Date time
                 transaction.Date = DateTime.Parse(currentDate);
             }
             else
             {
-                //The DateTime object being fed in is in MM/dd/yyyy format.
+                //The DateTime object being fed in is being saved in MM/dd/yyyy format.
                 //To correct that to dd/MM/yyyy i'm converting it to a string, then back to a DateTime object.
                 transaction.Date = DateTime.Parse(currentDate.ToString("MM/dd/yyyy"));
             }
 
             //DESCRIPTION
-            transaction.Description = xlWorkSheet.Cells[row, 2].value;          
+            transaction.Description = xlWorkSheet.Cells[row, 2].value;
 
-            //Credit or debit
-            if (xlWorkSheet.Cells[row, 3].value != null)
-            {
-                transaction.Value = xlWorkSheet.Cells[row, 3].value;
-            }
-            else
-            {
-                transaction.Value = xlWorkSheet.Cells[row, 4].value;
-            }
+            //VALUE
+            if (xlWorkSheet.Cells[row, 3].value != null) { transaction.Value = xlWorkSheet.Cells[row, 3].value; } //Credit
+            else { transaction.Value = xlWorkSheet.Cells[row, 4].value; } //Debit
+
+            //CATEGORY
+            transaction.Category = transaction.AutoCategorise(transaction);
 
             return transaction;
         }
-        #endregion
-
+        #endregion        
+        
         #region Set Current Transactions Category
 
         void ConfirmButton_Click(object sender, EventArgs e)
         {
-            ///This method is called when the user clicks the 'Confirm' button
-
-            //If the index for tracking where we are in the list is less than the legth of the list
             if (listIndex < transactionList.Count)
             {
-                //Save current selected Category to the category field of the current transaction object
-                transactionList[listIndex].Category = (Category)categoryComboBox.SelectedValue;             
-
-                //Populate a string array with each of the current Transaction objects fields
-                string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), transactionList[listIndex].Category.ToString() };
-                //Add it as the next row to our DataGridView
+                string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), categoryComboBox.SelectedValue.ToString() };
                 dataGridView.Rows.Add(currentRow);
 
                 listIndex++;
-                //Display the next row from the excel for the user to view and select a category for
+
                 DisplayNextRowLabels();
             }
         }
 
         void DisplayNextRowLabels()
         {
-            ///Populate the labels in the form with the current Transaction objects information
             if (listIndex < transactionList.Count)
             {
                 dateLabel.Text = transactionList[listIndex].Date.ToString();
                 descriptionLabel.Text = transactionList[listIndex].Description;
                 valueLabel.Text = transactionList[listIndex].Value.ToString();
+
+                //TRY TO SET COMBOBOX TO AUTO FILL THE CATEGORY THAT THE CURRENT TRANSACTION ALREADY HAS
+                categoryComboBox.Text = transactionList[listIndex].Category;
+
             }
         }
         #endregion
@@ -189,6 +162,6 @@ namespace BudgetApp
             }
 
             this.Close();
-        }        
+        }
     }
 }
