@@ -11,26 +11,31 @@ namespace BudgetApp.Models
         public double Value { get; set; }
         public string Category { get; set; }
 
-
-
-
-
-
-
-
-
-
-
-
         public string AutoCategorise(Transaction transaction)
         {
-            if(transaction.Description.Contains("Internal Transfer"))
-            {
-                return "Ignore";
-            }
+            List<Category> categories = SqliteDataAccess.LoadCategories();
 
+            foreach (Category category in categories)
+            {
+
+                if (category.Tag != null && transaction.Description.ToLower().Contains(category.Tag))
+                {
+                    return category.CategoryName;
+                }
+            }  
+            
             return "Other";
         }
+
+
+
+
+
+
+
+
+
+
 
         public double Total(List<Transaction> transactions)
         {

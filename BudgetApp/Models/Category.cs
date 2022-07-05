@@ -1,27 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BudgetApp.Models
+﻿namespace BudgetApp.Models
 {
-    internal enum Category
+    internal class Category
     {
-        Ignore,
-        Children,
-        Education,
-        Entertainment,
-        Everyday,
-        Gifts,
-        Medical,
-        Home,
-        Insurance,
-        Pets,
-        Technology,
-        Transportation,
-        Travel,
-        Utilities,
-        Other
+        public int ID { get; set; }
+        public string CategoryName { get; set; }
+        public string Tag { get; set; }
     }
 }

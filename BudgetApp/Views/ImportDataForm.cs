@@ -7,10 +7,8 @@ using Excel = Microsoft.Office.Interop.Excel;
 namespace BudgetApp.Views
 {
     /// <summary>
-    /// Takes data from selected excel form as seperate 'Transaction' objects
-    /// Allows the user to categorise each transaction in the imported data
-    /// Saves each Transaction to a list
-    /// Saves the finished list to the users database
+    /// Takes data from thhe selected excel form as seperate 'Transaction' objects
+    /// Allows the user to categorise each transaction, saves them to a list, Saves the finished list to the users database
     /// </summary>
     public partial class ImportDataForm : Form
     {
@@ -28,15 +26,26 @@ namespace BudgetApp.Views
         public ImportDataForm()
         {
             InitializeComponent();
-            categoryComboBox.DataSource = Enum.GetValues(typeof(Category));
+            PopulateComoboBox();
         }
 
-        ///<summary>
-        ///This method is called once an excel file is chosen from the BudgetAppForm
-        ///Gets the data from the selected excel, creates transaction objects and puts them into the transactionList       
-        ///</summary>
+        private void PopulateComoboBox()
+        {
+            List<Category> categories = SqliteDataAccess.LoadCategories();
+
+
+            //Remove duplicates
+            foreach (Category category in categories)
+            {
+                categoryComboBox.Items.Add(category.CategoryName);
+            }
+        }
+
         public void ReadExcel(string sFile)
         {
+            //Called once an excel file is chosen from the BudgetAppForm
+            //Gets data from the selected excel, creates transaction objects and puts them into the transactionList       
+
             int row = 2; //Start from second row
             xlApp = new Excel.Application(); //Excel app object
             xlWorkBook = xlApp.Workbooks.Open(sFile); //Workbook to open the excel file
@@ -69,22 +78,19 @@ namespace BudgetApp.Views
             //Display the first row from the excel for the user to view and select a category for
             DisplayNextRowLabels();
 
-            //Add Combobox column
+
             //DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
-            //comboBoxColumn.DataSource = Enum.GetValues(typeof(Category)); // set the source of the combobox coloumn to be the Category Object
             //dataGridView.Columns.Add(comboBoxColumn);
         }
 
-        #region Populate Transaction Objects
-        
+        #region Populate Transaction Objects        
         Transaction GetTransactionData(int row)
         {
             Transaction transaction = new Transaction();
 
-            //Date
+            //DATE
             //Excel is feeding some of the dates as DateTime objects(day of month > 12) and some as strings(day of month <= 12).
             var currentDate = xlWorkSheet.Cells[row, 1].value;
-
             if (currentDate is string)
             {
                 transaction.Date = DateTime.Parse(currentDate);
@@ -111,12 +117,11 @@ namespace BudgetApp.Views
         #endregion        
         
         #region Set Current Transactions Category
-
         void ConfirmButton_Click(object sender, EventArgs e)
         {
             if (listIndex < transactionList.Count)
             {
-                string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), categoryComboBox.SelectedValue.ToString() };
+                string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), transactionList[listIndex].Category };
                 dataGridView.Rows.Add(currentRow);
 
                 listIndex++;
@@ -132,13 +137,20 @@ namespace BudgetApp.Views
                 dateLabel.Text = transactionList[listIndex].Date.ToString();
                 descriptionLabel.Text = transactionList[listIndex].Description;
                 valueLabel.Text = transactionList[listIndex].Value.ToString();
-
-                //TRY TO SET COMBOBOX TO AUTO FILL THE CATEGORY THAT THE CURRENT TRANSACTION ALREADY HAS
                 categoryComboBox.Text = transactionList[listIndex].Category;
-
             }
         }
         #endregion
+
+        void FinishButton_Click(object sender, EventArgs e)
+        {
+            foreach (Transaction transaction in transactionList)
+            {
+                SqliteDataAccess.SaveTransaction(transaction);
+            }
+
+            Close();
+        }
 
         void CleanUpExcelObjects()
         {
@@ -152,16 +164,6 @@ namespace BudgetApp.Views
 
             xlApp.Quit();
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
-        }
-
-        void FinishButton_Click(object sender, EventArgs e)
-        {            
-            foreach (Transaction transaction in transactionList)
-            {
-                SqliteDataAccess.SaveTransaction(transaction);
-            }
-
-            this.Close();
         }
     }
 }

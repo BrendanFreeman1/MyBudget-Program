@@ -14,6 +14,7 @@ namespace BudgetApp
         {
             InitializeComponent();
             LoadTransactionsList();
+            PopulateLabels();
         }
 
         //Called when the 'Import Excel File" button is clicked
@@ -42,6 +43,18 @@ namespace BudgetApp
         void LoadTransactionsList()
         {
             transactions = SqliteDataAccess.LoadTransactions();
+        }
+
+        void CustomCategorybtn_Click(object sender, EventArgs e)
+        {
+            CustomCategoryForm customCategoryForm = new CustomCategoryForm();
+            customCategoryForm.Show();
+        }
+
+        void PopulateLabels()
+        {
+            Transaction transaction = new Transaction();
+            TotalValue.Text = transaction.Total(transactions).ToString();
         }
     }
 }

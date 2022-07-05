@@ -86,7 +86,7 @@
             this.descriptionText.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.descriptionText.AutoSize = true;
             this.descriptionText.ForeColor = System.Drawing.Color.Snow;
-            this.descriptionText.Location = new System.Drawing.Point(176, 39);
+            this.descriptionText.Location = new System.Drawing.Point(160, 39);
             this.descriptionText.Name = "descriptionText";
             this.descriptionText.Size = new System.Drawing.Size(60, 13);
             this.descriptionText.TabIndex = 6;
@@ -98,7 +98,7 @@
             this.dateText.AutoSize = true;
             this.dateText.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dateText.ForeColor = System.Drawing.Color.Snow;
-            this.dateText.Location = new System.Drawing.Point(12, 39);
+            this.dateText.Location = new System.Drawing.Point(21, 39);
             this.dateText.Name = "dateText";
             this.dateText.Size = new System.Drawing.Size(30, 13);
             this.dateText.TabIndex = 7;
@@ -132,7 +132,7 @@
             this.dateLabel.AutoSize = true;
             this.dateLabel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dateLabel.ForeColor = System.Drawing.Color.Snow;
-            this.dateLabel.Location = new System.Drawing.Point(12, 73);
+            this.dateLabel.Location = new System.Drawing.Point(21, 73);
             this.dateLabel.Name = "dateLabel";
             this.dateLabel.Size = new System.Drawing.Size(64, 13);
             this.dateLabel.TabIndex = 11;
@@ -143,7 +143,7 @@
             this.descriptionLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.ForeColor = System.Drawing.Color.Snow;
-            this.descriptionLabel.Location = new System.Drawing.Point(176, 73);
+            this.descriptionLabel.Location = new System.Drawing.Point(160, 73);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(94, 13);
             this.descriptionLabel.TabIndex = 10;

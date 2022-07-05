@@ -11,8 +11,7 @@ namespace BudgetApp.Models
     {
         public static List<Transaction> LoadTransactions()
         {
-            //Connect and open the Transactionsdb Database
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
             {
                 var output = cnn.Query<Transaction>("select * from Transactions", new DynamicParameters());
                 return output.ToList();
@@ -21,21 +20,42 @@ namespace BudgetApp.Models
 
         public static void SaveTransaction(Transaction transaction)
         {
-            //Connect to the Transactionsdb Database
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
             {
-                if (transaction.Category != Category.Ignore.ToString())
+                if (transaction.Category != "Ignore")
                 {
                     cnn.Execute("insert into Transactions (Date, Description, Value, Category) values (@Date, @Description, @Value, @Category)", transaction);
                 }
-
+            }
         }
+
+        public static List<Category> LoadCategories()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
+            {
+                var output = cnn.Query<Category>("select * from Categories", new DynamicParameters());
+                return output.ToList();
+            }
         }
 
-        private static string LoadConnectionString(string id = "Default")
+        public static void SaveCategory(Category category)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
+            {
+                cnn.Execute("insert into Categories (CategoryName, Tag) values (@CategoryName, @Tag)", category);
+            }
+        }
+
+        private static string LoadConnectionString(string id)
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;
         }
+
+
+
+
+
+
 
 
     }

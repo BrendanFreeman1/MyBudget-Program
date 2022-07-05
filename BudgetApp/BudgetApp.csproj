@@ -70,6 +70,12 @@
   <ItemGroup>
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\SqliteDataAccess.cs" />
+    <Compile Include="Views\CustomCategoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CustomCategoryForm.Designer.cs">
+      <DependentUpon>CustomCategoryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImportDataForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     <EmbeddedResource Include="Views\BudgetAppForm.resx">
       <DependentUpon>BudgetAppForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\CustomCategoryForm.resx">
+      <DependentUpon>CustomCategoryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ImportDataForm.resx">
       <DependentUpon>ImportDataForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -100,6 +109,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Data\Categories.db" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
