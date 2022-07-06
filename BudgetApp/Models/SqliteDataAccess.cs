@@ -42,7 +42,7 @@ namespace BudgetApp.Models
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
             {
-                cnn.Execute("insert into Categories (CategoryName, Tag) values (@CategoryName, @Tag)", category);
+                cnn.Execute("insert into Categories (Name, Tag) values (@Name, @Tag)", category);
             }
         }
 

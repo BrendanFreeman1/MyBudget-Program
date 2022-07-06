@@ -11,19 +11,18 @@ namespace BudgetApp.Models
         public double Value { get; set; }
         public string Category { get; set; }
 
-        public string AutoCategorise(Transaction transaction)
+        public static string AutoCategorise(Transaction transaction)
         {
-            //THIS MAY BE BROKEN
-            List<Category> categoriesList = SqliteDataAccess.LoadCategories();
 
-            foreach (Category category in categoriesList)
+            foreach (Category category in SqliteDataAccess.LoadCategories())
             {
                 if (category.Tag != null && transaction.Description.ToLower().Contains(category.Tag))
                 {
-                    return category.CategoryName;
+                    return category.Name;
                 }
             }  
             
+            //SOMETIMES RETURNS 'Other' AND OTHER TIMES 'other' ???
             return "Other";
         }
 
@@ -40,7 +39,6 @@ namespace BudgetApp.Models
             return total;
         }
 
-        //POSSIBLY PASS IN CATEGORY OBJECT TO SORT BY
         public static double TotalByCategory(List<Transaction> transactions, string category)
         {
             double total = 0;

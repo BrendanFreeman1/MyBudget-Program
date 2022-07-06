@@ -31,13 +31,11 @@ namespace BudgetApp.Views
 
         private void PopulateComoboBox()
         {
-            List<Category> categoriesList = SqliteDataAccess.LoadCategories();
-
-            foreach (Category category in categoriesList)
+            foreach (Category category in SqliteDataAccess.LoadCategories())
             {
-                if(!categoryComboBox.Items.Contains(category.CategoryName.ToLower()))
+                if(!categoryComboBox.Items.Contains(category.Name.ToLower()))
                 {
-                    categoryComboBox.Items.Add(category.CategoryName.ToLower());
+                    categoryComboBox.Items.Add(category.Name.ToLower());
                 }
             }
         }
@@ -111,7 +109,7 @@ namespace BudgetApp.Views
             else { transaction.Value = xlWorkSheet.Cells[row, 4].value; } //Debit
 
             //CATEGORY
-            transaction.Category = transaction.AutoCategorise(transaction);
+            transaction.Category = Transaction.AutoCategorise(transaction);
 
             return transaction;
         }

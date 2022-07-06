@@ -2,6 +2,7 @@
 using BudgetApp.Views;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BudgetApp
@@ -56,30 +57,37 @@ namespace BudgetApp
 
             List<Category> defaultCategories = new List<Category>
             {
-                new Category ("Ignore", ""),
-                new Category ("Children", ""),
-                new Category ("Debt", ""),
-                new Category ("Education", ""),
-                new Category ("Entertainment", ""),
-                new Category ("Everyday", ""),
-                new Category ("Gifts", ""),
-                new Category ("Insurance", ""),
-                new Category ("Pets", ""),
-                new Category ("Technology", ""),
-                new Category ("Transportation", ""),
-                new Category ("Travel", ""),
-                new Category ("Utilities", ""),
-                new Category ("Other", "")
+                new Category ("Ignore", null),
+                new Category ("Children", null),
+                new Category ("Debt", null),
+                new Category ("Education", null),
+                new Category ("Entertainment", null),
+                new Category ("Everyday", null),
+                new Category ("Gifts", null),
+                new Category ("Insurance", null),
+                new Category ("Pets", null),
+                new Category ("Technology", null),
+                new Category ("Transportation", null),
+                new Category ("Travel", null),
+                new Category ("Utilities", null),
+                new Category ("Other", null)
             };
 
-            foreach(Category defaultCategory in defaultCategories)
+            //Get the names of the categories already in the database
+            List<string> categoryNames = categoriesList.Select(c => c.Name).ToList();
+
+            //Compair the categories we want to add against what we already have
+            foreach (Category defaultCategory in defaultCategories)
             {
-                if(!categoriesList.Contains(defaultCategory))
+                if (categoryNames.Contains(defaultCategory.Name))
+                {
+                    continue;
+                }
+                else
                 {
                     SqliteDataAccess.SaveCategory(defaultCategory);
                 }
             }
-            
         }
 
         void CustomCategorybtn_Click(object sender, EventArgs e)
