@@ -13,7 +13,7 @@ namespace BudgetApp.Views
 
         private void ConfirmBtn_Click(object sender, EventArgs e)
         {
-            Category category = new Category { CategoryName = categoryNameBox.Text.ToLower(), Tag = tagBox.Text.ToLower() };
+            Category category = new Category(categoryNameBox.Text.ToLower(), tagBox.Text.ToLower());
 
             if(category.Tag == "") { category.Tag = null; }
 

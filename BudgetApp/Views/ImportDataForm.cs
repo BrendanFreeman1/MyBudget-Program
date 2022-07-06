@@ -31,13 +31,14 @@ namespace BudgetApp.Views
 
         private void PopulateComoboBox()
         {
-            List<Category> categories = SqliteDataAccess.LoadCategories();
+            List<Category> categoriesList = SqliteDataAccess.LoadCategories();
 
-
-            //Remove duplicates
-            foreach (Category category in categories)
+            foreach (Category category in categoriesList)
             {
-                categoryComboBox.Items.Add(category.CategoryName);
+                if(!categoryComboBox.Items.Contains(category.CategoryName.ToLower()))
+                {
+                    categoryComboBox.Items.Add(category.CategoryName.ToLower());
+                }
             }
         }
 
@@ -116,12 +117,11 @@ namespace BudgetApp.Views
         }
         #endregion        
         
-        #region Set Current Transactions Category
         void ConfirmButton_Click(object sender, EventArgs e)
         {
             if (listIndex < transactionList.Count)
             {
-                string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), transactionList[listIndex].Category };
+                string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), categoryComboBox.SelectedItem.ToString() };
                 dataGridView.Rows.Add(currentRow);
 
                 listIndex++;
@@ -140,8 +140,7 @@ namespace BudgetApp.Views
                 categoryComboBox.Text = transactionList[listIndex].Category;
             }
         }
-        #endregion
-
+   
         void FinishButton_Click(object sender, EventArgs e)
         {
             foreach (Transaction transaction in transactionList)

@@ -8,12 +8,14 @@ namespace BudgetApp
 {
     public partial class BudgetApp : Form
     {
-        List<Transaction> transactions = new List<Transaction>();
+        List<Transaction> transactionsList = new List<Transaction>();
+        List<Category> categoriesList = new List<Category>();
 
         public BudgetApp()
         {
             InitializeComponent();
-            LoadTransactionsList();
+            LoadFromDatabase();
+            SaveDefaultCategories();
             PopulateLabels();
         }
 
@@ -40,9 +42,44 @@ namespace BudgetApp
             }
         }
 
-        void LoadTransactionsList()
+        void LoadFromDatabase()
         {
-            transactions = SqliteDataAccess.LoadTransactions();
+            transactionsList = SqliteDataAccess.LoadTransactions();
+            categoriesList = SqliteDataAccess.LoadCategories();
+        }
+
+        void SaveDefaultCategories()
+        {
+            //After the users categories have been loaded from their database into the categoriesList
+            //Check if it contains the default categories, if not add them to the database
+            //Should only work on the users intial use of this app
+
+            List<Category> defaultCategories = new List<Category>
+            {
+                new Category ("Ignore", ""),
+                new Category ("Children", ""),
+                new Category ("Debt", ""),
+                new Category ("Education", ""),
+                new Category ("Entertainment", ""),
+                new Category ("Everyday", ""),
+                new Category ("Gifts", ""),
+                new Category ("Insurance", ""),
+                new Category ("Pets", ""),
+                new Category ("Technology", ""),
+                new Category ("Transportation", ""),
+                new Category ("Travel", ""),
+                new Category ("Utilities", ""),
+                new Category ("Other", "")
+            };
+
+            foreach(Category defaultCategory in defaultCategories)
+            {
+                if(!categoriesList.Contains(defaultCategory))
+                {
+                    SqliteDataAccess.SaveCategory(defaultCategory);
+                }
+            }
+            
         }
 
         void CustomCategorybtn_Click(object sender, EventArgs e)
@@ -53,8 +90,7 @@ namespace BudgetApp
 
         void PopulateLabels()
         {
-            Transaction transaction = new Transaction();
-            TotalValue.Text = transaction.Total(transactions).ToString();
+            TotalValue.Text = Transaction.Total(transactionsList).ToString();
         }
     }
 }
