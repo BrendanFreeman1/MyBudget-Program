@@ -37,9 +37,9 @@
             // 
             // Importbtn
             // 
-            this.Importbtn.Location = new System.Drawing.Point(13, 13);
+            this.Importbtn.Location = new System.Drawing.Point(652, 742);
             this.Importbtn.Name = "Importbtn";
-            this.Importbtn.Size = new System.Drawing.Size(122, 23);
+            this.Importbtn.Size = new System.Drawing.Size(145, 23);
             this.Importbtn.TabIndex = 0;
             this.Importbtn.Text = "Select Excel File";
             this.Importbtn.UseVisualStyleBackColor = true;
@@ -63,7 +63,7 @@
             // 
             this.TotalLabel.AutoSize = true;
             this.TotalLabel.ForeColor = System.Drawing.Color.Snow;
-            this.TotalLabel.Location = new System.Drawing.Point(22, 169);
+            this.TotalLabel.Location = new System.Drawing.Point(12, 9);
             this.TotalLabel.Name = "TotalLabel";
             this.TotalLabel.Size = new System.Drawing.Size(34, 13);
             this.TotalLabel.TabIndex = 2;
@@ -74,7 +74,7 @@
             TotalValue.AutoSize = true;
             TotalValue.ForeColor = System.Drawing.Color.Snow;
             TotalValue.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            TotalValue.Location = new System.Drawing.Point(62, 169);
+            TotalValue.Location = new System.Drawing.Point(52, 9);
             TotalValue.Name = "TotalValue";
             TotalValue.Size = new System.Drawing.Size(58, 13);
             TotalValue.TabIndex = 3;

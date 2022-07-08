@@ -15,8 +15,9 @@ namespace BudgetApp
         public BudgetApp()
         {
             InitializeComponent();
+            LoadFromDatabase();
             SaveDefaultCategories();
-            StartUp();
+            PopulateLabels();
         }
 
         public static void StartUp()
@@ -25,7 +26,12 @@ namespace BudgetApp
             PopulateLabels();
         }
 
-        //Called when the 'Import Excel File" button is clicked
+        static void LoadFromDatabase()
+        {
+            transactionsList = SqliteDataAccess.LoadTransactions();
+            categoriesList = SqliteDataAccess.LoadCategories();
+        }
+
         void Importbtn_Click(object sender, EventArgs e)
         {
             //Set the file name to null to begin with
@@ -37,7 +43,7 @@ namespace BudgetApp
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 //If the file name has now been updated from null to something
-                //Open a new ImportDataForm and run the readExcel method on that file
+                //Open a new ImportDataForm and run the ImportData method on that file
                 if (openFileDialog.FileName.Trim() != "")
                 {
                     ImportDataForm importDataForm = new ImportDataForm();
@@ -46,13 +52,6 @@ namespace BudgetApp
                     importDataForm.ImportData(openFileDialog.FileName);
                 }
             }
-
-        }
-
-        static void LoadFromDatabase()
-        {
-            transactionsList = SqliteDataAccess.LoadTransactions();
-            categoriesList = SqliteDataAccess.LoadCategories();
         }
 
         void SaveDefaultCategories()
@@ -97,6 +96,8 @@ namespace BudgetApp
         static void PopulateLabels()
         {
             TotalValue.Text = Transaction.Total(transactionsList).ToString();
+
+
         }
     }
 }
