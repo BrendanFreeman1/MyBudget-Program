@@ -158,7 +158,10 @@ namespace BudgetApp.Views
         {
             foreach (Transaction transaction in transactionList)
             {
-                SqliteDataAccess.SaveTransaction(transaction);
+                if(transaction.Category != "Ignore")
+                {
+                    SqliteDataAccess.SaveTransaction(transaction);
+                }
             }
 
             //Reload the now updated database and Re-calculate totals

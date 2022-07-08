@@ -28,16 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.Importbtn = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.CustomCategorybtn = new System.Windows.Forms.Button();
-            this.TotalLabel = new System.Windows.Forms.Label();
-            TotalValue = new System.Windows.Forms.Label();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // Importbtn
             // 
-            this.Importbtn.Location = new System.Drawing.Point(652, 742);
+            this.Importbtn.Location = new System.Drawing.Point(1073, 730);
             this.Importbtn.Name = "Importbtn";
             this.Importbtn.Size = new System.Drawing.Size(145, 23);
             this.Importbtn.TabIndex = 0;
@@ -51,7 +54,7 @@
             // 
             // CustomCategorybtn
             // 
-            this.CustomCategorybtn.Location = new System.Drawing.Point(652, 771);
+            this.CustomCategorybtn.Location = new System.Drawing.Point(1073, 759);
             this.CustomCategorybtn.Name = "CustomCategorybtn";
             this.CustomCategorybtn.Size = new System.Drawing.Size(145, 23);
             this.CustomCategorybtn.TabIndex = 1;
@@ -59,26 +62,23 @@
             this.CustomCategorybtn.UseVisualStyleBackColor = true;
             this.CustomCategorybtn.Click += new System.EventHandler(this.CustomCategorybtn_Click);
             // 
-            // TotalLabel
+            // chart1
             // 
-            this.TotalLabel.AutoSize = true;
-            this.TotalLabel.ForeColor = System.Drawing.Color.Snow;
-            this.TotalLabel.Location = new System.Drawing.Point(12, 9);
-            this.TotalLabel.Name = "TotalLabel";
-            this.TotalLabel.Size = new System.Drawing.Size(34, 13);
-            this.TotalLabel.TabIndex = 2;
-            this.TotalLabel.Text = "Total:";
-            // 
-            // TotalValue
-            // 
-            TotalValue.AutoSize = true;
-            TotalValue.ForeColor = System.Drawing.Color.Snow;
-            TotalValue.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            TotalValue.Location = new System.Drawing.Point(52, 9);
-            TotalValue.Name = "TotalValue";
-            TotalValue.Size = new System.Drawing.Size(58, 13);
-            TotalValue.TabIndex = 3;
-            TotalValue.Text = "TotalValue";
+            this.chart1.BorderlineColor = System.Drawing.Color.Transparent;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(12, 429);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series1.Legend = "Legend1";
+            series1.Name = "Total";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(603, 347);
+            this.chart1.TabIndex = 2;
+            this.chart1.Text = "chart1";
             // 
             // BudgetApp
             // 
@@ -86,15 +86,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(809, 806);
-            this.Controls.Add(TotalValue);
-            this.Controls.Add(this.TotalLabel);
+            this.ClientSize = new System.Drawing.Size(1230, 794);
+            this.Controls.Add(this.chart1);
             this.Controls.Add(this.CustomCategorybtn);
             this.Controls.Add(this.Importbtn);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "BudgetApp";
             this.Text = "BudgetApp";
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -103,8 +103,7 @@
         private System.Windows.Forms.Button Importbtn;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button CustomCategorybtn;
-        private System.Windows.Forms.Label TotalLabel;
-        private static System.Windows.Forms.Label TotalValue;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }
 

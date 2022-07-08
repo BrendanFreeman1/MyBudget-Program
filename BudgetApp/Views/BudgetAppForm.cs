@@ -11,6 +11,8 @@ namespace BudgetApp
     {
         private static List<Transaction> transactionsList = new List<Transaction>();
         private static List<Category> categoriesList = new List<Category>();
+        private static List<string> uniqueCategoriesList = new List<string>();
+
 
         public BudgetApp()
         {
@@ -23,13 +25,21 @@ namespace BudgetApp
         public static void StartUp()
         {
             LoadFromDatabase();
-            PopulateLabels();
+            //PopulateLabels();
         }
 
         static void LoadFromDatabase()
         {
             transactionsList = SqliteDataAccess.LoadTransactions();
             categoriesList = SqliteDataAccess.LoadCategories();
+            
+            //Get the names of the categories already in the database
+            List<string> categoryNames = categoriesList.Select(c => c.Name).ToList();
+
+            foreach (string categoryName in categoryNames)
+            {
+                if (!uniqueCategoriesList.Contains(categoryName)) { uniqueCategoriesList.Add(categoryName); }
+            }
         }
 
         void Importbtn_Click(object sender, EventArgs e)
@@ -93,11 +103,17 @@ namespace BudgetApp
             customCategoryForm.Show();
         }
 
-        static void PopulateLabels()
-        {
-            TotalValue.Text = Transaction.Total(transactionsList).ToString();
+        void PopulateLabels()
+        { 
+            chart1.Titles.Add("Total By Category");
 
-
+            foreach (string categoryName in uniqueCategoriesList)
+            {
+                double categoryTotal = Transaction.TotalByCategory(transactionsList, categoryName);
+                chart1.Series["Total"].Points.AddXY(categoryName + " " + categoryTotal.ToString(), categoryTotal);
+            }
         }
+
+
     }
 }

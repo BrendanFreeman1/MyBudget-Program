@@ -44,7 +44,7 @@ namespace BudgetApp.Models
             double total = 0;
             foreach (Transaction transaction in transactions)
             {
-                if (transaction.Category == category) { total += transaction.Value; }
+                if (transaction.Category == category.ToLower()) { total += transaction.Value; }
             }
 
             return total;
