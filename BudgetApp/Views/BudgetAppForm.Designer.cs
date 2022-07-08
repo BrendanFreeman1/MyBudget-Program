@@ -32,7 +32,7 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.CustomCategorybtn = new System.Windows.Forms.Button();
             this.TotalLabel = new System.Windows.Forms.Label();
-            this.TotalValue = new System.Windows.Forms.Label();
+            TotalValue = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Importbtn
@@ -71,14 +71,14 @@
             // 
             // TotalValue
             // 
-            this.TotalValue.AutoSize = true;
-            this.TotalValue.ForeColor = System.Drawing.Color.Snow;
-            this.TotalValue.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.TotalValue.Location = new System.Drawing.Point(62, 169);
-            this.TotalValue.Name = "TotalValue";
-            this.TotalValue.Size = new System.Drawing.Size(58, 13);
-            this.TotalValue.TabIndex = 3;
-            this.TotalValue.Text = "TotalValue";
+            TotalValue.AutoSize = true;
+            TotalValue.ForeColor = System.Drawing.Color.Snow;
+            TotalValue.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            TotalValue.Location = new System.Drawing.Point(62, 169);
+            TotalValue.Name = "TotalValue";
+            TotalValue.Size = new System.Drawing.Size(58, 13);
+            TotalValue.TabIndex = 3;
+            TotalValue.Text = "TotalValue";
             // 
             // BudgetApp
             // 
@@ -87,7 +87,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(809, 806);
-            this.Controls.Add(this.TotalValue);
+            this.Controls.Add(TotalValue);
             this.Controls.Add(this.TotalLabel);
             this.Controls.Add(this.CustomCategorybtn);
             this.Controls.Add(this.Importbtn);
@@ -104,7 +104,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button CustomCategorybtn;
         private System.Windows.Forms.Label TotalLabel;
-        private System.Windows.Forms.Label TotalValue;
+        private static System.Windows.Forms.Label TotalValue;
     }
 }
 

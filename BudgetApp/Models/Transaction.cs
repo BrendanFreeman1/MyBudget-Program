@@ -20,9 +20,9 @@ namespace BudgetApp.Models
                 {
                     return category.Name;
                 }
-            }  
-            
-            //SOMETIMES RETURNS 'Other' AND OTHER TIMES 'other' ???
+            }
+
+            //Default categorisation
             return "Other";
         }
 

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace BudgetApp.Views
 {
     public partial class CustomCategoryForm : Form
-    {        
+    {
         public CustomCategoryForm()
         {
             InitializeComponent();
@@ -18,6 +18,9 @@ namespace BudgetApp.Views
             if(category.Tag == "") { category.Tag = null; }
 
             SqliteDataAccess.SaveCategory(category);
+
+            //Re-Populate the ComboBox with the updated Categories list
+            ImportDataForm.PopulateCategoryComoboBox();
 
             Close();
         }

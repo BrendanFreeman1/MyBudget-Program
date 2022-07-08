@@ -13,34 +13,24 @@ namespace BudgetApp.Views
     public partial class ImportDataForm : Form
     {
         #region Initialise variables
-        private readonly List<Transaction> transactionList = new List<Transaction>();
+        private static readonly List<Transaction> transactionList = new List<Transaction>();
         private int listIndex = 0;
 
         //Create excel objects
-        Excel.Application xlApp;
-        Excel.Workbook xlWorkBook;
-        Excel.Worksheet xlWorkSheet;
+        private static Excel.Application xlApp;
+        private static Excel.Workbook xlWorkBook;
+        private static Excel.Worksheet xlWorkSheet;
 
         #endregion
 
         public ImportDataForm()
         {
             InitializeComponent();
-            PopulateComoboBox();
+
+            //Possibly move opening the file into this class to keep all methods private!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
-        private void PopulateComoboBox()
-        {
-            foreach (Category category in SqliteDataAccess.LoadCategories())
-            {
-                if(!categoryComboBox.Items.Contains(category.Name.ToLower()))
-                {
-                    categoryComboBox.Items.Add(category.Name.ToLower());
-                }
-            }
-        }
-
-        public void ReadExcel(string sFile)
+        public void ImportData(string sFile)
         {
             //Called once an excel file is chosen from the BudgetAppForm
             //Gets data from the selected excel, creates transaction objects and puts them into the transactionList       
@@ -58,31 +48,41 @@ namespace BudgetApp.Views
                 row++;
             }
 
+            //Create the columns and headers in our DataGridView
             CreateDataGridViewColumns();
 
-            CleanUpExcelObjects();
-        }
-
-        void CreateDataGridViewColumns()
-        {           
-            for (int i = 0; i <= 3; i++)
-            {                
-                DataGridViewColumn column = new DataGridViewTextBoxColumn();                
-                dataGridView.Columns.Add(column);
-            }
-
-            //Populate first row with column headers
-            dataGridView.Rows.Add("Date", "Description", "Value", "Category");
+            //Load Categories from database and add to our ComboBox
+            PopulateCategoryComoboBox();
 
             //Display the first row from the excel for the user to view and select a category for
             DisplayNextRowLabels();
 
-
-            //DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
-            //dataGridView.Columns.Add(comboBoxColumn);
+            //Close and Quit excel objects
+            CleanUpExcelObjects();
         }
 
-        #region Populate Transaction Objects        
+        void CreateDataGridViewColumns()
+        {
+            for (int i = 0; i <= 3; i++)
+            {
+                DataGridViewColumn column = new DataGridViewTextBoxColumn();
+                dataGridView.Columns.Add(column);
+            }
+
+            dataGridView.Rows.Add("Date", "Description", "Value", "Category");
+        }
+
+        public static void PopulateCategoryComoboBox()
+        {
+            foreach (Category category in SqliteDataAccess.LoadCategories())
+            {
+                if (!categoryComboBox.Items.Contains(category.Name))
+                {
+                    categoryComboBox.Items.Add(category.Name);
+                }
+            }
+        }
+      
         Transaction GetTransactionData(int row)
         {
             Transaction transaction = new Transaction();
@@ -105,25 +105,34 @@ namespace BudgetApp.Views
             transaction.Description = xlWorkSheet.Cells[row, 2].value;
 
             //VALUE
-            if (xlWorkSheet.Cells[row, 3].value != null) { transaction.Value = xlWorkSheet.Cells[row, 3].value; } //Credit
-            else { transaction.Value = xlWorkSheet.Cells[row, 4].value; } //Debit
+            if (xlWorkSheet.Cells[row, 3].value != null) 
+            { 
+                transaction.Value = xlWorkSheet.Cells[row, 3].value; //Credit 
+            }
+            else  
+            { 
+                transaction.Value = xlWorkSheet.Cells[row, 4].value; //Debit
+            }
 
             //CATEGORY
             transaction.Category = Transaction.AutoCategorise(transaction);
 
             return transaction;
-        }
-        #endregion        
+        }       
         
         void ConfirmButton_Click(object sender, EventArgs e)
         {
             if (listIndex < transactionList.Count)
             {
-                string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), categoryComboBox.SelectedItem.ToString() };
+                //Set transactions category to users selection
+                transactionList[listIndex].Category = categoryComboBox.SelectedItem.ToString();
+
+                //Add transaction to DataGridView
+                string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), transactionList[listIndex].Category };
                 dataGridView.Rows.Add(currentRow);
 
+                //Display the next row from the excel for the user to view and select a category for
                 listIndex++;
-
                 DisplayNextRowLabels();
             }
         }
@@ -135,16 +144,25 @@ namespace BudgetApp.Views
                 dateLabel.Text = transactionList[listIndex].Date.ToString();
                 descriptionLabel.Text = transactionList[listIndex].Description;
                 valueLabel.Text = transactionList[listIndex].Value.ToString();
-                categoryComboBox.Text = transactionList[listIndex].Category;
+                categoryComboBox.SelectedItem = transactionList[listIndex].Category;
             }
         }
-   
+
+        void CustomCategorybtn_Click(object sender, EventArgs e)
+        {
+            CustomCategoryForm customCategoryForm = new CustomCategoryForm();
+            customCategoryForm.Show();
+        }
+
         void FinishButton_Click(object sender, EventArgs e)
         {
             foreach (Transaction transaction in transactionList)
             {
                 SqliteDataAccess.SaveTransaction(transaction);
             }
+
+            //Reload the now updated database and Re-calculate totals
+            BudgetApp.StartUp();
 
             Close();
         }
@@ -162,5 +180,6 @@ namespace BudgetApp.Views
             xlApp.Quit();
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
         }
+
     }
 }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.categoryComboBox = new System.Windows.Forms.ComboBox();
+            categoryComboBox = new System.Windows.Forms.ComboBox();
             this.confirmButton = new System.Windows.Forms.Button();
             this.descriptionText = new System.Windows.Forms.Label();
             this.dateText = new System.Windows.Forms.Label();
@@ -39,6 +39,7 @@
             this.descriptionLabel = new System.Windows.Forms.Label();
             this.Heading = new System.Windows.Forms.Label();
             this.FinishButton = new System.Windows.Forms.Button();
+            this.CustomCategorybtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,12 +64,12 @@
             // 
             // categoryComboBox
             // 
-            this.categoryComboBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.categoryComboBox.FormattingEnabled = true;
-            this.categoryComboBox.Location = new System.Drawing.Point(889, 36);
-            this.categoryComboBox.Name = "categoryComboBox";
-            this.categoryComboBox.Size = new System.Drawing.Size(138, 21);
-            this.categoryComboBox.TabIndex = 3;
+            categoryComboBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            categoryComboBox.FormattingEnabled = true;
+            categoryComboBox.Location = new System.Drawing.Point(889, 36);
+            categoryComboBox.Name = "categoryComboBox";
+            categoryComboBox.Size = new System.Drawing.Size(138, 21);
+            categoryComboBox.TabIndex = 3;
             // 
             // confirmButton
             // 
@@ -171,13 +172,25 @@
             this.FinishButton.UseVisualStyleBackColor = true;
             this.FinishButton.Click += new System.EventHandler(this.FinishButton_Click);
             // 
+            // CustomCategorybtn
+            // 
+            this.CustomCategorybtn.Location = new System.Drawing.Point(889, 864);
+            this.CustomCategorybtn.Name = "CustomCategorybtn";
+            this.CustomCategorybtn.Size = new System.Drawing.Size(138, 23);
+            this.CustomCategorybtn.TabIndex = 15;
+            this.CustomCategorybtn.Text = "Create Custom Category";
+            this.CustomCategorybtn.UseVisualStyleBackColor = true;
+            this.CustomCategorybtn.Click += new System.EventHandler(this.CustomCategorybtn_Click);
+            // 
             // ImportDataForm
             // 
+            this.AcceptButton = this.confirmButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(1046, 927);
+            this.Controls.Add(this.CustomCategorybtn);
             this.Controls.Add(this.FinishButton);
             this.Controls.Add(this.Heading);
             this.Controls.Add(this.valueLabel);
@@ -187,7 +200,7 @@
             this.Controls.Add(this.dateText);
             this.Controls.Add(this.descriptionText);
             this.Controls.Add(this.confirmButton);
-            this.Controls.Add(this.categoryComboBox);
+            this.Controls.Add(categoryComboBox);
             this.Controls.Add(this.dataGridView);
             this.Name = "ImportDataForm";
             this.Text = "ImportDataForm";
@@ -200,7 +213,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView;
-        private System.Windows.Forms.ComboBox categoryComboBox;
+        private static System.Windows.Forms.ComboBox categoryComboBox;
         private System.Windows.Forms.Button confirmButton;
         private System.Windows.Forms.Label descriptionText;
         private System.Windows.Forms.Label dateText;
@@ -210,5 +223,6 @@
         private System.Windows.Forms.Label descriptionLabel;
         private System.Windows.Forms.Label Heading;
         private System.Windows.Forms.Button FinishButton;
+        private System.Windows.Forms.Button CustomCategorybtn;
     }
 }

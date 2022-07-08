@@ -9,14 +9,19 @@ namespace BudgetApp
 {
     public partial class BudgetApp : Form
     {
-        List<Transaction> transactionsList = new List<Transaction>();
-        List<Category> categoriesList = new List<Category>();
+        private static List<Transaction> transactionsList = new List<Transaction>();
+        private static List<Category> categoriesList = new List<Category>();
 
         public BudgetApp()
         {
             InitializeComponent();
-            LoadFromDatabase();
             SaveDefaultCategories();
+            StartUp();
+        }
+
+        public static void StartUp()
+        {
+            LoadFromDatabase();
             PopulateLabels();
         }
 
@@ -37,13 +42,14 @@ namespace BudgetApp
                 {
                     ImportDataForm importDataForm = new ImportDataForm();
                     importDataForm.Show();
-                    
-                    importDataForm.ReadExcel(openFileDialog.FileName);
+
+                    importDataForm.ImportData(openFileDialog.FileName);
                 }
             }
+
         }
 
-        void LoadFromDatabase()
+        static void LoadFromDatabase()
         {
             transactionsList = SqliteDataAccess.LoadTransactions();
             categoriesList = SqliteDataAccess.LoadCategories();
@@ -66,7 +72,6 @@ namespace BudgetApp
                 new Category ("Gifts", null),
                 new Category ("Insurance", null),
                 new Category ("Pets", null),
-                new Category ("Technology", null),
                 new Category ("Transportation", null),
                 new Category ("Travel", null),
                 new Category ("Utilities", null),
@@ -79,14 +84,7 @@ namespace BudgetApp
             //Compair the categories we want to add against what we already have
             foreach (Category defaultCategory in defaultCategories)
             {
-                if (categoryNames.Contains(defaultCategory.Name))
-                {
-                    continue;
-                }
-                else
-                {
-                    SqliteDataAccess.SaveCategory(defaultCategory);
-                }
+                if (!categoryNames.Contains(defaultCategory.Name)) { SqliteDataAccess.SaveCategory(defaultCategory); }
             }
         }
 
@@ -96,7 +94,7 @@ namespace BudgetApp
             customCategoryForm.Show();
         }
 
-        void PopulateLabels()
+        static void PopulateLabels()
         {
             TotalValue.Text = Transaction.Total(transactionsList).ToString();
         }
