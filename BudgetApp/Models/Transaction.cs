@@ -22,11 +22,8 @@ namespace BudgetApp.Models
                 }
             }
 
-            //Default categorisation
-            return "Other";
+            return "Other"; //Default categorisation
         }
-
-
 
         public static double Total(List<Transaction> transactions)
         {
@@ -39,23 +36,26 @@ namespace BudgetApp.Models
             return total;
         }
 
-        public static double TotalByCategory(List<Transaction> transactions, string category)
+        public static double Total(List<Transaction> transactions, DateTime startDate, DateTime endDate, string category)
         {
             double total = 0;
+            startDate = startDate.Date + new TimeSpan(00, 00, 00);
+            endDate = endDate.Date + new TimeSpan(23, 59, 59);
+
             foreach (Transaction transaction in transactions)
             {
-                if (transaction.Category == category.ToLower()) { total += transaction.Value; }
-            }
+                if (transaction.Date >= startDate && transaction.Date <= endDate)
+                {
+                    if(category != null && transaction.Category == category.ToLower()) 
+                    { 
+                        total += transaction.Value;
+                    }
 
-            return total;
-        }
-
-        public static double TotalByDate(List<Transaction> transactions, DateTime startDate, DateTime endDate)
-        {
-            double total = 0;
-            foreach (Transaction transaction in transactions)
-            { 
-                if (transaction.Date >= startDate && transaction.Date <= endDate) { total += transaction.Value; }
+                    if(category == null)
+                    {
+                        total += transaction.Value;
+                    }
+                }
             }
 
             return total;

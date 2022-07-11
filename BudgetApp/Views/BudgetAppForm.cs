@@ -12,20 +12,12 @@ namespace BudgetApp
         private static List<Transaction> transactionsList = new List<Transaction>();
         private static List<Category> categoriesList = new List<Category>();
         private static List<string> uniqueCategoriesList = new List<string>();
-
-
         public BudgetApp()
         {
             InitializeComponent();
             LoadFromDatabase();
             SaveDefaultCategories();
-            PopulateLabels();
-        }
-
-        public static void StartUp()
-        {
-            LoadFromDatabase();
-            //PopulateLabels();
+            PopulateBarGraph();
         }
 
         static void LoadFromDatabase()
@@ -36,9 +28,9 @@ namespace BudgetApp
             //Get the names of the categories already in the database
             List<string> categoryNames = categoriesList.Select(c => c.Name).ToList();
 
-            foreach (string categoryName in categoryNames)
+            foreach (string name in categoryNames)
             {
-                if (!uniqueCategoriesList.Contains(categoryName)) { uniqueCategoriesList.Add(categoryName); }
+                if (!uniqueCategoriesList.Contains(name)) { uniqueCategoriesList.Add(name); }
             }
         }
 
@@ -73,6 +65,7 @@ namespace BudgetApp
             List<Category> defaultCategories = new List<Category>
             {
                 new Category ("Ignore", null),
+                new Category ("Income", null),
                 new Category ("Children", null),
                 new Category ("Debt", null),
                 new Category ("Education", null),
@@ -103,17 +96,26 @@ namespace BudgetApp
             customCategoryForm.Show();
         }
 
-        void PopulateLabels()
+        void PopulateBarGraph()
         { 
-            chart1.Titles.Add("Total By Category");
+            categoryTotalsChart.Titles.Add("Total By Category");
 
             foreach (string categoryName in uniqueCategoriesList)
             {
-                double categoryTotal = Transaction.TotalByCategory(transactionsList, categoryName);
-                chart1.Series["Total"].Points.AddXY(categoryName + " " + categoryTotal.ToString(), categoryTotal);
+                double categoryTotal = Transaction.Total(transactionsList, DateTime.MinValue, DateTime.MaxValue, categoryName) * -1 ;
+
+                if(categoryTotal != 0 && categoryName != "Ignore")
+                {
+                    categoryTotalsChart.Series["Category Totals"].Points.AddXY(categoryName, categoryTotal);
+                }               
             }
         }
 
+        private void SortByDatebtn_Click(object sender, EventArgs e)
+        {
+            double total = Transaction.Total(transactionsList, fromDateTimePicker.Value, toDateTimePicker.Value, null);
 
+            totalValueLabel.Text = total.ToString();    
+        }
     }
 }

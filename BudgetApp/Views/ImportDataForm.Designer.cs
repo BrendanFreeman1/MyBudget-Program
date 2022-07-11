@@ -69,6 +69,7 @@
             categoryComboBox.Location = new System.Drawing.Point(889, 36);
             categoryComboBox.Name = "categoryComboBox";
             categoryComboBox.Size = new System.Drawing.Size(138, 21);
+            categoryComboBox.Sorted = true;
             categoryComboBox.TabIndex = 3;
             // 
             // confirmButton
@@ -213,7 +214,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView;
-        private static System.Windows.Forms.ComboBox categoryComboBox;
         private System.Windows.Forms.Button confirmButton;
         private System.Windows.Forms.Label descriptionText;
         private System.Windows.Forms.Label dateText;
@@ -224,5 +224,6 @@
         private System.Windows.Forms.Label Heading;
         private System.Windows.Forms.Button FinishButton;
         private System.Windows.Forms.Button CustomCategorybtn;
+        private static System.Windows.Forms.ComboBox categoryComboBox;
     }
 }
