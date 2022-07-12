@@ -92,6 +92,7 @@
             this.Controls.Add(this.textLabel);
             this.Controls.Add(this.tagBox);
             this.Name = "CustomCategoryForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CustomCategoryForm";
             this.ResumeLayout(false);
             this.PerformLayout();

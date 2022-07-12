@@ -13,7 +13,6 @@ namespace BudgetApp.Models
 
         public static string AutoCategorise(Transaction transaction)
         {
-
             foreach (Category category in SqliteDataAccess.LoadCategories())
             {
                 if (category.Tag != null && transaction.Description.ToLower().Contains(category.Tag))
@@ -46,7 +45,7 @@ namespace BudgetApp.Models
             {
                 if (transaction.Date >= startDate && transaction.Date <= endDate)
                 {
-                    if(category != null && transaction.Category == category.ToLower()) 
+                    if (category != null && transaction.Category.ToLower() == category.ToLower()) 
                     { 
                         total += transaction.Value;
                     }

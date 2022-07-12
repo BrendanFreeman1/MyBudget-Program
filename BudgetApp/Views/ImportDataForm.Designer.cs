@@ -204,6 +204,7 @@
             this.Controls.Add(categoryComboBox);
             this.Controls.Add(this.dataGridView);
             this.Name = "ImportDataForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ImportDataForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
