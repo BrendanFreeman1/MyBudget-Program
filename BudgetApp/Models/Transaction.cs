@@ -56,9 +56,7 @@ namespace BudgetApp.Models
                     }
                 }
             }
-
             return total;
         }
-
     }
 }

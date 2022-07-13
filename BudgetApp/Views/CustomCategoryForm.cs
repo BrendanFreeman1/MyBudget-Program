@@ -21,6 +21,7 @@ namespace BudgetApp.Views
 
             //Re-Populate the ComboBox with the updated Categories list
             ImportDataForm.PopulateCategoryComoboBox();
+            ImportDataForm.UpdateListCategories();
 
             Close();
         }

@@ -14,7 +14,7 @@ namespace BudgetApp.Views
     {
         #region Initialise variables
         private static readonly List<Transaction> transactionList = new List<Transaction>();
-        private int listIndex = 0;
+        private static int listIndex = 0;
 
         //Create excel objects
         private static Excel.Application xlApp;
@@ -72,7 +72,7 @@ namespace BudgetApp.Views
             dataGridView.Rows.Add("Date", "Description", "Value", "Category");
         }
 
-        public static void PopulateCategoryComoboBox()
+        internal static void PopulateCategoryComoboBox()
         {
             foreach (Category category in SqliteDataAccess.LoadCategories())
             {
@@ -82,7 +82,16 @@ namespace BudgetApp.Views
                 }
             }
         }
-      
+        internal static void UpdateListCategories()
+        {
+            foreach(Transaction transaction in transactionList)
+            {
+                transaction.Category = Transaction.AutoCategorise(transaction);
+            }
+
+            categoryComboBox.SelectedItem = transactionList[listIndex].Category;
+        }
+
         Transaction GetTransactionData(int row)
         {
             Transaction transaction = new Transaction();

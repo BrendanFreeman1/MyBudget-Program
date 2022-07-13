@@ -2,8 +2,10 @@
 using BudgetApp.Views;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace BudgetApp
 {
@@ -17,8 +19,21 @@ namespace BudgetApp
             InitializeComponent();
             LoadFromDatabase();
             SaveDefaultCategories();
+            PopulateYearComoboBox();
             PopulateCategoryBarGraph();
             PopulateMonthBarGraph();
+        }
+
+        private void PopulateYearComoboBox()
+        {
+            //Get year of earlist date from database and set that as first year, then run through to year of last date
+
+            for(int i = 1900; i < 3000; i++)
+            {
+                yearComboBox.Items.Add(i.ToString());
+            }
+
+            yearComboBox.Text = DateTime.Now.Year.ToString();
         }
 
         public static void StartUp()
@@ -119,15 +134,19 @@ namespace BudgetApp
 
         void PopulateMonthBarGraph()
         {
-            List<string> months = new List<string> { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-            
-            foreach (string month in months)
+            monthChart.Series["Month Totals"].Points.Clear();
+
+            for (int i=1; i<=12; i++)
             {
-                monthChart.Series["Month Totals"].Points.AddXY(month, 100);
-            }         
+                string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i);
+                DateTime monthStart = new DateTime(int.Parse(yearComboBox.Text), i, 1);
+                DateTime monthEnd = monthStart.AddMonths(1).AddDays(-1); //Get the 1st of the next month, then subtract 1 day
+
+                monthChart.Series["Month Totals"].Points.AddXY(month, Transaction.Total(transactionsList, monthStart, monthEnd, null));
+            }
         }
 
-        private void SortByDatebtn_Click(object sender, EventArgs e)
+        void SortByDatebtn_Click(object sender, EventArgs e)
         {
             //CLEAN UP MATHS HERE!!!!!!!!!!!!
             PopulateCategoryBarGraph();
@@ -138,6 +157,11 @@ namespace BudgetApp
             incomeValue.Text = income.ToString("0.##");
             expensesValue.Text = expenses.ToString("0.##");
             netValue.Text = (income - (expenses*-1)).ToString("0.##");
+        }
+
+        private void yearComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PopulateMonthBarGraph();
         }
     }
 }

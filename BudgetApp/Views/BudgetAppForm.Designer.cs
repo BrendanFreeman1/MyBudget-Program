@@ -33,9 +33,9 @@
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.Importbtn = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.CustomCategorybtn = new System.Windows.Forms.Button();
             this.categoryExpencesChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.fromDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.toDateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -51,13 +51,14 @@
             this.expensesLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.monthChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.yearComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.categoryExpencesChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.monthChart)).BeginInit();
             this.SuspendLayout();
             // 
             // Importbtn
             // 
-            this.Importbtn.Location = new System.Drawing.Point(827, 103);
+            this.Importbtn.Location = new System.Drawing.Point(827, 132);
             this.Importbtn.Name = "Importbtn";
             this.Importbtn.Size = new System.Drawing.Size(145, 23);
             this.Importbtn.TabIndex = 0;
@@ -68,16 +69,6 @@
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
-            // 
-            // CustomCategorybtn
-            // 
-            this.CustomCategorybtn.Location = new System.Drawing.Point(827, 132);
-            this.CustomCategorybtn.Name = "CustomCategorybtn";
-            this.CustomCategorybtn.Size = new System.Drawing.Size(145, 23);
-            this.CustomCategorybtn.TabIndex = 1;
-            this.CustomCategorybtn.Text = "Create Custom Category";
-            this.CustomCategorybtn.UseVisualStyleBackColor = true;
-            this.CustomCategorybtn.Click += new System.EventHandler(this.CustomCategorybtn_Click);
             // 
             // categoryExpencesChart
             // 
@@ -145,6 +136,7 @@
             this.categoryExpencesChart.TabIndex = 2;
             title1.Alignment = System.Drawing.ContentAlignment.TopCenter;
             title1.BackColor = System.Drawing.Color.Transparent;
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             title1.ForeColor = System.Drawing.Color.White;
             title1.Name = "totalPerCategoryTitle";
             title1.Text = "Expences Per Category";
@@ -224,7 +216,7 @@
             this.titleLabel.AutoSize = true;
             this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLabel.ForeColor = System.Drawing.Color.White;
-            this.titleLabel.Location = new System.Drawing.Point(413, 9);
+            this.titleLabel.Location = new System.Drawing.Point(413, 30);
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(168, 37);
             this.titleLabel.TabIndex = 10;
@@ -289,16 +281,23 @@
             // monthChart
             // 
             this.monthChart.BackColor = System.Drawing.Color.Transparent;
+            this.monthChart.BorderlineColor = System.Drawing.Color.Empty;
+            chartArea2.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea2.AxisX.IsMarginVisible = false;
             chartArea2.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
+            chartArea2.AxisX.LabelStyle.Interval = 0D;
+            chartArea2.AxisX.LabelStyle.IntervalOffset = 0D;
+            chartArea2.AxisX.LabelStyle.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea2.AxisX.LabelStyle.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
             chartArea2.AxisX.LineColor = System.Drawing.Color.White;
             chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.White;
-            chartArea2.AxisX.MajorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea2.AxisX.MajorTickMark.Size = 0F;
+            chartArea2.AxisX.MajorTickMark.Enabled = false;
             chartArea2.AxisX.MinorGrid.LineColor = System.Drawing.Color.White;
             chartArea2.AxisX.MinorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea2.AxisX.TitleForeColor = System.Drawing.Color.White;
+            chartArea2.AxisX.ScaleBreakStyle.BreakLineStyle = System.Windows.Forms.DataVisualization.Charting.BreakLineStyle.None;
+            chartArea2.AxisX.ScaleBreakStyle.LineColor = System.Drawing.Color.White;
+            chartArea2.AxisX.TitleForeColor = System.Drawing.Color.Empty;
             chartArea2.AxisX2.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea2.AxisX2.LineColor = System.Drawing.Color.White;
             chartArea2.AxisX2.MajorGrid.LineColor = System.Drawing.Color.White;
             chartArea2.AxisX2.MajorTickMark.LineColor = System.Drawing.Color.White;
             chartArea2.AxisX2.MinorGrid.LineColor = System.Drawing.Color.White;
@@ -306,30 +305,44 @@
             chartArea2.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
             chartArea2.AxisY.LineColor = System.Drawing.Color.White;
             chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.White;
+            chartArea2.AxisY.MajorTickMark.Enabled = false;
             chartArea2.AxisY.MajorTickMark.LineColor = System.Drawing.Color.White;
             chartArea2.AxisY.MinorGrid.LineColor = System.Drawing.Color.White;
             chartArea2.AxisY.MinorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea2.AxisY.TitleForeColor = System.Drawing.Color.White;
             chartArea2.AxisY2.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea2.AxisY2.LineColor = System.Drawing.Color.White;
             chartArea2.AxisY2.MajorGrid.LineColor = System.Drawing.Color.White;
             chartArea2.AxisY2.MajorTickMark.LineColor = System.Drawing.Color.White;
             chartArea2.AxisY2.MinorGrid.LineColor = System.Drawing.Color.White;
             chartArea2.AxisY2.MinorTickMark.LineColor = System.Drawing.Color.White;
             chartArea2.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.BorderColor = System.Drawing.Color.Transparent;
+            chartArea2.BorderColor = System.Drawing.Color.Empty;
             chartArea2.BorderWidth = 0;
             chartArea2.Name = "ChartArea1";
             this.monthChart.ChartAreas.Add(chartArea2);
-            this.monthChart.Location = new System.Drawing.Point(12, 565);
+            this.monthChart.Location = new System.Drawing.Point(12, 549);
             this.monthChart.Name = "monthChart";
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.LabelForeColor = System.Drawing.Color.Empty;
             series2.Name = "Month Totals";
             this.monthChart.Series.Add(series2);
-            this.monthChart.Size = new System.Drawing.Size(960, 234);
+            this.monthChart.Size = new System.Drawing.Size(960, 250);
             this.monthChart.TabIndex = 16;
             this.monthChart.Text = "chart1";
+            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            title2.ForeColor = System.Drawing.Color.White;
+            title2.Name = "MonthTotalsChart";
+            title2.Text = "Month Totals";
+            this.monthChart.Titles.Add(title2);
+            // 
+            // yearComboBox
+            // 
+            this.yearComboBox.FormattingEnabled = true;
+            this.yearComboBox.Location = new System.Drawing.Point(79, 549);
+            this.yearComboBox.Name = "yearComboBox";
+            this.yearComboBox.Size = new System.Drawing.Size(75, 21);
+            this.yearComboBox.TabIndex = 17;
+            this.yearComboBox.SelectedIndexChanged += new System.EventHandler(this.yearComboBox_SelectedIndexChanged);
             // 
             // BudgetApp
             // 
@@ -338,6 +351,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(984, 811);
+            this.Controls.Add(this.yearComboBox);
             this.Controls.Add(this.monthChart);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.expensesValue);
@@ -353,7 +367,6 @@
             this.Controls.Add(this.toDateTimePicker);
             this.Controls.Add(this.fromDateTimePicker);
             this.Controls.Add(this.categoryExpencesChart);
-            this.Controls.Add(this.CustomCategorybtn);
             this.Controls.Add(this.Importbtn);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "BudgetApp";
@@ -370,7 +383,6 @@
 
         private System.Windows.Forms.Button Importbtn;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
-        private System.Windows.Forms.Button CustomCategorybtn;
         private System.Windows.Forms.DataVisualization.Charting.Chart categoryExpencesChart;
         private System.Windows.Forms.DateTimePicker fromDateTimePicker;
         private System.Windows.Forms.DateTimePicker toDateTimePicker;
@@ -386,6 +398,7 @@
         private System.Windows.Forms.Label expensesLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataVisualization.Charting.Chart monthChart;
+        private System.Windows.Forms.ComboBox yearComboBox;
     }
 }
 
