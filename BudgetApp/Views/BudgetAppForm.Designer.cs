@@ -34,37 +34,43 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            this.Importbtn = new System.Windows.Forms.Button();
+            this.ImportBtn = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.categoryExpencesChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.fromDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.toDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.FromDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.ToDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.fromLabel = new System.Windows.Forms.Label();
             this.toLabel = new System.Windows.Forms.Label();
-            this.SortByDatebtn = new System.Windows.Forms.Button();
-            this.incomeLabel = new System.Windows.Forms.Label();
-            this.incomeValue = new System.Windows.Forms.Label();
+            this.PopulateLabelsBtn = new System.Windows.Forms.Button();
+            this.IncomeLabel = new System.Windows.Forms.Label();
+            this.IncomeValue = new System.Windows.Forms.Label();
             this.titleLabel = new System.Windows.Forms.Label();
-            this.netValue = new System.Windows.Forms.Label();
-            this.netLabel = new System.Windows.Forms.Label();
-            this.expensesValue = new System.Windows.Forms.Label();
-            this.expensesLabel = new System.Windows.Forms.Label();
+            this.NetValue = new System.Windows.Forms.Label();
+            this.NetLabel = new System.Windows.Forms.Label();
+            this.ExpensesValue = new System.Windows.Forms.Label();
+            this.ExpensesLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.monthChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.yearComboBox = new System.Windows.Forms.ComboBox();
+            this.YearComboBox = new System.Windows.Forms.ComboBox();
+            this.YearExpensesValue = new System.Windows.Forms.Label();
+            this.YearExpensesLabel = new System.Windows.Forms.Label();
+            this.YearTotalValue = new System.Windows.Forms.Label();
+            this.YearIncomeValue = new System.Windows.Forms.Label();
+            this.YearIncomeLabel = new System.Windows.Forms.Label();
+            this.YearTotalLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.categoryExpencesChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.monthChart)).BeginInit();
             this.SuspendLayout();
             // 
-            // Importbtn
+            // ImportBtn
             // 
-            this.Importbtn.Location = new System.Drawing.Point(827, 132);
-            this.Importbtn.Name = "Importbtn";
-            this.Importbtn.Size = new System.Drawing.Size(145, 23);
-            this.Importbtn.TabIndex = 0;
-            this.Importbtn.Text = "Select Excel File";
-            this.Importbtn.UseVisualStyleBackColor = true;
-            this.Importbtn.Click += new System.EventHandler(this.Importbtn_Click);
+            this.ImportBtn.Location = new System.Drawing.Point(827, 132);
+            this.ImportBtn.Name = "ImportBtn";
+            this.ImportBtn.Size = new System.Drawing.Size(145, 23);
+            this.ImportBtn.TabIndex = 0;
+            this.ImportBtn.Text = "Select Excel File";
+            this.ImportBtn.UseVisualStyleBackColor = true;
+            this.ImportBtn.Click += new System.EventHandler(this.Importbtn_Click);
             // 
             // openFileDialog
             // 
@@ -142,73 +148,75 @@
             title1.Text = "Expences Per Category";
             this.categoryExpencesChart.Titles.Add(title1);
             // 
-            // fromDateTimePicker
+            // FromDateTimePicker
             // 
-            this.fromDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.fromDateTimePicker.Location = new System.Drawing.Point(22, 135);
-            this.fromDateTimePicker.Name = "fromDateTimePicker";
-            this.fromDateTimePicker.Size = new System.Drawing.Size(96, 20);
-            this.fromDateTimePicker.TabIndex = 3;
+            this.FromDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.FromDateTimePicker.Location = new System.Drawing.Point(22, 135);
+            this.FromDateTimePicker.Name = "FromDateTimePicker";
+            this.FromDateTimePicker.Size = new System.Drawing.Size(96, 20);
+            this.FromDateTimePicker.TabIndex = 3;
             // 
-            // toDateTimePicker
+            // ToDateTimePicker
             // 
-            this.toDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.toDateTimePicker.Location = new System.Drawing.Point(134, 135);
-            this.toDateTimePicker.Name = "toDateTimePicker";
-            this.toDateTimePicker.Size = new System.Drawing.Size(96, 20);
-            this.toDateTimePicker.TabIndex = 4;
+            this.ToDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.ToDateTimePicker.Location = new System.Drawing.Point(134, 135);
+            this.ToDateTimePicker.Name = "ToDateTimePicker";
+            this.ToDateTimePicker.Size = new System.Drawing.Size(96, 20);
+            this.ToDateTimePicker.TabIndex = 4;
             // 
             // fromLabel
             // 
             this.fromLabel.AutoSize = true;
+            this.fromLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fromLabel.ForeColor = System.Drawing.Color.White;
-            this.fromLabel.Location = new System.Drawing.Point(57, 116);
+            this.fromLabel.Location = new System.Drawing.Point(47, 115);
             this.fromLabel.Name = "fromLabel";
-            this.fromLabel.Size = new System.Drawing.Size(30, 13);
+            this.fromLabel.Size = new System.Drawing.Size(40, 17);
             this.fromLabel.TabIndex = 5;
             this.fromLabel.Text = "From";
             // 
             // toLabel
             // 
             this.toLabel.AutoSize = true;
+            this.toLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toLabel.ForeColor = System.Drawing.Color.White;
-            this.toLabel.Location = new System.Drawing.Point(166, 116);
+            this.toLabel.Location = new System.Drawing.Point(173, 115);
             this.toLabel.Name = "toLabel";
-            this.toLabel.Size = new System.Drawing.Size(20, 13);
+            this.toLabel.Size = new System.Drawing.Size(25, 17);
             this.toLabel.TabIndex = 6;
             this.toLabel.Text = "To";
             // 
-            // SortByDatebtn
+            // PopulateLabelsBtn
             // 
-            this.SortByDatebtn.Location = new System.Drawing.Point(247, 135);
-            this.SortByDatebtn.Name = "SortByDatebtn";
-            this.SortByDatebtn.Size = new System.Drawing.Size(56, 20);
-            this.SortByDatebtn.TabIndex = 7;
-            this.SortByDatebtn.Text = "Go";
-            this.SortByDatebtn.UseVisualStyleBackColor = true;
-            this.SortByDatebtn.Click += new System.EventHandler(this.SortByDatebtn_Click);
+            this.PopulateLabelsBtn.Location = new System.Drawing.Point(247, 135);
+            this.PopulateLabelsBtn.Name = "PopulateLabelsBtn";
+            this.PopulateLabelsBtn.Size = new System.Drawing.Size(56, 20);
+            this.PopulateLabelsBtn.TabIndex = 7;
+            this.PopulateLabelsBtn.Text = "Go";
+            this.PopulateLabelsBtn.UseVisualStyleBackColor = true;
+            this.PopulateLabelsBtn.Click += new System.EventHandler(this.PopulateLabelsBtn_Click);
             // 
-            // incomeLabel
+            // IncomeLabel
             // 
-            this.incomeLabel.AutoSize = true;
-            this.incomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.incomeLabel.ForeColor = System.Drawing.Color.White;
-            this.incomeLabel.Location = new System.Drawing.Point(45, 248);
-            this.incomeLabel.Name = "incomeLabel";
-            this.incomeLabel.Size = new System.Drawing.Size(90, 26);
-            this.incomeLabel.TabIndex = 8;
-            this.incomeLabel.Text = "Income:";
+            this.IncomeLabel.AutoSize = true;
+            this.IncomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IncomeLabel.ForeColor = System.Drawing.Color.White;
+            this.IncomeLabel.Location = new System.Drawing.Point(54, 247);
+            this.IncomeLabel.Name = "IncomeLabel";
+            this.IncomeLabel.Size = new System.Drawing.Size(90, 26);
+            this.IncomeLabel.TabIndex = 8;
+            this.IncomeLabel.Text = "Income:";
             // 
-            // incomeValue
+            // IncomeValue
             // 
-            this.incomeValue.AutoSize = true;
-            this.incomeValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.incomeValue.ForeColor = System.Drawing.Color.White;
-            this.incomeValue.Location = new System.Drawing.Point(141, 248);
-            this.incomeValue.Name = "incomeValue";
-            this.incomeValue.Size = new System.Drawing.Size(120, 26);
-            this.incomeValue.TabIndex = 9;
-            this.incomeValue.Text = "000000000";
+            this.IncomeValue.AutoSize = true;
+            this.IncomeValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IncomeValue.ForeColor = System.Drawing.Color.White;
+            this.IncomeValue.Location = new System.Drawing.Point(150, 247);
+            this.IncomeValue.Name = "IncomeValue";
+            this.IncomeValue.Size = new System.Drawing.Size(120, 26);
+            this.IncomeValue.TabIndex = 9;
+            this.IncomeValue.Text = "000000000";
             // 
             // titleLabel
             // 
@@ -222,49 +230,49 @@
             this.titleLabel.TabIndex = 10;
             this.titleLabel.Text = "My Budget";
             // 
-            // netValue
+            // NetValue
             // 
-            this.netValue.AutoSize = true;
-            this.netValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.netValue.ForeColor = System.Drawing.Color.White;
-            this.netValue.Location = new System.Drawing.Point(141, 206);
-            this.netValue.Name = "netValue";
-            this.netValue.Size = new System.Drawing.Size(120, 26);
-            this.netValue.TabIndex = 12;
-            this.netValue.Text = "000000000";
+            this.NetValue.AutoSize = true;
+            this.NetValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NetValue.ForeColor = System.Drawing.Color.White;
+            this.NetValue.Location = new System.Drawing.Point(150, 205);
+            this.NetValue.Name = "NetValue";
+            this.NetValue.Size = new System.Drawing.Size(120, 26);
+            this.NetValue.TabIndex = 12;
+            this.NetValue.Text = "000000000";
             // 
-            // netLabel
+            // NetLabel
             // 
-            this.netLabel.AutoSize = true;
-            this.netLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.netLabel.ForeColor = System.Drawing.Color.White;
-            this.netLabel.Location = new System.Drawing.Point(83, 206);
-            this.netLabel.Name = "netLabel";
-            this.netLabel.Size = new System.Drawing.Size(52, 26);
-            this.netLabel.TabIndex = 11;
-            this.netLabel.Text = "Net:";
+            this.NetLabel.AutoSize = true;
+            this.NetLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NetLabel.ForeColor = System.Drawing.Color.White;
+            this.NetLabel.Location = new System.Drawing.Point(92, 205);
+            this.NetLabel.Name = "NetLabel";
+            this.NetLabel.Size = new System.Drawing.Size(52, 26);
+            this.NetLabel.TabIndex = 11;
+            this.NetLabel.Text = "Net:";
             // 
-            // expensesValue
+            // ExpensesValue
             // 
-            this.expensesValue.AutoSize = true;
-            this.expensesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.expensesValue.ForeColor = System.Drawing.Color.White;
-            this.expensesValue.Location = new System.Drawing.Point(141, 290);
-            this.expensesValue.Name = "expensesValue";
-            this.expensesValue.Size = new System.Drawing.Size(120, 26);
-            this.expensesValue.TabIndex = 14;
-            this.expensesValue.Text = "000000000";
+            this.ExpensesValue.AutoSize = true;
+            this.ExpensesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExpensesValue.ForeColor = System.Drawing.Color.White;
+            this.ExpensesValue.Location = new System.Drawing.Point(150, 289);
+            this.ExpensesValue.Name = "ExpensesValue";
+            this.ExpensesValue.Size = new System.Drawing.Size(120, 26);
+            this.ExpensesValue.TabIndex = 14;
+            this.ExpensesValue.Text = "000000000";
             // 
-            // expensesLabel
+            // ExpensesLabel
             // 
-            this.expensesLabel.AutoSize = true;
-            this.expensesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.expensesLabel.ForeColor = System.Drawing.Color.White;
-            this.expensesLabel.Location = new System.Drawing.Point(21, 290);
-            this.expensesLabel.Name = "expensesLabel";
-            this.expensesLabel.Size = new System.Drawing.Size(114, 26);
-            this.expensesLabel.TabIndex = 13;
-            this.expensesLabel.Text = "Expenses:";
+            this.ExpensesLabel.AutoSize = true;
+            this.ExpensesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExpensesLabel.ForeColor = System.Drawing.Color.White;
+            this.ExpensesLabel.Location = new System.Drawing.Point(30, 289);
+            this.ExpensesLabel.Name = "ExpensesLabel";
+            this.ExpensesLabel.Size = new System.Drawing.Size(114, 26);
+            this.ExpensesLabel.TabIndex = 13;
+            this.ExpensesLabel.Text = "Expenses:";
             // 
             // label1
             // 
@@ -335,14 +343,80 @@
             title2.Text = "Month Totals";
             this.monthChart.Titles.Add(title2);
             // 
-            // yearComboBox
+            // YearComboBox
             // 
-            this.yearComboBox.FormattingEnabled = true;
-            this.yearComboBox.Location = new System.Drawing.Point(79, 549);
-            this.yearComboBox.Name = "yearComboBox";
-            this.yearComboBox.Size = new System.Drawing.Size(75, 21);
-            this.yearComboBox.TabIndex = 17;
-            this.yearComboBox.SelectedIndexChanged += new System.EventHandler(this.yearComboBox_SelectedIndexChanged);
+            this.YearComboBox.FormattingEnabled = true;
+            this.YearComboBox.Location = new System.Drawing.Point(80, 458);
+            this.YearComboBox.Name = "YearComboBox";
+            this.YearComboBox.Size = new System.Drawing.Size(93, 21);
+            this.YearComboBox.TabIndex = 17;
+            this.YearComboBox.SelectedIndexChanged += new System.EventHandler(this.YearComboBox_SelectedIndexChanged);
+            // 
+            // YearExpensesValue
+            // 
+            this.YearExpensesValue.AutoSize = true;
+            this.YearExpensesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearExpensesValue.ForeColor = System.Drawing.Color.White;
+            this.YearExpensesValue.Location = new System.Drawing.Point(814, 542);
+            this.YearExpensesValue.Name = "YearExpensesValue";
+            this.YearExpensesValue.Size = new System.Drawing.Size(120, 26);
+            this.YearExpensesValue.TabIndex = 23;
+            this.YearExpensesValue.Text = "000000000";
+            // 
+            // YearExpensesLabel
+            // 
+            this.YearExpensesLabel.AutoSize = true;
+            this.YearExpensesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearExpensesLabel.ForeColor = System.Drawing.Color.White;
+            this.YearExpensesLabel.Location = new System.Drawing.Point(641, 542);
+            this.YearExpensesLabel.Name = "YearExpensesLabel";
+            this.YearExpensesLabel.Size = new System.Drawing.Size(167, 26);
+            this.YearExpensesLabel.TabIndex = 22;
+            this.YearExpensesLabel.Text = "Year Expenses:";
+            // 
+            // YearTotalValue
+            // 
+            this.YearTotalValue.AutoSize = true;
+            this.YearTotalValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearTotalValue.ForeColor = System.Drawing.Color.White;
+            this.YearTotalValue.Location = new System.Drawing.Point(814, 458);
+            this.YearTotalValue.Name = "YearTotalValue";
+            this.YearTotalValue.Size = new System.Drawing.Size(120, 26);
+            this.YearTotalValue.TabIndex = 21;
+            this.YearTotalValue.Text = "000000000";
+            // 
+            // YearIncomeValue
+            // 
+            this.YearIncomeValue.AutoSize = true;
+            this.YearIncomeValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearIncomeValue.ForeColor = System.Drawing.Color.White;
+            this.YearIncomeValue.Location = new System.Drawing.Point(814, 500);
+            this.YearIncomeValue.Name = "YearIncomeValue";
+            this.YearIncomeValue.Size = new System.Drawing.Size(120, 26);
+            this.YearIncomeValue.TabIndex = 19;
+            this.YearIncomeValue.Text = "000000000";
+            // 
+            // YearIncomeLabel
+            // 
+            this.YearIncomeLabel.AutoSize = true;
+            this.YearIncomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearIncomeLabel.ForeColor = System.Drawing.Color.White;
+            this.YearIncomeLabel.Location = new System.Drawing.Point(665, 500);
+            this.YearIncomeLabel.Name = "YearIncomeLabel";
+            this.YearIncomeLabel.Size = new System.Drawing.Size(143, 26);
+            this.YearIncomeLabel.TabIndex = 18;
+            this.YearIncomeLabel.Text = "Year Income:";
+            // 
+            // YearTotalLabel
+            // 
+            this.YearTotalLabel.AutoSize = true;
+            this.YearTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearTotalLabel.ForeColor = System.Drawing.Color.White;
+            this.YearTotalLabel.Location = new System.Drawing.Point(690, 458);
+            this.YearTotalLabel.Name = "YearTotalLabel";
+            this.YearTotalLabel.Size = new System.Drawing.Size(118, 26);
+            this.YearTotalLabel.TabIndex = 20;
+            this.YearTotalLabel.Text = "Year Total:";
             // 
             // BudgetApp
             // 
@@ -351,23 +425,29 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(984, 811);
-            this.Controls.Add(this.yearComboBox);
+            this.Controls.Add(this.YearExpensesValue);
+            this.Controls.Add(this.YearExpensesLabel);
+            this.Controls.Add(this.YearTotalValue);
+            this.Controls.Add(this.YearTotalLabel);
+            this.Controls.Add(this.YearIncomeValue);
+            this.Controls.Add(this.YearIncomeLabel);
+            this.Controls.Add(this.YearComboBox);
             this.Controls.Add(this.monthChart);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.expensesValue);
-            this.Controls.Add(this.expensesLabel);
-            this.Controls.Add(this.netValue);
-            this.Controls.Add(this.netLabel);
+            this.Controls.Add(this.ExpensesValue);
+            this.Controls.Add(this.ExpensesLabel);
+            this.Controls.Add(this.NetValue);
+            this.Controls.Add(this.NetLabel);
             this.Controls.Add(this.titleLabel);
-            this.Controls.Add(this.incomeValue);
-            this.Controls.Add(this.incomeLabel);
-            this.Controls.Add(this.SortByDatebtn);
+            this.Controls.Add(this.IncomeValue);
+            this.Controls.Add(this.IncomeLabel);
+            this.Controls.Add(this.PopulateLabelsBtn);
             this.Controls.Add(this.toLabel);
             this.Controls.Add(this.fromLabel);
-            this.Controls.Add(this.toDateTimePicker);
-            this.Controls.Add(this.fromDateTimePicker);
+            this.Controls.Add(this.ToDateTimePicker);
+            this.Controls.Add(this.FromDateTimePicker);
             this.Controls.Add(this.categoryExpencesChart);
-            this.Controls.Add(this.Importbtn);
+            this.Controls.Add(this.ImportBtn);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "BudgetApp";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -381,24 +461,30 @@
 
         #endregion
 
-        private System.Windows.Forms.Button Importbtn;
+        private System.Windows.Forms.Button ImportBtn;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.DataVisualization.Charting.Chart categoryExpencesChart;
-        private System.Windows.Forms.DateTimePicker fromDateTimePicker;
-        private System.Windows.Forms.DateTimePicker toDateTimePicker;
+        private System.Windows.Forms.DateTimePicker FromDateTimePicker;
+        private System.Windows.Forms.DateTimePicker ToDateTimePicker;
         private System.Windows.Forms.Label fromLabel;
         private System.Windows.Forms.Label toLabel;
-        private System.Windows.Forms.Button SortByDatebtn;
-        private System.Windows.Forms.Label incomeLabel;
-        private System.Windows.Forms.Label incomeValue;
+        private System.Windows.Forms.Button PopulateLabelsBtn;
+        private System.Windows.Forms.Label IncomeLabel;
+        private System.Windows.Forms.Label IncomeValue;
         private System.Windows.Forms.Label titleLabel;
-        private System.Windows.Forms.Label netValue;
-        private System.Windows.Forms.Label netLabel;
-        private System.Windows.Forms.Label expensesValue;
-        private System.Windows.Forms.Label expensesLabel;
+        private System.Windows.Forms.Label NetValue;
+        private System.Windows.Forms.Label NetLabel;
+        private System.Windows.Forms.Label ExpensesValue;
+        private System.Windows.Forms.Label ExpensesLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataVisualization.Charting.Chart monthChart;
-        private System.Windows.Forms.ComboBox yearComboBox;
+        private System.Windows.Forms.ComboBox YearComboBox;
+        private System.Windows.Forms.Label YearExpensesValue;
+        private System.Windows.Forms.Label YearExpensesLabel;
+        private System.Windows.Forms.Label YearTotalValue;
+        private System.Windows.Forms.Label YearIncomeValue;
+        private System.Windows.Forms.Label YearIncomeLabel;
+        private System.Windows.Forms.Label YearTotalLabel;
     }
 }
 

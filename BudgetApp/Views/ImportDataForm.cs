@@ -10,11 +10,13 @@ namespace BudgetApp.Views
     /// Takes data from thhe selected excel form as seperate 'Transaction' objects
     /// Allows the user to categorise each transaction, saves them to a list, Saves the finished list to the users database
     /// </summary>
+    
+    //Possibly move opening the file into this class to keep all methods private!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public partial class ImportDataForm : Form
     {
         #region Initialise variables
         private static readonly List<Transaction> transactionList = new List<Transaction>();
-        private static int listIndex = 0;
+        private static int listIndex;
 
         //Create excel objects
         private static Excel.Application xlApp;
@@ -27,7 +29,8 @@ namespace BudgetApp.Views
         {
             InitializeComponent();
 
-            //Possibly move opening the file into this class to keep all methods private!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            transactionList.Clear();
+            listIndex = 0;            
         }
 
         public void ImportData(string sFile)
@@ -57,7 +60,7 @@ namespace BudgetApp.Views
             //Display the first row from the excel for the user to view and select a category for
             DisplayNextRowLabels();
 
-            //Close and Quit excel objects
+            //Close all Excel objects now that we don't need them any more
             CleanUpExcelObjects();
         }
 
@@ -82,6 +85,7 @@ namespace BudgetApp.Views
                 }
             }
         }
+
         internal static void UpdateListCategories()
         {
             foreach(Transaction transaction in transactionList)
@@ -129,12 +133,12 @@ namespace BudgetApp.Views
             return transaction;
         }       
         
-        void ConfirmButton_Click(object sender, EventArgs e)
+        void ConfirmBtn_Click(object sender, EventArgs e)
         {
             if (listIndex < transactionList.Count)
             {
                 //Set transactions category to users selection
-                transactionList[listIndex].Category = categoryComboBox.SelectedItem.ToString();
+                transactionList[listIndex].Category = categoryComboBox.Text.ToString();//Ensure this is setting correct category with testing
 
                 //Add transaction to DataGridView
                 string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), transactionList[listIndex].Category };
@@ -157,13 +161,13 @@ namespace BudgetApp.Views
             }
         }
 
-        void CustomCategorybtn_Click(object sender, EventArgs e)
+        void CustomCategoryBtn_Click(object sender, EventArgs e)
         {
             CustomCategoryForm customCategoryForm = new CustomCategoryForm();
             customCategoryForm.Show();
         }
 
-        void FinishButton_Click(object sender, EventArgs e)
+        void FinishBtn_Click(object sender, EventArgs e)
         {
             foreach (Transaction transaction in transactionList)
             {
@@ -174,7 +178,7 @@ namespace BudgetApp.Views
             }
 
             //Reload the now updated database and Re-calculate totals
-            BudgetApp.StartUp();
+            BudgetApp.ReloadForm();
 
             Close();
         }
@@ -192,6 +196,5 @@ namespace BudgetApp.Views
             xlApp.Quit();
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
         }
-
     }
 }
