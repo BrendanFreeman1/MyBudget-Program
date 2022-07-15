@@ -22,7 +22,6 @@ namespace BudgetApp.Views
         private static Excel.Application xlApp;
         private static Excel.Workbook xlWorkBook;
         private static Excel.Worksheet xlWorkSheet;
-
         #endregion
 
         public ImportDataForm()
@@ -51,49 +50,13 @@ namespace BudgetApp.Views
                 row++;
             }
 
-            //Create the columns and headers in our DataGridView
             CreateDataGridViewColumns();
 
-            //Load Categories from database and add to our ComboBox
             PopulateCategoryComoboBox();
 
-            //Display the first row from the excel for the user to view and select a category for
             DisplayNextRowLabels();
 
-            //Close all Excel objects now that we don't need them any more
             CleanUpExcelObjects();
-        }
-
-        void CreateDataGridViewColumns()
-        {
-            for (int i = 0; i <= 3; i++)
-            {
-                DataGridViewColumn column = new DataGridViewTextBoxColumn();
-                dataGridView.Columns.Add(column);
-            }
-
-            dataGridView.Rows.Add("Date", "Description", "Value", "Category");
-        }
-
-        internal static void PopulateCategoryComoboBox()
-        {
-            foreach (Category category in SqliteDataAccess.LoadCategories())
-            {
-                if (!categoryComboBox.Items.Contains(category.Name))
-                {
-                    categoryComboBox.Items.Add(category.Name);
-                }
-            }
-        }
-
-        internal static void UpdateListCategories()
-        {
-            foreach(Transaction transaction in transactionList)
-            {
-                transaction.Category = Transaction.AutoCategorise(transaction);
-            }
-
-            categoryComboBox.SelectedItem = transactionList[listIndex].Category;
         }
 
         Transaction GetTransactionData(int row)
@@ -118,12 +81,12 @@ namespace BudgetApp.Views
             transaction.Description = xlWorkSheet.Cells[row, 2].value;
 
             //VALUE
-            if (xlWorkSheet.Cells[row, 3].value != null) 
-            { 
+            if (xlWorkSheet.Cells[row, 3].value != null)
+            {
                 transaction.Value = xlWorkSheet.Cells[row, 3].value; //Credit 
             }
-            else  
-            { 
+            else
+            {
                 transaction.Value = xlWorkSheet.Cells[row, 4].value; //Debit
             }
 
@@ -131,34 +94,67 @@ namespace BudgetApp.Views
             transaction.Category = Transaction.AutoCategorise(transaction);
 
             return transaction;
-        }       
+        }
+
+        void CreateDataGridViewColumns()
+        {
+            for (int i = 0; i <= 3; i++)
+            {
+                DataGridViewColumn column = new DataGridViewTextBoxColumn();
+                dataGridView.Columns.Add(column);
+            }
+
+            dataGridView.Rows.Add("Date", "Description", "Value", "Category");
+        }
+
+        internal static void PopulateCategoryComoboBox()
+        {
+            foreach (Category category in SqliteDataAccess.LoadCategories())
+            {
+                if (!categoryComboBox.Items.Contains(category.Name))
+                {
+                    categoryComboBox.Items.Add(category.Name);
+                }
+            }
+        }
+
+        internal static void UpdateTransactionsCategories()
+        {
+            //Update the remainder of the list with the new categorisation
+            for(int i = listIndex; i < transactionList.Count; i++)
+            {
+                transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
+            }
+            
+            //Update the category combobox text with the users new category
+            categoryComboBox.SelectedItem = transactionList[listIndex].Category;
+        }        
         
         void ConfirmBtn_Click(object sender, EventArgs e)
         {
-            if (listIndex < transactionList.Count)
+            //Ensure the list Index cant go past the length of the transactions list
+            if (listIndex < transactionList.Count - 1)
             {
                 //Set transactions category to users selection
-                transactionList[listIndex].Category = categoryComboBox.Text.ToString();//Ensure this is setting correct category with testing
+                transactionList[listIndex].Category = categoryComboBox.Text.ToString();
 
                 //Add transaction to DataGridView
                 string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), transactionList[listIndex].Category };
                 dataGridView.Rows.Add(currentRow);
 
-                //Display the next row from the excel for the user to view and select a category for
                 listIndex++;
+
+                //Display the next row from the excel for the user to view and select a category for
                 DisplayNextRowLabels();
             }
         }
 
         void DisplayNextRowLabels()
         {
-            if (listIndex < transactionList.Count)
-            {
-                dateLabel.Text = transactionList[listIndex].Date.ToString();
-                descriptionLabel.Text = transactionList[listIndex].Description;
-                valueLabel.Text = transactionList[listIndex].Value.ToString();
-                categoryComboBox.SelectedItem = transactionList[listIndex].Category;
-            }
+            dateLabel.Text = transactionList[listIndex].Date.ToString();
+            descriptionLabel.Text = transactionList[listIndex].Description;
+            valueLabel.Text = transactionList[listIndex].Value.ToString();
+            categoryComboBox.SelectedItem = transactionList[listIndex].Category;
         }
 
         void CustomCategoryBtn_Click(object sender, EventArgs e)

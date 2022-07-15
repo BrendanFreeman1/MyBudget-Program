@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.categoryComboBox = new System.Windows.Forms.ComboBox();
+            categoryComboBox = new System.Windows.Forms.ComboBox();
             this.confirmBtn = new System.Windows.Forms.Button();
             this.descriptionText = new System.Windows.Forms.Label();
             this.dateText = new System.Windows.Forms.Label();
@@ -37,7 +37,6 @@
             this.valueLabel = new System.Windows.Forms.Label();
             this.dateLabel = new System.Windows.Forms.Label();
             this.descriptionLabel = new System.Windows.Forms.Label();
-            this.Heading = new System.Windows.Forms.Label();
             this.FinishBtn = new System.Windows.Forms.Button();
             this.CustomCategoryBtn = new System.Windows.Forms.Button();
             this.CurrentTransactionLabel = new System.Windows.Forms.Label();
@@ -55,29 +54,29 @@
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView.ColumnHeadersVisible = false;
-            this.dataGridView.Location = new System.Drawing.Point(15, 133);
+            this.dataGridView.Location = new System.Drawing.Point(12, 104);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowHeadersWidth = 4;
             this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView.Size = new System.Drawing.Size(1021, 724);
+            this.dataGridView.Size = new System.Drawing.Size(1021, 711);
             this.dataGridView.TabIndex = 2;
             // 
             // categoryComboBox
             // 
-            this.categoryComboBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.categoryComboBox.FormattingEnabled = true;
-            this.categoryComboBox.Location = new System.Drawing.Point(889, 65);
-            this.categoryComboBox.Name = "categoryComboBox";
-            this.categoryComboBox.Size = new System.Drawing.Size(138, 21);
-            this.categoryComboBox.Sorted = true;
-            this.categoryComboBox.TabIndex = 3;
+            categoryComboBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            categoryComboBox.FormattingEnabled = true;
+            categoryComboBox.Location = new System.Drawing.Point(896, 42);
+            categoryComboBox.Name = "categoryComboBox";
+            categoryComboBox.Size = new System.Drawing.Size(138, 21);
+            categoryComboBox.Sorted = true;
+            categoryComboBox.TabIndex = 3;
             // 
             // confirmBtn
             // 
             this.confirmBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.confirmBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.confirmBtn.Location = new System.Drawing.Point(889, 98);
+            this.confirmBtn.Location = new System.Drawing.Point(895, 69);
             this.confirmBtn.Name = "confirmBtn";
             this.confirmBtn.Size = new System.Drawing.Size(138, 29);
             this.confirmBtn.TabIndex = 4;
@@ -124,7 +123,7 @@
             this.valueLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.valueLabel.AutoSize = true;
             this.valueLabel.ForeColor = System.Drawing.Color.Snow;
-            this.valueLabel.Location = new System.Drawing.Point(815, 73);
+            this.valueLabel.Location = new System.Drawing.Point(821, 50);
             this.valueLabel.Name = "valueLabel";
             this.valueLabel.Size = new System.Drawing.Size(68, 13);
             this.valueLabel.TabIndex = 12;
@@ -136,7 +135,7 @@
             this.dateLabel.AutoSize = true;
             this.dateLabel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dateLabel.ForeColor = System.Drawing.Color.Snow;
-            this.dateLabel.Location = new System.Drawing.Point(21, 73);
+            this.dateLabel.Location = new System.Drawing.Point(18, 50);
             this.dateLabel.Name = "dateLabel";
             this.dateLabel.Size = new System.Drawing.Size(64, 13);
             this.dateLabel.TabIndex = 11;
@@ -147,29 +146,17 @@
             this.descriptionLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.ForeColor = System.Drawing.Color.Snow;
-            this.descriptionLabel.Location = new System.Drawing.Point(160, 73);
+            this.descriptionLabel.Location = new System.Drawing.Point(157, 50);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(94, 13);
             this.descriptionLabel.TabIndex = 10;
             this.descriptionLabel.Text = "CurrentDescription";
             // 
-            // Heading
-            // 
-            this.Heading.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.Heading.AutoSize = true;
-            this.Heading.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Heading.ForeColor = System.Drawing.Color.Snow;
-            this.Heading.Location = new System.Drawing.Point(273, 9);
-            this.Heading.Name = "Heading";
-            this.Heading.Size = new System.Drawing.Size(501, 20);
-            this.Heading.TabIndex = 13;
-            this.Heading.Text = "Please select a Category for the current transaction and click \'Confirm\'";
-            // 
             // FinishBtn
             // 
-            this.FinishBtn.Location = new System.Drawing.Point(889, 894);
+            this.FinishBtn.Location = new System.Drawing.Point(895, 821);
             this.FinishBtn.Name = "FinishBtn";
-            this.FinishBtn.Size = new System.Drawing.Size(138, 21);
+            this.FinishBtn.Size = new System.Drawing.Size(138, 23);
             this.FinishBtn.TabIndex = 14;
             this.FinishBtn.Text = "Finish";
             this.FinishBtn.UseVisualStyleBackColor = true;
@@ -177,7 +164,7 @@
             // 
             // CustomCategoryBtn
             // 
-            this.CustomCategoryBtn.Location = new System.Drawing.Point(889, 864);
+            this.CustomCategoryBtn.Location = new System.Drawing.Point(751, 821);
             this.CustomCategoryBtn.Name = "CustomCategoryBtn";
             this.CustomCategoryBtn.Size = new System.Drawing.Size(138, 23);
             this.CustomCategoryBtn.TabIndex = 15;
@@ -192,7 +179,7 @@
             this.CurrentTransactionLabel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.CurrentTransactionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CurrentTransactionLabel.ForeColor = System.Drawing.Color.Snow;
-            this.CurrentTransactionLabel.Location = new System.Drawing.Point(21, 39);
+            this.CurrentTransactionLabel.Location = new System.Drawing.Point(17, 14);
             this.CurrentTransactionLabel.Name = "CurrentTransactionLabel";
             this.CurrentTransactionLabel.Size = new System.Drawing.Size(153, 20);
             this.CurrentTransactionLabel.TabIndex = 16;
@@ -205,11 +192,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ClientSize = new System.Drawing.Size(1046, 927);
+            this.ClientSize = new System.Drawing.Size(1046, 853);
             this.Controls.Add(this.CurrentTransactionLabel);
             this.Controls.Add(this.CustomCategoryBtn);
             this.Controls.Add(this.FinishBtn);
-            this.Controls.Add(this.Heading);
             this.Controls.Add(this.valueLabel);
             this.Controls.Add(this.dateLabel);
             this.Controls.Add(this.descriptionLabel);
@@ -217,7 +203,7 @@
             this.Controls.Add(this.dateText);
             this.Controls.Add(this.descriptionText);
             this.Controls.Add(this.confirmBtn);
-            this.Controls.Add(this.categoryComboBox);
+            this.Controls.Add(categoryComboBox);
             this.Controls.Add(this.dataGridView);
             this.Name = "ImportDataForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -238,10 +224,9 @@
         private System.Windows.Forms.Label valueLabel;
         private System.Windows.Forms.Label dateLabel;
         private System.Windows.Forms.Label descriptionLabel;
-        private System.Windows.Forms.Label Heading;
         private System.Windows.Forms.Button FinishBtn;
         private System.Windows.Forms.Button CustomCategoryBtn;
         private System.Windows.Forms.Label CurrentTransactionLabel;
-        private System.Windows.Forms.ComboBox categoryComboBox;
+        private static System.Windows.Forms.ComboBox categoryComboBox;
     }
 }

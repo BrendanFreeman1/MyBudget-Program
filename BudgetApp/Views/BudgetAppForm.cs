@@ -125,7 +125,9 @@ namespace BudgetApp
         void PopulateMonthBarGraph()
         {
             //Clear values from the chart
-            monthChart.Series["Month Totals"].Points.Clear();
+            monthChart.Series["Income"].Points.Clear();
+            monthChart.Series["Expenses"].Points.Clear();
+            monthChart.Series["Net"].Points.Clear();
 
             //For each month add the month and the total expenses to the chart
             for (int i=1; i<=12; i++)
@@ -134,7 +136,13 @@ namespace BudgetApp
                 DateTime monthStart = new DateTime(int.Parse(YearComboBox.Text), i, 1);
                 DateTime monthEnd = monthStart.AddMonths(1).AddDays(-1); //Get the 1st of the next month, then subtract 1 day
 
-                monthChart.Series["Month Totals"].Points.AddXY(month, Transaction.Total(transactionsList, monthStart, monthEnd, null));
+                double monthIncome = Transaction.Total(transactionsList, monthStart, monthEnd, "Income");
+                double monthExpenses = Transaction.Total(transactionsList, monthStart, monthEnd, null) - monthIncome;
+                double monthNet = monthIncome + monthExpenses;
+
+                monthChart.Series["Income"].Points.AddXY(month, monthIncome);
+                monthChart.Series["Expenses"].Points.AddY(monthExpenses);
+                monthChart.Series["Net"].Points.AddY(monthNet);
             }
         }
 
@@ -162,14 +170,13 @@ namespace BudgetApp
 
         void PopulateLabelsBtn_Click(object sender, EventArgs e)
         {
-
             PopulateCategoryBarGraph();
 
             double income = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, "Income");
             double expenses = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, null) - income;
 
             IncomeValue.Text = income.ToString("0.##");
-            ExpensesValue.Text = expenses.ToString("0.##");
+            ExpensesValue.Text = (expenses*-1).ToString("0.##");
             NetValue.Text = (expenses + income).ToString("0.##");
         }
 
@@ -184,7 +191,7 @@ namespace BudgetApp
             double expenses = Transaction.Total(transactionsList, yearStart, yearEnd, null) - income;
 
             YearIncomeValue.Text = income.ToString("0.##");
-            YearExpensesValue.Text = expenses.ToString("0.##");
+            YearExpensesValue.Text = (expenses*-1).ToString("0.##");
             YearTotalValue.Text = (expenses + income).ToString("0.##");
         }
     }
