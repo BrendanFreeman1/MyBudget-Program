@@ -125,15 +125,16 @@ namespace BudgetApp.Views
             {
                 transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
             }
-            
+
+            if(listIndex >= transactionList.Count) { listIndex = transactionList.Count - 2; }
+
             //Update the category combobox text with the users new category
             categoryComboBox.SelectedItem = transactionList[listIndex].Category;
         }        
         
         void ConfirmBtn_Click(object sender, EventArgs e)
         {
-            //Ensure the list Index cant go past the length of the transactions list
-            if (listIndex < transactionList.Count - 1)
+            if (listIndex < transactionList.Count)
             {
                 //Set transactions category to users selection
                 transactionList[listIndex].Category = categoryComboBox.Text.ToString();
@@ -147,14 +148,18 @@ namespace BudgetApp.Views
                 //Display the next row from the excel for the user to view and select a category for
                 DisplayNextRowLabels();
             }
+
         }
 
         void DisplayNextRowLabels()
         {
-            dateLabel.Text = transactionList[listIndex].Date.ToString();
-            descriptionLabel.Text = transactionList[listIndex].Description;
-            valueLabel.Text = transactionList[listIndex].Value.ToString();
-            categoryComboBox.SelectedItem = transactionList[listIndex].Category;
+            if (listIndex < transactionList.Count)
+            {
+                dateLabel.Text = transactionList[listIndex].Date.ToString();
+                descriptionLabel.Text = transactionList[listIndex].Description;
+                valueLabel.Text = transactionList[listIndex].Value.ToString();
+                categoryComboBox.SelectedItem = transactionList[listIndex].Category;
+            }
         }
 
         void CustomCategoryBtn_Click(object sender, EventArgs e)
