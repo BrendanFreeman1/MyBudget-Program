@@ -161,7 +161,6 @@ namespace BudgetApp
                 {
                     ImportDataForm importDataForm = new ImportDataForm();
                     importDataForm.Show();
-
                     importDataForm.ImportData(openFileDialog.FileName);
                 }
             }

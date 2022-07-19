@@ -77,6 +77,12 @@
     <Compile Include="Views\CustomCategoryForm.Designer.cs">
       <DependentUpon>CustomCategoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ErrorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ErrorForm.Designer.cs">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImportDataForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\CustomCategoryForm.resx">
       <DependentUpon>CustomCategoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ErrorForm.resx">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ImportDataForm.resx">
       <DependentUpon>ImportDataForm.cs</DependentUpon>

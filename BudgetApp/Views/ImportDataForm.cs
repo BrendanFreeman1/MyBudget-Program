@@ -42,12 +42,25 @@ namespace BudgetApp.Views
             xlWorkBook = xlApp.Workbooks.Open(sFile); //Workbook to open the excel file
             xlWorkSheet = xlWorkBook.ActiveSheet; //Gets the excels active sheet   
 
-            //While there are still rows in the excel with data
-            while (xlWorkSheet.Cells[row, 1].value != null)
+            try
             {
-                transactionList.Add(GetTransactionData(row));
+                //While there are still rows in the excel with data
+                while (xlWorkSheet.Cells[row, 1].value != null)
+                {
+                    transactionList.Add(GetTransactionData(row));
 
-                row++;
+                    row++;
+                }
+
+            }
+            catch (System.FormatException) 
+            {
+                Close();
+
+                ErrorForm errorForm = new ErrorForm();
+                errorForm.Show();
+
+                errorForm.ErrorMessage("Please select a file with the correct format.");
             }
 
             CreateDataGridViewColumns();
@@ -137,7 +150,7 @@ namespace BudgetApp.Views
             if (listIndex < transactionList.Count)
             {
                 //Set transactions category to users selection
-                transactionList[listIndex].Category = categoryComboBox.Text.ToString();
+                transactionList[listIndex].Category = categoryComboBox.Text;
 
                 //Add transaction to DataGridView
                 string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), transactionList[listIndex].Category };
@@ -196,6 +209,14 @@ namespace BudgetApp.Views
 
             xlApp.Quit();
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
+        }
+
+        private void Updatebtn_Click(object sender, EventArgs e)
+        {
+            int row = dataGridView.CurrentCell.RowIndex;
+
+            transactionList[row-1].Category = categoryComboBox.Text;
+            dataGridView.CurrentCell.Value = transactionList[row-1].Category;
         }
     }
 }
