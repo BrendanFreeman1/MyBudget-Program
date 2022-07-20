@@ -35,7 +35,7 @@
             // 
             this.ErrorLabel.AutoSize = true;
             this.ErrorLabel.ForeColor = System.Drawing.Color.White;
-            this.ErrorLabel.Location = new System.Drawing.Point(84, 54);
+            this.ErrorLabel.Location = new System.Drawing.Point(75, 54);
             this.ErrorLabel.Name = "ErrorLabel";
             this.ErrorLabel.Size = new System.Drawing.Size(0, 13);
             this.ErrorLabel.TabIndex = 0;
@@ -45,7 +45,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(361, 189);
+            this.ClientSize = new System.Drawing.Size(361, 126);
             this.Controls.Add(this.ErrorLabel);
             this.Name = "ErrorForm";
             this.Text = "ErrorForm";

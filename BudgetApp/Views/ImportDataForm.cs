@@ -114,8 +114,15 @@ namespace BudgetApp.Views
             for (int i = 0; i <= 3; i++)
             {
                 DataGridViewColumn column = new DataGridViewTextBoxColumn();
+                if (i == 0) column.Width = 130;
+                if (i == 1) column.Width = 680;
+                if (i == 2) column.Width = 70;
+                if (i == 3) column.Width = 135;
                 dataGridView.Columns.Add(column);
             }
+
+
+
 
             dataGridView.Rows.Add("Date", "Description", "Value", "Category");
         }
@@ -217,6 +224,11 @@ namespace BudgetApp.Views
 
             transactionList[row-1].Category = categoryComboBox.Text;
             dataGridView.CurrentCell.Value = transactionList[row-1].Category;
+        }
+
+        private void descriptionLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

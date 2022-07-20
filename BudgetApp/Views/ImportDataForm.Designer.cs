@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView = new System.Windows.Forms.DataGridView();
             categoryComboBox = new System.Windows.Forms.ComboBox();
             this.confirmBtn = new System.Windows.Forms.Button();
             this.descriptionText = new System.Windows.Forms.Label();
@@ -41,30 +40,9 @@
             this.CustomCategoryBtn = new System.Windows.Forms.Button();
             this.CurrentTransactionLabel = new System.Windows.Forms.Label();
             this.Updatebtn = new System.Windows.Forms.Button();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dataGridView
-            // 
-            this.dataGridView.AllowUserToAddRows = false;
-            this.dataGridView.AllowUserToDeleteRows = false;
-            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.ColumnHeadersVisible = false;
-            this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView.Location = new System.Drawing.Point(12, 104);
-            this.dataGridView.MultiSelect = false;
-            this.dataGridView.Name = "dataGridView";
-            this.dataGridView.ReadOnly = true;
-            this.dataGridView.RowHeadersWidth = 4;
-            this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView.Size = new System.Drawing.Size(1021, 711);
-            this.dataGridView.TabIndex = 2;
             // 
             // categoryComboBox
             // 
@@ -80,9 +58,9 @@
             // 
             this.confirmBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.confirmBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.confirmBtn.Location = new System.Drawing.Point(896, 69);
+            this.confirmBtn.Location = new System.Drawing.Point(896, 12);
             this.confirmBtn.Name = "confirmBtn";
-            this.confirmBtn.Size = new System.Drawing.Size(138, 29);
+            this.confirmBtn.Size = new System.Drawing.Size(138, 24);
             this.confirmBtn.TabIndex = 4;
             this.confirmBtn.Text = "Confirm";
             this.confirmBtn.UseVisualStyleBackColor = true;
@@ -127,7 +105,7 @@
             this.valueLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.valueLabel.AutoSize = true;
             this.valueLabel.ForeColor = System.Drawing.Color.Snow;
-            this.valueLabel.Location = new System.Drawing.Point(821, 45);
+            this.valueLabel.Location = new System.Drawing.Point(828, 50);
             this.valueLabel.Name = "valueLabel";
             this.valueLabel.Size = new System.Drawing.Size(68, 13);
             this.valueLabel.TabIndex = 12;
@@ -139,7 +117,7 @@
             this.dateLabel.AutoSize = true;
             this.dateLabel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dateLabel.ForeColor = System.Drawing.Color.Snow;
-            this.dateLabel.Location = new System.Drawing.Point(18, 45);
+            this.dateLabel.Location = new System.Drawing.Point(18, 50);
             this.dateLabel.Name = "dateLabel";
             this.dateLabel.Size = new System.Drawing.Size(64, 13);
             this.dateLabel.TabIndex = 11;
@@ -150,11 +128,12 @@
             this.descriptionLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.ForeColor = System.Drawing.Color.Snow;
-            this.descriptionLabel.Location = new System.Drawing.Point(151, 45);
+            this.descriptionLabel.Location = new System.Drawing.Point(150, 50);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(94, 13);
             this.descriptionLabel.TabIndex = 10;
             this.descriptionLabel.Text = "CurrentDescription";
+            this.descriptionLabel.Click += new System.EventHandler(this.descriptionLabel_Click);
             // 
             // FinishBtn
             // 
@@ -201,6 +180,29 @@
             this.Updatebtn.UseVisualStyleBackColor = true;
             this.Updatebtn.Click += new System.EventHandler(this.Updatebtn_Click);
             // 
+            // dataGridView
+            // 
+            this.dataGridView.AllowUserToAddRows = false;
+            this.dataGridView.AllowUserToDeleteRows = false;
+            this.dataGridView.AllowUserToResizeColumns = false;
+            this.dataGridView.AllowUserToResizeRows = false;
+            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.ColumnHeadersVisible = false;
+            this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridView.Location = new System.Drawing.Point(12, 82);
+            this.dataGridView.MultiSelect = false;
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.ReadOnly = true;
+            this.dataGridView.RowHeadersWidth = 4;
+            this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridView.Size = new System.Drawing.Size(1021, 733);
+            this.dataGridView.TabIndex = 2;
+            // 
             // ImportDataForm
             // 
             this.AcceptButton = this.confirmBtn;
@@ -232,8 +234,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Button confirmBtn;
         private System.Windows.Forms.Label descriptionText;
         private System.Windows.Forms.Label dateText;
@@ -245,6 +245,7 @@
         private System.Windows.Forms.Button CustomCategoryBtn;
         private System.Windows.Forms.Label CurrentTransactionLabel;
         private System.Windows.Forms.Button Updatebtn;
+        private System.Windows.Forms.DataGridView dataGridView;
         private static System.Windows.Forms.ComboBox categoryComboBox;
     }
 }

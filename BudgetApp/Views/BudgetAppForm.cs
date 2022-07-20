@@ -139,6 +139,10 @@ namespace BudgetApp
                 double monthExpenses = Transaction.Total(transactionsList, monthStart, monthEnd, null) - monthIncome;
                 double monthNet = monthIncome + monthExpenses;
 
+                //Limit the chart to positive numbers
+                if(monthNet < 0) monthNet = 0;
+                monthExpenses *= -1;
+
                 monthChart.Series["Income"].Points.AddXY(month, monthIncome);
                 monthChart.Series["Expenses"].Points.AddY(monthExpenses);
                 monthChart.Series["Net"].Points.AddY(monthNet);

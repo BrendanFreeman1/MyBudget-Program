@@ -67,7 +67,7 @@
             // 
             // ImportBtn
             // 
-            this.ImportBtn.Location = new System.Drawing.Point(827, 63);
+            this.ImportBtn.Location = new System.Drawing.Point(929, 66);
             this.ImportBtn.Name = "ImportBtn";
             this.ImportBtn.Size = new System.Drawing.Size(145, 23);
             this.ImportBtn.TabIndex = 0;
@@ -88,12 +88,20 @@
             this.categoryExpencesChart.BorderSkin.BorderColor = System.Drawing.Color.Transparent;
             this.categoryExpencesChart.BorderSkin.BorderWidth = 0;
             this.categoryExpencesChart.BorderSkin.PageColor = System.Drawing.Color.Transparent;
+            chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
             chartArea1.AxisX.LabelStyle.ForeColor = System.Drawing.Color.White;
-            chartArea1.AxisX.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.LabelStyle.Interval = 0D;
+            chartArea1.AxisX.LabelStyle.IntervalOffset = 0D;
+            chartArea1.AxisX.LabelStyle.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisX.LabelStyle.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisX.LineColor = System.Drawing.Color.Empty;
+            chartArea1.AxisX.MajorGrid.Interval = 0D;
+            chartArea1.AxisX.MajorGrid.IntervalOffset = 0D;
+            chartArea1.AxisX.MajorGrid.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
+            chartArea1.AxisX.MajorGrid.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
             chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisX.MajorTickMark.Enabled = false;
             chartArea1.AxisX.MajorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea1.AxisX.MajorTickMark.Size = 0F;
-            chartArea1.AxisX.MajorTickMark.TickMarkStyle = System.Windows.Forms.DataVisualization.Charting.TickMarkStyle.None;
             chartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.White;
             chartArea1.AxisX.MinorTickMark.LineColor = System.Drawing.Color.White;
             chartArea1.AxisX.TitleForeColor = System.Drawing.Color.White;
@@ -107,6 +115,7 @@
             chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.White;
             chartArea1.AxisY.LineColor = System.Drawing.Color.White;
             chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.White;
+            chartArea1.AxisY.MajorTickMark.Enabled = false;
             chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.White;
             chartArea1.AxisY.MinorGrid.LineColor = System.Drawing.Color.White;
             chartArea1.AxisY.MinorTickMark.LineColor = System.Drawing.Color.White;
@@ -118,30 +127,24 @@
             chartArea1.AxisY2.MinorGrid.LineColor = System.Drawing.Color.White;
             chartArea1.AxisY2.MinorTickMark.LineColor = System.Drawing.Color.White;
             chartArea1.AxisY2.TitleForeColor = System.Drawing.Color.White;
-            chartArea1.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.BackImageTransparentColor = System.Drawing.Color.Transparent;
-            chartArea1.BackSecondaryColor = System.Drawing.Color.Transparent;
-            chartArea1.BorderColor = System.Drawing.Color.Transparent;
-            chartArea1.BorderWidth = 0;
+            chartArea1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
+            chartArea1.BorderColor = System.Drawing.Color.Empty;
             chartArea1.Name = "ChartArea1";
             this.categoryExpencesChart.ChartAreas.Add(chartArea1);
-            this.categoryExpencesChart.Location = new System.Drawing.Point(267, 92);
+            this.categoryExpencesChart.Location = new System.Drawing.Point(-38, 162);
             this.categoryExpencesChart.Name = "categoryExpencesChart";
             this.categoryExpencesChart.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            series1.BackSecondaryColor = System.Drawing.Color.Transparent;
-            series1.BorderColor = System.Drawing.Color.Transparent;
-            series1.BorderWidth = 0;
             series1.ChartArea = "ChartArea1";
-            series1.Color = System.Drawing.Color.White;
             series1.CustomProperties = "CollectedColor=Black";
             series1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             series1.IsVisibleInLegend = false;
+            series1.IsXValueIndexed = true;
             series1.LabelForeColor = System.Drawing.Color.Empty;
             series1.MarkerColor = System.Drawing.Color.White;
             series1.Name = "Category Totals";
             series1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.BrightPastel;
             this.categoryExpencesChart.Series.Add(series1);
-            this.categoryExpencesChart.Size = new System.Drawing.Size(705, 271);
+            this.categoryExpencesChart.Size = new System.Drawing.Size(1137, 335);
             this.categoryExpencesChart.TabIndex = 2;
             title1.Alignment = System.Drawing.ContentAlignment.TopCenter;
             title1.BackColor = System.Drawing.Color.Transparent;
@@ -154,7 +157,7 @@
             // FromDateTimePicker
             // 
             this.FromDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.FromDateTimePicker.Location = new System.Drawing.Point(22, 66);
+            this.FromDateTimePicker.Location = new System.Drawing.Point(12, 66);
             this.FromDateTimePicker.Name = "FromDateTimePicker";
             this.FromDateTimePicker.Size = new System.Drawing.Size(96, 20);
             this.FromDateTimePicker.TabIndex = 3;
@@ -162,7 +165,7 @@
             // ToDateTimePicker
             // 
             this.ToDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.ToDateTimePicker.Location = new System.Drawing.Point(134, 66);
+            this.ToDateTimePicker.Location = new System.Drawing.Point(114, 66);
             this.ToDateTimePicker.Name = "ToDateTimePicker";
             this.ToDateTimePicker.Size = new System.Drawing.Size(96, 20);
             this.ToDateTimePicker.TabIndex = 4;
@@ -172,7 +175,7 @@
             this.fromLabel.AutoSize = true;
             this.fromLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fromLabel.ForeColor = System.Drawing.Color.White;
-            this.fromLabel.Location = new System.Drawing.Point(47, 46);
+            this.fromLabel.Location = new System.Drawing.Point(36, 46);
             this.fromLabel.Name = "fromLabel";
             this.fromLabel.Size = new System.Drawing.Size(40, 17);
             this.fromLabel.TabIndex = 5;
@@ -183,7 +186,7 @@
             this.toLabel.AutoSize = true;
             this.toLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toLabel.ForeColor = System.Drawing.Color.White;
-            this.toLabel.Location = new System.Drawing.Point(173, 46);
+            this.toLabel.Location = new System.Drawing.Point(148, 46);
             this.toLabel.Name = "toLabel";
             this.toLabel.Size = new System.Drawing.Size(25, 17);
             this.toLabel.TabIndex = 6;
@@ -191,7 +194,7 @@
             // 
             // PopulateLabelsBtn
             // 
-            this.PopulateLabelsBtn.Location = new System.Drawing.Point(247, 66);
+            this.PopulateLabelsBtn.Location = new System.Drawing.Point(216, 66);
             this.PopulateLabelsBtn.Name = "PopulateLabelsBtn";
             this.PopulateLabelsBtn.Size = new System.Drawing.Size(56, 20);
             this.PopulateLabelsBtn.TabIndex = 7;
@@ -202,22 +205,22 @@
             // IncomeLabel
             // 
             this.IncomeLabel.AutoSize = true;
-            this.IncomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IncomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.IncomeLabel.ForeColor = System.Drawing.Color.White;
-            this.IncomeLabel.Location = new System.Drawing.Point(54, 178);
+            this.IncomeLabel.Location = new System.Drawing.Point(898, 151);
             this.IncomeLabel.Name = "IncomeLabel";
-            this.IncomeLabel.Size = new System.Drawing.Size(90, 26);
+            this.IncomeLabel.Size = new System.Drawing.Size(78, 24);
             this.IncomeLabel.TabIndex = 8;
             this.IncomeLabel.Text = "Income:";
             // 
             // IncomeValue
             // 
             this.IncomeValue.AutoSize = true;
-            this.IncomeValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.IncomeValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.IncomeValue.ForeColor = System.Drawing.Color.White;
-            this.IncomeValue.Location = new System.Drawing.Point(150, 178);
+            this.IncomeValue.Location = new System.Drawing.Point(982, 151);
             this.IncomeValue.Name = "IncomeValue";
-            this.IncomeValue.Size = new System.Drawing.Size(120, 26);
+            this.IncomeValue.Size = new System.Drawing.Size(100, 24);
             this.IncomeValue.TabIndex = 9;
             this.IncomeValue.Text = "000000000";
             // 
@@ -227,7 +230,7 @@
             this.titleLabel.AutoSize = true;
             this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLabel.ForeColor = System.Drawing.Color.White;
-            this.titleLabel.Location = new System.Drawing.Point(413, 9);
+            this.titleLabel.Location = new System.Drawing.Point(466, 9);
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(168, 37);
             this.titleLabel.TabIndex = 10;
@@ -236,44 +239,44 @@
             // NetValue
             // 
             this.NetValue.AutoSize = true;
-            this.NetValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NetValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NetValue.ForeColor = System.Drawing.Color.White;
-            this.NetValue.Location = new System.Drawing.Point(150, 136);
+            this.NetValue.Location = new System.Drawing.Point(982, 127);
             this.NetValue.Name = "NetValue";
-            this.NetValue.Size = new System.Drawing.Size(120, 26);
+            this.NetValue.Size = new System.Drawing.Size(100, 24);
             this.NetValue.TabIndex = 12;
             this.NetValue.Text = "000000000";
             // 
             // NetLabel
             // 
             this.NetLabel.AutoSize = true;
-            this.NetLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NetLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NetLabel.ForeColor = System.Drawing.Color.White;
-            this.NetLabel.Location = new System.Drawing.Point(92, 136);
+            this.NetLabel.Location = new System.Drawing.Point(932, 127);
             this.NetLabel.Name = "NetLabel";
-            this.NetLabel.Size = new System.Drawing.Size(52, 26);
+            this.NetLabel.Size = new System.Drawing.Size(44, 24);
             this.NetLabel.TabIndex = 11;
             this.NetLabel.Text = "Net:";
             // 
             // ExpensesValue
             // 
             this.ExpensesValue.AutoSize = true;
-            this.ExpensesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExpensesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExpensesValue.ForeColor = System.Drawing.Color.White;
-            this.ExpensesValue.Location = new System.Drawing.Point(150, 220);
+            this.ExpensesValue.Location = new System.Drawing.Point(982, 175);
             this.ExpensesValue.Name = "ExpensesValue";
-            this.ExpensesValue.Size = new System.Drawing.Size(120, 26);
+            this.ExpensesValue.Size = new System.Drawing.Size(100, 24);
             this.ExpensesValue.TabIndex = 14;
             this.ExpensesValue.Text = "000000000";
             // 
             // ExpensesLabel
             // 
             this.ExpensesLabel.AutoSize = true;
-            this.ExpensesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExpensesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ExpensesLabel.ForeColor = System.Drawing.Color.White;
-            this.ExpensesLabel.Location = new System.Drawing.Point(30, 220);
+            this.ExpensesLabel.Location = new System.Drawing.Point(876, 175);
             this.ExpensesLabel.Name = "ExpensesLabel";
-            this.ExpensesLabel.Size = new System.Drawing.Size(114, 26);
+            this.ExpensesLabel.Size = new System.Drawing.Size(100, 24);
             this.ExpensesLabel.TabIndex = 13;
             this.ExpensesLabel.Text = "Expenses:";
             // 
@@ -281,13 +284,13 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(-22, 350);
+            this.label1.Location = new System.Drawing.Point(-10, 484);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(1015, 13);
+            this.label1.Size = new System.Drawing.Size(1123, 13);
             this.label1.TabIndex = 15;
             this.label1.Text = "_________________________________________________________________________________" +
     "________________________________________________________________________________" +
-    "_______";
+    "_________________________";
             // 
             // monthChart
             // 
@@ -326,7 +329,7 @@
             chartArea2.AxisY2.MajorTickMark.LineColor = System.Drawing.Color.White;
             chartArea2.AxisY2.MinorGrid.LineColor = System.Drawing.Color.White;
             chartArea2.AxisY2.MinorTickMark.LineColor = System.Drawing.Color.White;
-            chartArea2.BackColor = System.Drawing.Color.Transparent;
+            chartArea2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
             chartArea2.BorderColor = System.Drawing.Color.Empty;
             chartArea2.BorderWidth = 0;
             chartArea2.Name = "ChartArea1";
@@ -338,7 +341,7 @@
             legend1.TitleBackColor = System.Drawing.Color.Transparent;
             legend1.TitleForeColor = System.Drawing.Color.White;
             this.monthChart.Legends.Add(legend1);
-            this.monthChart.Location = new System.Drawing.Point(12, 480);
+            this.monthChart.Location = new System.Drawing.Point(-38, 566);
             this.monthChart.Name = "monthChart";
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
@@ -356,19 +359,19 @@
             this.monthChart.Series.Add(series2);
             this.monthChart.Series.Add(series3);
             this.monthChart.Series.Add(series4);
-            this.monthChart.Size = new System.Drawing.Size(960, 250);
+            this.monthChart.Size = new System.Drawing.Size(1151, 397);
             this.monthChart.TabIndex = 16;
             this.monthChart.Text = "chart1";
             title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             title2.ForeColor = System.Drawing.Color.White;
             title2.Name = "MonthTotalsChart";
-            title2.Text = "Month Totals";
+            title2.Text = "Total Per Month";
             this.monthChart.Titles.Add(title2);
             // 
             // YearComboBox
             // 
             this.YearComboBox.FormattingEnabled = true;
-            this.YearComboBox.Location = new System.Drawing.Point(80, 388);
+            this.YearComboBox.Location = new System.Drawing.Point(49, 523);
             this.YearComboBox.Name = "YearComboBox";
             this.YearComboBox.Size = new System.Drawing.Size(93, 21);
             this.YearComboBox.TabIndex = 17;
@@ -377,66 +380,66 @@
             // YearExpensesValue
             // 
             this.YearExpensesValue.AutoSize = true;
-            this.YearExpensesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearExpensesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.YearExpensesValue.ForeColor = System.Drawing.Color.White;
-            this.YearExpensesValue.Location = new System.Drawing.Point(814, 429);
+            this.YearExpensesValue.Location = new System.Drawing.Point(976, 571);
             this.YearExpensesValue.Name = "YearExpensesValue";
-            this.YearExpensesValue.Size = new System.Drawing.Size(90, 20);
+            this.YearExpensesValue.Size = new System.Drawing.Size(100, 24);
             this.YearExpensesValue.TabIndex = 23;
             this.YearExpensesValue.Text = "000000000";
             // 
             // YearExpensesLabel
             // 
             this.YearExpensesLabel.AutoSize = true;
-            this.YearExpensesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearExpensesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.YearExpensesLabel.ForeColor = System.Drawing.Color.White;
-            this.YearExpensesLabel.Location = new System.Drawing.Point(687, 429);
+            this.YearExpensesLabel.Location = new System.Drawing.Point(832, 571);
             this.YearExpensesLabel.Name = "YearExpensesLabel";
-            this.YearExpensesLabel.Size = new System.Drawing.Size(121, 20);
+            this.YearExpensesLabel.Size = new System.Drawing.Size(144, 24);
             this.YearExpensesLabel.TabIndex = 22;
             this.YearExpensesLabel.Text = "Year Expenses:";
             // 
             // YearTotalValue
             // 
             this.YearTotalValue.AutoSize = true;
-            this.YearTotalValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearTotalValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.YearTotalValue.ForeColor = System.Drawing.Color.White;
-            this.YearTotalValue.Location = new System.Drawing.Point(814, 389);
+            this.YearTotalValue.Location = new System.Drawing.Point(976, 523);
             this.YearTotalValue.Name = "YearTotalValue";
-            this.YearTotalValue.Size = new System.Drawing.Size(90, 20);
+            this.YearTotalValue.Size = new System.Drawing.Size(100, 24);
             this.YearTotalValue.TabIndex = 21;
             this.YearTotalValue.Text = "000000000";
             // 
             // YearIncomeValue
             // 
             this.YearIncomeValue.AutoSize = true;
-            this.YearIncomeValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearIncomeValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.YearIncomeValue.ForeColor = System.Drawing.Color.White;
-            this.YearIncomeValue.Location = new System.Drawing.Point(814, 409);
+            this.YearIncomeValue.Location = new System.Drawing.Point(976, 547);
             this.YearIncomeValue.Name = "YearIncomeValue";
-            this.YearIncomeValue.Size = new System.Drawing.Size(90, 20);
+            this.YearIncomeValue.Size = new System.Drawing.Size(100, 24);
             this.YearIncomeValue.TabIndex = 19;
             this.YearIncomeValue.Text = "000000000";
             // 
             // YearIncomeLabel
             // 
             this.YearIncomeLabel.AutoSize = true;
-            this.YearIncomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearIncomeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.YearIncomeLabel.ForeColor = System.Drawing.Color.White;
-            this.YearIncomeLabel.Location = new System.Drawing.Point(704, 409);
+            this.YearIncomeLabel.Location = new System.Drawing.Point(854, 547);
             this.YearIncomeLabel.Name = "YearIncomeLabel";
-            this.YearIncomeLabel.Size = new System.Drawing.Size(104, 20);
+            this.YearIncomeLabel.Size = new System.Drawing.Size(122, 24);
             this.YearIncomeLabel.TabIndex = 18;
             this.YearIncomeLabel.Text = "Year Income:";
             // 
             // YearTotalLabel
             // 
             this.YearTotalLabel.AutoSize = true;
-            this.YearTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.YearTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.YearTotalLabel.ForeColor = System.Drawing.Color.White;
-            this.YearTotalLabel.Location = new System.Drawing.Point(722, 389);
+            this.YearTotalLabel.Location = new System.Drawing.Point(876, 523);
             this.YearTotalLabel.Name = "YearTotalLabel";
-            this.YearTotalLabel.Size = new System.Drawing.Size(86, 20);
+            this.YearTotalLabel.Size = new System.Drawing.Size(100, 24);
             this.YearTotalLabel.TabIndex = 20;
             this.YearTotalLabel.Text = "Year Total:";
             // 
@@ -446,7 +449,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(984, 742);
+            this.ClientSize = new System.Drawing.Size(1090, 975);
             this.Controls.Add(this.YearExpensesValue);
             this.Controls.Add(this.YearExpensesLabel);
             this.Controls.Add(this.YearTotalValue);
