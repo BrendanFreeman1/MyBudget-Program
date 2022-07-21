@@ -121,9 +121,6 @@ namespace BudgetApp.Views
                 dataGridView.Columns.Add(column);
             }
 
-
-
-
             dataGridView.Rows.Add("Date", "Description", "Value", "Category");
         }
 
