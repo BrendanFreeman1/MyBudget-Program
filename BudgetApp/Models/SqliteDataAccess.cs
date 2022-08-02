@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,7 +14,7 @@ namespace BudgetApp.Models
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
             {
-                var output = cnn.Query<Transaction>("select * from Transactions", new DynamicParameters());
+                var output = cnn.Query<Transaction>("SELECT * FROM Transactions", new DynamicParameters());
                 return output.ToList();
             }
         }
@@ -24,8 +25,27 @@ namespace BudgetApp.Models
             {
                 if (transaction.Category != "Ignore")
                 {
-                    cnn.Execute("insert into Transactions (Date, Description, Value, Category) values (@Date, @Description, @Value, @Category)", transaction);
+                    cnn.Execute("INSERT INTO Transactions (Date, Description, Value, Category) VALUES (@Date, @Description, @Value, @Category)", transaction);
                 }
+            }
+        }
+
+        public static void UpdateTransaction(Transaction transaction)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
+            {
+                if (transaction.Category != "Ignore")
+                {
+                    cnn.Execute("UPDATE Transactions SET Category = @Category WHERE ID = @ID", transaction);
+                }
+            }
+        }
+
+        public static void DeleteTransaction(Transaction transaction)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
+            {
+                cnn.Execute("DELETE FROM Transactions WHERE ID = @ID", transaction);
             }
         }
 
@@ -33,7 +53,7 @@ namespace BudgetApp.Models
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
             {
-                var output = cnn.Query<Category>("select * from Categories", new DynamicParameters());
+                var output = cnn.Query<Category>("SELECT * FROM Categories", new DynamicParameters());
                 return output.ToList();
             }
         }
@@ -62,8 +82,6 @@ namespace BudgetApp.Models
                 cnn.Execute("insert into Categories (Name, Tag) values (@Name, @Tag)", category);
             }
         }
-
-
 
         private static string LoadConnectionString(string id)
         {

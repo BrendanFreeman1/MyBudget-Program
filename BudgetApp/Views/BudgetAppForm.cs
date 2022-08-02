@@ -12,7 +12,6 @@ namespace BudgetApp
     {
         #region Initialise variables
         private static List<Transaction> transactionsList = new List<Transaction>();
-        private static List<Category> categoriesList = new List<Category>();
         private static List<string> uniqueCategoriesList = new List<string>();
         #endregion
 
@@ -34,7 +33,6 @@ namespace BudgetApp
         static void LoadDataFromDatabase()
         {
             transactionsList = SqliteDataAccess.LoadTransactions();
-            categoriesList = SqliteDataAccess.LoadCategories();
             uniqueCategoriesList = SqliteDataAccess.LoadUniqueCategoryList();
 
             //Ensure user has the default categories
@@ -43,6 +41,7 @@ namespace BudgetApp
 
         void Importbtn_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("Hello Blord");
             //Set the file name to null to begin with
             openFileDialog.FileName = "";
             //Restrict the file types we can attempt to open
@@ -176,5 +175,11 @@ namespace BudgetApp
         }
 
         #endregion
+
+        private void ViewTransactionbtn_Click(object sender, EventArgs e)
+        {
+            AllTransactionsForm allTransactionsForm = new AllTransactionsForm();
+            allTransactionsForm.Show();
+        }
     }
 }

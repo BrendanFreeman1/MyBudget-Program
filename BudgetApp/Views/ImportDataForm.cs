@@ -16,7 +16,7 @@ namespace BudgetApp.Views
     {
         #region Initialise variables
         private static readonly List<Transaction> transactionList = new List<Transaction>();
-        private static int listIndex;
+        private static int listIndex = 0;
 
         //Create excel objects
         private static Excel.Application xlApp;
@@ -28,8 +28,7 @@ namespace BudgetApp.Views
         {
             InitializeComponent();
 
-            transactionList.Clear();
-            listIndex = 0;            
+            transactionList.Clear();           
         }
 
         public void ImportData(string sFile)
@@ -47,7 +46,7 @@ namespace BudgetApp.Views
                 //While there are still rows in the excel with data
                 while (xlWorkSheet.Cells[row, 1].value != null)
                 {
-                    transactionList.Add(GetTransactionData(row));
+                    transactionList.Add(GetTransactionDataFromExcel(row));
 
                     row++;
                 }
@@ -72,7 +71,7 @@ namespace BudgetApp.Views
             CleanUpExcelObjects();
         }
 
-        Transaction GetTransactionData(int row)
+        Transaction GetTransactionDataFromExcel(int row)
         {
             Transaction transaction = new Transaction();
 
@@ -114,14 +113,18 @@ namespace BudgetApp.Views
             for (int i = 0; i <= 3; i++)
             {
                 DataGridViewColumn column = new DataGridViewTextBoxColumn();
-                if (i == 0) column.Width = 130;
-                if (i == 1) column.Width = 680;
-                if (i == 2) column.Width = 70;
-                if (i == 3) column.Width = 135;
                 dataGridView.Columns.Add(column);
             }
 
-            dataGridView.Rows.Add("Date", "Description", "Value", "Category");
+            dataGridView.Columns[0].Width = 70;
+            dataGridView.Columns[0].HeaderText = "Date";
+            dataGridView.Columns[1].Width = 740;
+            dataGridView.Columns[1].HeaderText = "Description";
+            dataGridView.Columns[2].Width = 70;
+            dataGridView.Columns[2].HeaderText = "Value";
+            dataGridView.Columns[3].Width = 135;
+            dataGridView.Columns[3].HeaderText = "Category";
+
         }
 
         internal static void PopulateCategoryComoboBox()
@@ -143,6 +146,7 @@ namespace BudgetApp.Views
                 transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
             }
 
+            //If the user is at the very last item in the transactionList list
             if(listIndex >= transactionList.Count) { listIndex = transactionList.Count - 2; }
 
             //Update the category combobox text with the users new category
@@ -153,11 +157,11 @@ namespace BudgetApp.Views
         {
             if (listIndex < transactionList.Count)
             {
-                //Set transactions category to users selection
+                //Set transactionList category to the users selection
                 transactionList[listIndex].Category = categoryComboBox.Text;
 
-                //Add transaction to DataGridView
-                string[] currentRow = { transactionList[listIndex].Date.ToString(), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), transactionList[listIndex].Category };
+                //Add the transaction to the DataGridView
+                string[] currentRow = { transactionList[listIndex].Date.ToString("d"), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), transactionList[listIndex].Category };
                 dataGridView.Rows.Add(currentRow);
 
                 listIndex++;
@@ -201,6 +205,18 @@ namespace BudgetApp.Views
             Close();
         }
 
+        void Updatebtn_Click(object sender, EventArgs e)
+        {
+            //Ensure we can only edit the Categories column
+            if (dataGridView.CurrentCell.ColumnIndex == 3)
+            {
+                int row = dataGridView.CurrentCell.RowIndex;
+
+                transactionList[row - 1].Category = categoryComboBox.Text; //IndexOutOfRange on first entry in DataGridView
+                dataGridView.CurrentCell.Value = transactionList[row - 1].Category;
+            }
+        }
+
         void CleanUpExcelObjects()
         {
             GC.Collect();
@@ -213,19 +229,6 @@ namespace BudgetApp.Views
 
             xlApp.Quit();
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
-        }
-
-        private void Updatebtn_Click(object sender, EventArgs e)
-        {
-            int row = dataGridView.CurrentCell.RowIndex;
-
-            transactionList[row-1].Category = categoryComboBox.Text;
-            dataGridView.CurrentCell.Value = transactionList[row-1].Category;
-        }
-
-        private void descriptionLabel_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -71,6 +71,12 @@
   <ItemGroup>
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\SqliteDataAccess.cs" />
+    <Compile Include="Views\AllTransactionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AllTransactionsForm.Designer.cs">
+      <DependentUpon>AllTransactionsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\CustomCategoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Views\AllTransactionsForm.resx">
+      <DependentUpon>AllTransactionsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\BudgetAppForm.resx">
       <DependentUpon>BudgetAppForm.cs</DependentUpon>
     </EmbeddedResource>

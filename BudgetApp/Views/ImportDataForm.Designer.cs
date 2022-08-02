@@ -118,6 +118,7 @@
             this.dateLabel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dateLabel.ForeColor = System.Drawing.Color.Snow;
             this.dateLabel.Location = new System.Drawing.Point(18, 50);
+            this.dateLabel.MaximumSize = new System.Drawing.Size(70, 15);
             this.dateLabel.Name = "dateLabel";
             this.dateLabel.Size = new System.Drawing.Size(64, 13);
             this.dateLabel.TabIndex = 11;
@@ -128,12 +129,11 @@
             this.descriptionLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.ForeColor = System.Drawing.Color.Snow;
-            this.descriptionLabel.Location = new System.Drawing.Point(150, 50);
+            this.descriptionLabel.Location = new System.Drawing.Point(88, 50);
             this.descriptionLabel.Name = "descriptionLabel";
             this.descriptionLabel.Size = new System.Drawing.Size(94, 13);
             this.descriptionLabel.TabIndex = 10;
             this.descriptionLabel.Text = "CurrentDescription";
-            this.descriptionLabel.Click += new System.EventHandler(this.descriptionLabel_Click);
             // 
             // FinishBtn
             // 
@@ -191,7 +191,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView.BackgroundColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.ColumnHeadersVisible = false;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView.Location = new System.Drawing.Point(12, 82);
             this.dataGridView.MultiSelect = false;

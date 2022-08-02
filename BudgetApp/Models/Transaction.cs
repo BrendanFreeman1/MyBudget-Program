@@ -17,7 +17,7 @@ namespace BudgetApp.Models
 
             foreach (Category category in SqliteDataAccess.LoadCategories())
             {
-                //If the sample text is found within the transactions description return the corresponding category
+                //If the sample text is found within the transactionList description return the corresponding category
                 if (category.Tag != null && transaction.Description.ToLower().Contains(category.Tag))
                 {
                     return category.Name;
