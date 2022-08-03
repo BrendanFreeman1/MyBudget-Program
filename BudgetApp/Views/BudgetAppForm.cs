@@ -10,7 +10,7 @@ namespace BudgetApp
 {
     public partial class BudgetApp : Form
     {
-        #region Initialise variables
+        #region Initialise Variables
         private static List<Transaction> transactionsList = new List<Transaction>();
         private static List<string> uniqueCategoriesList = new List<string>();
         #endregion
@@ -20,13 +20,14 @@ namespace BudgetApp
             InitializeComponent();
             LoadDataFromDatabase();
             PopulateFormBoxes();
-            PopulateCategoryGraph();
             PopulateMonthBarGraph();
+            PopulateCategoryGraph();
         }
+
         public static void ReloadForm()
         {
             ///Runs when the App is first started and when when the FinishBtn on the ImportDataForm is clicked 
-            
+
             LoadDataFromDatabase();
         }
 
@@ -41,38 +42,25 @@ namespace BudgetApp
 
         void Importbtn_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("Hello Blord");
-            //Set the file name to null to begin with
-            openFileDialog.FileName = "";
-            //Restrict the file types we can attempt to open
-            openFileDialog.Filter = "Excel File|*.xlsx;*.xls;*.csv";
+            ImportDataForm importDataForm = new ImportDataForm();
+            importDataForm.Show();
 
-            //If the user has selected a file and pressed 'Open' and not 'Cancel'
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                //If the file name has now been updated from null to something
-                //Open a new ImportDataForm and run the ImportData method on that file
-                if (openFileDialog.FileName.Trim() != "")
-                {
-                    ImportDataForm importDataForm = new ImportDataForm();
-                    importDataForm.Show();
-                    importDataForm.ImportData(openFileDialog.FileName);
-                }
-            }
-        }//Possibly move this to the import data form
+            importDataForm.OpenFile();           
+        }
 
         void PopulateFormBoxes()
         {
             if (transactionsList.Count > 0)
             {
-                //Date Pickers
+                //Populate Date Pickers
                 //Sort the transations list by date
                 transactionsList.Sort((i, j) => DateTime.Compare(i.Date, j.Date));
+
                 //Set DateTimePickers dates
                 FromDateTimePicker.Value = transactionsList.First().Date;
                 ToDateTimePicker.Value = transactionsList.Last().Date;
 
-                //YearComoboBox
+                //Populate YearComoboBox
                 int currentYear = transactionsList.First().Date.Year;
                 int lastYear = transactionsList.Last().Date.Year;
                 //Add all the years between the first and last to the YearComboBox
@@ -137,7 +125,6 @@ namespace BudgetApp
             PopulateDateTotals();
             PopulateCategoryGraph();
         }
-
         void ToDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             PopulateDateTotals();
@@ -146,8 +133,6 @@ namespace BudgetApp
 
         void PopulateDateTotals()
         {
-            PopulateCategoryGraph();
-
             double income = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, "Income");
             double expenses = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, null) - income;
 

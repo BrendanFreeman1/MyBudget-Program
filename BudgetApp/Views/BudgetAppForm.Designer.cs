@@ -38,7 +38,6 @@
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.ImportBtn = new System.Windows.Forms.Button();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.categoryExpencesChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.FromDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.ToDateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -74,10 +73,6 @@
             this.ImportBtn.Text = "Select Excel File";
             this.ImportBtn.UseVisualStyleBackColor = true;
             this.ImportBtn.Click += new System.EventHandler(this.Importbtn_Click);
-            // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "openFileDialog";
             // 
             // categoryExpencesChart
             // 
@@ -490,7 +485,6 @@
         #endregion
 
         private System.Windows.Forms.Button ImportBtn;
-        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.DataVisualization.Charting.Chart categoryExpencesChart;
         private System.Windows.Forms.DateTimePicker FromDateTimePicker;
         private System.Windows.Forms.DateTimePicker ToDateTimePicker;

@@ -36,11 +36,12 @@
             this.valueLabel = new System.Windows.Forms.Label();
             this.dateLabel = new System.Windows.Forms.Label();
             this.descriptionLabel = new System.Windows.Forms.Label();
-            this.FinishBtn = new System.Windows.Forms.Button();
+            this.SaveBtn = new System.Windows.Forms.Button();
             this.CustomCategoryBtn = new System.Windows.Forms.Button();
             this.CurrentTransactionLabel = new System.Windows.Forms.Label();
             this.Updatebtn = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,9 +108,8 @@
             this.valueLabel.ForeColor = System.Drawing.Color.Snow;
             this.valueLabel.Location = new System.Drawing.Point(828, 50);
             this.valueLabel.Name = "valueLabel";
-            this.valueLabel.Size = new System.Drawing.Size(68, 13);
+            this.valueLabel.Size = new System.Drawing.Size(0, 13);
             this.valueLabel.TabIndex = 12;
-            this.valueLabel.Text = "CurrentValue";
             // 
             // dateLabel
             // 
@@ -120,9 +120,8 @@
             this.dateLabel.Location = new System.Drawing.Point(18, 50);
             this.dateLabel.MaximumSize = new System.Drawing.Size(70, 15);
             this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(64, 13);
+            this.dateLabel.Size = new System.Drawing.Size(0, 13);
             this.dateLabel.TabIndex = 11;
-            this.dateLabel.Text = "CurrentDate";
             // 
             // descriptionLabel
             // 
@@ -131,25 +130,24 @@
             this.descriptionLabel.ForeColor = System.Drawing.Color.Snow;
             this.descriptionLabel.Location = new System.Drawing.Point(88, 50);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(94, 13);
+            this.descriptionLabel.Size = new System.Drawing.Size(0, 13);
             this.descriptionLabel.TabIndex = 10;
-            this.descriptionLabel.Text = "CurrentDescription";
             // 
-            // FinishBtn
+            // SaveBtn
             // 
-            this.FinishBtn.Location = new System.Drawing.Point(896, 821);
-            this.FinishBtn.Name = "FinishBtn";
-            this.FinishBtn.Size = new System.Drawing.Size(138, 23);
-            this.FinishBtn.TabIndex = 14;
-            this.FinishBtn.Text = "Finish";
-            this.FinishBtn.UseVisualStyleBackColor = true;
-            this.FinishBtn.Click += new System.EventHandler(this.FinishBtn_Click);
+            this.SaveBtn.Location = new System.Drawing.Point(896, 817);
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.Size = new System.Drawing.Size(138, 24);
+            this.SaveBtn.TabIndex = 14;
+            this.SaveBtn.Text = "Save";
+            this.SaveBtn.UseVisualStyleBackColor = true;
+            this.SaveBtn.Click += new System.EventHandler(this.FinishBtn_Click);
             // 
             // CustomCategoryBtn
             // 
-            this.CustomCategoryBtn.Location = new System.Drawing.Point(753, 821);
+            this.CustomCategoryBtn.Location = new System.Drawing.Point(159, 817);
             this.CustomCategoryBtn.Name = "CustomCategoryBtn";
-            this.CustomCategoryBtn.Size = new System.Drawing.Size(137, 23);
+            this.CustomCategoryBtn.Size = new System.Drawing.Size(137, 24);
             this.CustomCategoryBtn.TabIndex = 15;
             this.CustomCategoryBtn.Text = "Create Custom Category";
             this.CustomCategoryBtn.UseVisualStyleBackColor = true;
@@ -172,11 +170,11 @@
             // 
             this.Updatebtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.Updatebtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Updatebtn.Location = new System.Drawing.Point(15, 821);
+            this.Updatebtn.Location = new System.Drawing.Point(15, 817);
             this.Updatebtn.Name = "Updatebtn";
-            this.Updatebtn.Size = new System.Drawing.Size(138, 23);
+            this.Updatebtn.Size = new System.Drawing.Size(138, 24);
             this.Updatebtn.TabIndex = 17;
-            this.Updatebtn.Text = "Update Category";
+            this.Updatebtn.Text = "Update Selection";
             this.Updatebtn.UseVisualStyleBackColor = true;
             this.Updatebtn.Click += new System.EventHandler(this.Updatebtn_Click);
             // 
@@ -199,8 +197,12 @@
             this.dataGridView.RowHeadersWidth = 4;
             this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView.Size = new System.Drawing.Size(1021, 733);
+            this.dataGridView.Size = new System.Drawing.Size(1021, 729);
             this.dataGridView.TabIndex = 2;
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog1";
             // 
             // ImportDataForm
             // 
@@ -213,7 +215,7 @@
             this.Controls.Add(this.Updatebtn);
             this.Controls.Add(this.CurrentTransactionLabel);
             this.Controls.Add(this.CustomCategoryBtn);
-            this.Controls.Add(this.FinishBtn);
+            this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.valueLabel);
             this.Controls.Add(this.dateLabel);
             this.Controls.Add(this.descriptionLabel);
@@ -240,11 +242,12 @@
         private System.Windows.Forms.Label valueLabel;
         private System.Windows.Forms.Label dateLabel;
         private System.Windows.Forms.Label descriptionLabel;
-        private System.Windows.Forms.Button FinishBtn;
+        private System.Windows.Forms.Button SaveBtn;
         private System.Windows.Forms.Button CustomCategoryBtn;
         private System.Windows.Forms.Label CurrentTransactionLabel;
         private System.Windows.Forms.Button Updatebtn;
         private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private static System.Windows.Forms.ComboBox categoryComboBox;
     }
 }

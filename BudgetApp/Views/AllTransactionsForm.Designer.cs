@@ -57,7 +57,7 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView.Location = new System.Drawing.Point(30, 56);
+            this.dataGridView.Location = new System.Drawing.Point(12, 56);
             this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
@@ -69,14 +69,13 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             this.dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView.Size = new System.Drawing.Size(1009, 733);
+            this.dataGridView.Size = new System.Drawing.Size(1044, 733);
             this.dataGridView.TabIndex = 3;
-            this.dataGridView.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_ColumnHeaderMouseClick);
             // 
             // Deletebtn
             // 
             this.Deletebtn.ForeColor = System.Drawing.Color.Black;
-            this.Deletebtn.Location = new System.Drawing.Point(901, 810);
+            this.Deletebtn.Location = new System.Drawing.Point(918, 810);
             this.Deletebtn.Name = "Deletebtn";
             this.Deletebtn.Size = new System.Drawing.Size(138, 23);
             this.Deletebtn.TabIndex = 4;
@@ -87,9 +86,9 @@
             // UpdateCategorybtn
             // 
             this.UpdateCategorybtn.ForeColor = System.Drawing.Color.Black;
-            this.UpdateCategorybtn.Location = new System.Drawing.Point(901, 13);
+            this.UpdateCategorybtn.Location = new System.Drawing.Point(918, 12);
             this.UpdateCategorybtn.Name = "UpdateCategorybtn";
-            this.UpdateCategorybtn.Size = new System.Drawing.Size(138, 23);
+            this.UpdateCategorybtn.Size = new System.Drawing.Size(138, 21);
             this.UpdateCategorybtn.TabIndex = 5;
             this.UpdateCategorybtn.Text = "Update Category";
             this.UpdateCategorybtn.UseVisualStyleBackColor = true;
@@ -99,7 +98,7 @@
             // 
             this.categoryComboBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.categoryComboBox.FormattingEnabled = true;
-            this.categoryComboBox.Location = new System.Drawing.Point(757, 13);
+            this.categoryComboBox.Location = new System.Drawing.Point(774, 12);
             this.categoryComboBox.Name = "categoryComboBox";
             this.categoryComboBox.Size = new System.Drawing.Size(138, 21);
             this.categoryComboBox.Sorted = true;

@@ -15,25 +15,46 @@ namespace BudgetApp.Views
     public partial class ImportDataForm : Form
     {
         #region Initialise variables
-        private static readonly List<Transaction> transactionList = new List<Transaction>();
-        private static int listIndex = 0;
+        static readonly List<Transaction> transactionList = new List<Transaction>();
+        static int listIndex = 0;
 
         //Create excel objects
-        private static Excel.Application xlApp;
-        private static Excel.Workbook xlWorkBook;
-        private static Excel.Worksheet xlWorkSheet;
+        static Excel.Application xlApp;
+        static Excel.Workbook xlWorkBook;
+        static Excel.Worksheet xlWorkSheet;
         #endregion
 
         public ImportDataForm()
         {
             InitializeComponent();
 
-            transactionList.Clear();           
+            transactionList.Clear();
+            FormBuilder.PopulateTransactionColumns(dataGridView);
+            FormBuilder.PopulateComboBox(categoryComboBox);
         }
 
-        public void ImportData(string sFile)
+        internal void OpenFile()
         {
-            //Called once an excel file is chosen from the BudgetAppForm
+            //Set the file name to null to begin with
+            openFileDialog.FileName = "";
+            //Restrict the file types we can attempt to open
+            openFileDialog.Filter = "Excel File|*.xlsx;*.xls;*.csv";
+
+            //If the user has selected a file and pressed 'Open' and not 'Cancel'
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                //If the file name has now been updated from null to something
+                //Open a new ImportDataForm and run the ImportData method on that file
+                if (openFileDialog.FileName.Trim() != "")
+                {
+                    ImportData(openFileDialog.FileName);
+                }
+            }
+        }
+
+        void ImportData(string sFile)
+        {
+            //Called once an excel file is chosen
             //Gets data from the selected excel, creates transaction objects and puts them into the transactionList       
 
             int row = 2; //Start from second row
@@ -52,7 +73,7 @@ namespace BudgetApp.Views
                 }
 
             }
-            catch (System.FormatException) 
+            catch (FormatException) 
             {
                 Close();
 
@@ -62,13 +83,23 @@ namespace BudgetApp.Views
                 errorForm.ErrorMessage("Please select a file with the correct format.");
             }
 
-            CreateDataGridViewColumns();
-
-            PopulateCategoryComoboBox();
-
             DisplayNextRowLabels();
 
             CleanUpExcelObjects();
+        }
+
+        void CleanUpExcelObjects()
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkSheet);
+
+            xlWorkBook.Close();
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkBook);
+
+            xlApp.Quit();
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
         }
 
         Transaction GetTransactionDataFromExcel(int row)
@@ -108,36 +139,6 @@ namespace BudgetApp.Views
             return transaction;
         }
 
-        void CreateDataGridViewColumns()
-        {
-            for (int i = 0; i <= 3; i++)
-            {
-                DataGridViewColumn column = new DataGridViewTextBoxColumn();
-                dataGridView.Columns.Add(column);
-            }
-
-            dataGridView.Columns[0].Width = 70;
-            dataGridView.Columns[0].HeaderText = "Date";
-            dataGridView.Columns[1].Width = 740;
-            dataGridView.Columns[1].HeaderText = "Description";
-            dataGridView.Columns[2].Width = 70;
-            dataGridView.Columns[2].HeaderText = "Value";
-            dataGridView.Columns[3].Width = 135;
-            dataGridView.Columns[3].HeaderText = "Category";
-
-        }
-
-        internal static void PopulateCategoryComoboBox()
-        {
-            foreach (Category category in SqliteDataAccess.LoadCategories())
-            {
-                if (!categoryComboBox.Items.Contains(category.Name))
-                {
-                    categoryComboBox.Items.Add(category.Name);
-                }
-            }
-        }
-
         internal static void UpdateTransactionsCategories()
         {
             //Update the remainder of the list with the new categorisation
@@ -152,6 +153,12 @@ namespace BudgetApp.Views
             //Update the category combobox text with the users new category
             categoryComboBox.SelectedItem = transactionList[listIndex].Category;
         }        
+
+        //Should be a better way to do this
+        internal static void PopulateCategoryComboBox()
+        {
+            FormBuilder.PopulateComboBox(categoryComboBox);
+        }
         
         void ConfirmBtn_Click(object sender, EventArgs e)
         {
@@ -160,10 +167,7 @@ namespace BudgetApp.Views
                 //Set transactionList category to the users selection
                 transactionList[listIndex].Category = categoryComboBox.Text;
 
-                //Add the transaction to the DataGridView
-                string[] currentRow = { transactionList[listIndex].Date.ToString("d"), transactionList[listIndex].Description, transactionList[listIndex].Value.ToString(), transactionList[listIndex].Category };
-                dataGridView.Rows.Add(currentRow);
-
+                FormBuilder.PopulateTransactionRow(dataGridView, transactionList[listIndex]);
                 listIndex++;
 
                 //Display the next row from the excel for the user to view and select a category for
@@ -207,28 +211,22 @@ namespace BudgetApp.Views
 
         void Updatebtn_Click(object sender, EventArgs e)
         {
+            //If the user doesn't have anything selected
+            if (dataGridView.CurrentCell == null) { return; }
+
             //Ensure we can only edit the Categories column
             if (dataGridView.CurrentCell.ColumnIndex == 3)
             {
                 int row = dataGridView.CurrentCell.RowIndex;
 
-                transactionList[row - 1].Category = categoryComboBox.Text; //IndexOutOfRange on first entry in DataGridView
-                dataGridView.CurrentCell.Value = transactionList[row - 1].Category;
-            }
+                transactionList[row].Category = categoryComboBox.Text;
+                dataGridView.CurrentCell.Value = transactionList[row].Category;
+
+                //Return the suggested category for the current transaction
+                categoryComboBox.Text = Transaction.AutoCategorise(transactionList[listIndex]);
+            }            
         }
 
-        void CleanUpExcelObjects()
-        {
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkSheet);
-
-            xlWorkBook.Close();
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlWorkBook);
-
-            xlApp.Quit();
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
-        }
+   
     }
 }

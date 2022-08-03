@@ -23,7 +23,7 @@ namespace BudgetApp.Views
             SqliteDataAccess.SaveCategory(category);
 
             //Re-Populate the ComboBox with the updated Categories list
-            ImportDataForm.PopulateCategoryComoboBox();
+            ImportDataForm.PopulateCategoryComboBox();
             ImportDataForm.UpdateTransactionsCategories();
 
             Close();

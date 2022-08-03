@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\FormBuilder.cs" />
     <Compile Include="Models\SqliteDataAccess.cs" />
     <Compile Include="Views\AllTransactionsForm.cs">
       <SubType>Form</SubType>
