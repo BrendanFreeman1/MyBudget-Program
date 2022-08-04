@@ -10,7 +10,7 @@ namespace BudgetApp.Models
 {
     internal class SqliteDataAccess
     {
-        public static List<Transaction> LoadTransactions()
+        internal static List<Transaction> LoadTransactions()
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
             {
@@ -19,7 +19,7 @@ namespace BudgetApp.Models
             }
         }
 
-        public static void SaveTransaction(Transaction transaction)
+        internal static void SaveTransaction(Transaction transaction)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
             {
@@ -30,7 +30,7 @@ namespace BudgetApp.Models
             }
         }
 
-        public static void UpdateTransaction(Transaction transaction)
+        internal static void UpdateTransaction(Transaction transaction)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
             {
@@ -41,7 +41,7 @@ namespace BudgetApp.Models
             }
         }
 
-        public static void DeleteTransaction(Transaction transaction)
+        internal static void DeleteTransaction(Transaction transaction)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
             {
@@ -49,7 +49,7 @@ namespace BudgetApp.Models
             }
         }
 
-        public static List<Category> LoadCategories()
+        internal static List<Category> LoadCategories()
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
             {
@@ -58,7 +58,7 @@ namespace BudgetApp.Models
             }
         }
 
-        public static List<string> LoadUniqueCategoryList()
+        internal static List<string> LoadUniqueCategoryList()
         {
             List<Category> categoriesList = LoadCategories();
             List<string> uniqueCategoriesList = new List<string>();
@@ -75,11 +75,11 @@ namespace BudgetApp.Models
             return uniqueCategoriesList;
         }
 
-        public static void SaveCategory(Category category)
+        internal static void SaveCategory(Category category)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
             {
-                cnn.Execute("insert into Categories (Name, Tag) values (@Name, @Tag)", category);
+                cnn.Execute("INSERT INTO Categories (Name, Tag) VALUES (@Name, @Tag)", category);
             }
         }
 

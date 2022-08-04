@@ -4,14 +4,14 @@ using System.Windows.Forms;
 
 namespace BudgetApp.Views
 {
-    public partial class CustomCategoryForm : Form
+    internal partial class CustomCategoryForm : Form
     {
         public CustomCategoryForm()
         {
             InitializeComponent();
         }
 
-        private void ConfirmBtn_Click(object sender, EventArgs e)
+        void ConfirmBtn_Click(object sender, EventArgs e)
         {
             //Create new category object with data from the user input fields
             Category category = new Category(char.ToUpper(categoryNameBox.Text[0]) + categoryNameBox.Text.Substring(1), tagBox.Text.ToLower());
@@ -23,7 +23,6 @@ namespace BudgetApp.Views
             SqliteDataAccess.SaveCategory(category);
 
             //Re-Populate the ComboBox with the updated Categories list
-            ImportDataForm.PopulateCategoryComboBox();
             ImportDataForm.UpdateTransactionsCategories();
 
             Close();

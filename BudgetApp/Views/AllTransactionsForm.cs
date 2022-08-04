@@ -7,7 +7,7 @@ namespace BudgetApp.Views
 {
     public partial class AllTransactionsForm : Form
     {
-        private List<Transaction> transactionList = new List<Transaction>();
+        List<Transaction> transactionList = new List<Transaction>();
 
         public AllTransactionsForm()
         {

@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace BudgetApp.Views
 {
-    public partial class ErrorForm : Form
+    internal partial class ErrorForm : Form
     {
         public ErrorForm()
         {
             InitializeComponent();
         }
 
-        public void ErrorMessage(string message)
+        internal void ErrorMessage(string message)
         {
             ErrorLabel.Text = message;
         }

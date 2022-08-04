@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace BudgetApp.Models
 {
-    internal class Transaction
+    public class Transaction
     {
         public int ID { get; set; }
         public DateTime Date { get; set; }
@@ -11,7 +12,7 @@ namespace BudgetApp.Models
         public double Value { get; set; }
         public string Category { get; set; }
 
-        public static string AutoCategorise(Transaction transaction)
+        internal static string AutoCategorise(Transaction transaction)
         {
             string defaultCategory = "Other";
 
@@ -28,7 +29,7 @@ namespace BudgetApp.Models
             return defaultCategory; 
         }
 
-        public static double Total(List<Transaction> transactions)
+        internal static double Total(List<Transaction> transactions)
         {
             double total = 0;
             //Add up the values for each transaction in the list past in.
@@ -40,7 +41,7 @@ namespace BudgetApp.Models
             return total;
         }
 
-        public static double Total(List<Transaction> transactions, DateTime startDate, DateTime endDate, string category)
+        internal static double Total(List<Transaction> transactions, DateTime startDate, DateTime endDate, string category)
         {
             double total = 0;
             startDate = startDate.Date + new TimeSpan(00, 00, 00);
@@ -62,6 +63,43 @@ namespace BudgetApp.Models
                 }
             }
             return total;
+        }
+
+        internal static Transaction GetTransactionDataFromExcel(int row, Excel.Worksheet xlWorkSheet)
+        {
+            Transaction transaction = new Transaction();
+
+            //DATE
+            //Excel is feeding some of the dates as DateTime objects(day of month > 12) and some as strings(day of month <= 12).
+            var currentDate = xlWorkSheet.Cells[row, 1].value;
+            if (currentDate is string)
+            {
+                transaction.Date = DateTime.Parse(currentDate);
+            }
+            else
+            {
+                //The DateTime object being fed in is being saved in MM/dd/yyyy format.
+                //To correct that to dd/MM/yyyy i'm converting it to a string, then back to a DateTime object.
+                transaction.Date = DateTime.Parse(currentDate.ToString("MM/dd/yyyy"));
+            }
+
+            //DESCRIPTION
+            transaction.Description = xlWorkSheet.Cells[row, 2].value;
+
+            //VALUE
+            if (xlWorkSheet.Cells[row, 3].value != null)
+            {
+                transaction.Value = xlWorkSheet.Cells[row, 3].value; //Credit 
+            }
+            else
+            {
+                transaction.Value = xlWorkSheet.Cells[row, 4].value; //Debit
+            }
+
+            //CATEGORY
+            transaction.Category = AutoCategorise(transaction);
+
+            return transaction;
         }
     }
 }

@@ -90,7 +90,7 @@
             this.UpdateCategorybtn.Name = "UpdateCategorybtn";
             this.UpdateCategorybtn.Size = new System.Drawing.Size(138, 21);
             this.UpdateCategorybtn.TabIndex = 5;
-            this.UpdateCategorybtn.Text = "Update Category";
+            this.UpdateCategorybtn.Text = "Update Selection";
             this.UpdateCategorybtn.UseVisualStyleBackColor = true;
             this.UpdateCategorybtn.Click += new System.EventHandler(this.UpdateCategorybtn_Click);
             // 

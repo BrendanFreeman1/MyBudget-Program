@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace BudgetApp
 {
-    public partial class BudgetApp : Form
+    internal partial class BudgetApp : Form
     {
         #region Initialise Variables
         private static List<Transaction> transactionsList = new List<Transaction>();
@@ -24,10 +24,10 @@ namespace BudgetApp
             PopulateCategoryGraph();
         }
 
-        public static void ReloadForm()
+        internal static void ReloadForm()
         {
             ///Runs when the App is first started and when when the FinishBtn on the ImportDataForm is clicked 
-
+            //Need to populate with Populate functions
             LoadDataFromDatabase();
         }
 
@@ -75,34 +75,6 @@ namespace BudgetApp
             YearComboBox.Text = DateTime.Now.Year.ToString();
         }
 
-        void PopulateMonthBarGraph()
-        {
-            //Clear values from the chart
-            monthChart.Series["Income"].Points.Clear();
-            monthChart.Series["Expenses"].Points.Clear();
-            monthChart.Series["Net"].Points.Clear();
-
-            //For each month add the month and the totals to the chart
-            for (int i=1; i<=12; i++)
-            {
-                string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i);
-                DateTime monthStart = new DateTime(int.Parse(YearComboBox.Text), i, 1);
-                DateTime monthEnd = monthStart.AddMonths(1).AddDays(-1); //Get the 1st of the next month, then subtract 1 day
-
-                double monthIncome = Transaction.Total(transactionsList, monthStart, monthEnd, "Income");
-                double monthExpenses = Transaction.Total(transactionsList, monthStart, monthEnd, null) - monthIncome;
-                double monthNet = monthIncome + monthExpenses;
-
-                //Limit the chart to positive numbers
-                if(monthNet < 0) monthNet = 0;
-                monthExpenses *= -1;
-
-                monthChart.Series["Income"].Points.AddXY(month, monthIncome);
-                monthChart.Series["Expenses"].Points.AddY(monthExpenses);
-                monthChart.Series["Net"].Points.AddY(monthNet);
-            }
-        }
-
         void YearComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             PopulateMonthBarGraph();
@@ -118,6 +90,34 @@ namespace BudgetApp
             YearTotalValue.Text = (expenses + income).ToString("0.##");
         }
 
+        void PopulateMonthBarGraph()
+        {
+            //Clear values from the chart
+            monthChart.Series["Income"].Points.Clear();
+            monthChart.Series["Expenses"].Points.Clear();
+            monthChart.Series["Net"].Points.Clear();
+
+            //For each month add the month and the totals to the chart
+            for (int i = 1; i <= 12; i++)
+            {
+                string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i);
+                DateTime monthStart = new DateTime(int.Parse(YearComboBox.Text), i, 1);
+                DateTime monthEnd = monthStart.AddMonths(1).AddDays(-1); //Get the 1st of the next month, then subtract 1 day
+
+                double monthIncome = Transaction.Total(transactionsList, monthStart, monthEnd, "Income");
+                double monthExpenses = Transaction.Total(transactionsList, monthStart, monthEnd, null) - monthIncome;
+                double monthNet = monthIncome + monthExpenses;
+
+                //Limit the chart to positive numbers
+                if (monthNet < 0) monthNet = 0;
+                monthExpenses *= -1;
+
+                monthChart.Series["Income"].Points.AddXY(month, monthIncome);
+                monthChart.Series["Expenses"].Points.AddY(monthExpenses);
+                monthChart.Series["Net"].Points.AddY(monthNet);
+            }
+        }
+
         #region DateTime Pickers
 
         void FromDateTimePicker_ValueChanged(object sender, EventArgs e)
@@ -125,6 +125,7 @@ namespace BudgetApp
             PopulateDateTotals();
             PopulateCategoryGraph();
         }
+
         void ToDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             PopulateDateTotals();
@@ -161,7 +162,7 @@ namespace BudgetApp
 
         #endregion
 
-        private void ViewTransactionbtn_Click(object sender, EventArgs e)
+        void ViewTransactionbtn_Click(object sender, EventArgs e)
         {
             AllTransactionsForm allTransactionsForm = new AllTransactionsForm();
             allTransactionsForm.Show();

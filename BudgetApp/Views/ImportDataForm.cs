@@ -7,12 +7,10 @@ using Excel = Microsoft.Office.Interop.Excel;
 namespace BudgetApp.Views
 {
     /// <summary>
-    /// Takes data from thhe selected excel form as seperate 'Transaction' objects
+    /// Takes data from the selected excel form as seperate 'Transaction' objects
     /// Allows the user to categorise each transaction, saves them to a list, Saves the finished list to the users database
     /// </summary>
-    
-    //Possibly move opening the file into this class to keep all methods private!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    public partial class ImportDataForm : Form
+    internal partial class ImportDataForm : Form
     {
         #region Initialise variables
         static readonly List<Transaction> transactionList = new List<Transaction>();
@@ -31,6 +29,25 @@ namespace BudgetApp.Views
             transactionList.Clear();
             FormBuilder.PopulateTransactionColumns(dataGridView);
             FormBuilder.PopulateComboBox(categoryComboBox);
+        }
+        internal static void UpdateTransactionsCategories()
+        {
+            //Reload ComboBox with newly added category
+            FormBuilder.PopulateComboBox(categoryComboBox);
+
+            //When the user added a new Category to AutoCategorise by, we want to update whatever remains in the transactionsList
+
+            //Update the remainder of the list with the new categorisation
+            for (int i = listIndex; i < transactionList.Count; i++)
+            {
+                transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
+            }
+
+            //If the user is at the very last item in the transactionList list
+            if (listIndex >= transactionList.Count) { listIndex = transactionList.Count - 2; }
+
+            //Update the category combobox text with the users new category
+            categoryComboBox.SelectedItem = transactionList[listIndex].Category;
         }
 
         internal void OpenFile()
@@ -55,8 +72,7 @@ namespace BudgetApp.Views
         void ImportData(string sFile)
         {
             //Called once an excel file is chosen
-            //Gets data from the selected excel, creates transaction objects and puts them into the transactionList       
-
+            //Gets data from the selected excel, creates transaction objects and puts them into the transactionList
             int row = 2; //Start from second row
             xlApp = new Excel.Application(); //Excel app object
             xlWorkBook = xlApp.Workbooks.Open(sFile); //Workbook to open the excel file
@@ -67,19 +83,19 @@ namespace BudgetApp.Views
                 //While there are still rows in the excel with data
                 while (xlWorkSheet.Cells[row, 1].value != null)
                 {
-                    transactionList.Add(GetTransactionDataFromExcel(row));
+                    //Populate Transactions list
+                    transactionList.Add(Transaction.GetTransactionDataFromExcel(row, xlWorkSheet));
 
                     row++;
                 }
 
             }
-            catch (FormatException) 
+            catch //Not an acceptable way to handle exceptions, think of a better way!!!!?!?!!?!?!!!
             {
                 Close();
 
                 ErrorForm errorForm = new ErrorForm();
                 errorForm.Show();
-
                 errorForm.ErrorMessage("Please select a file with the correct format.");
             }
 
@@ -101,64 +117,6 @@ namespace BudgetApp.Views
             xlApp.Quit();
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
         }
-
-        Transaction GetTransactionDataFromExcel(int row)
-        {
-            Transaction transaction = new Transaction();
-
-            //DATE
-            //Excel is feeding some of the dates as DateTime objects(day of month > 12) and some as strings(day of month <= 12).
-            var currentDate = xlWorkSheet.Cells[row, 1].value;
-            if (currentDate is string)
-            {
-                transaction.Date = DateTime.Parse(currentDate);
-            }
-            else
-            {
-                //The DateTime object being fed in is being saved in MM/dd/yyyy format.
-                //To correct that to dd/MM/yyyy i'm converting it to a string, then back to a DateTime object.
-                transaction.Date = DateTime.Parse(currentDate.ToString("MM/dd/yyyy"));
-            }
-
-            //DESCRIPTION
-            transaction.Description = xlWorkSheet.Cells[row, 2].value;
-
-            //VALUE
-            if (xlWorkSheet.Cells[row, 3].value != null)
-            {
-                transaction.Value = xlWorkSheet.Cells[row, 3].value; //Credit 
-            }
-            else
-            {
-                transaction.Value = xlWorkSheet.Cells[row, 4].value; //Debit
-            }
-
-            //CATEGORY
-            transaction.Category = Transaction.AutoCategorise(transaction);
-
-            return transaction;
-        }
-
-        internal static void UpdateTransactionsCategories()
-        {
-            //Update the remainder of the list with the new categorisation
-            for(int i = listIndex; i < transactionList.Count; i++)
-            {
-                transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
-            }
-
-            //If the user is at the very last item in the transactionList list
-            if(listIndex >= transactionList.Count) { listIndex = transactionList.Count - 2; }
-
-            //Update the category combobox text with the users new category
-            categoryComboBox.SelectedItem = transactionList[listIndex].Category;
-        }        
-
-        //Should be a better way to do this
-        internal static void PopulateCategoryComboBox()
-        {
-            FormBuilder.PopulateComboBox(categoryComboBox);
-        }
         
         void ConfirmBtn_Click(object sender, EventArgs e)
         {
@@ -173,7 +131,6 @@ namespace BudgetApp.Views
                 //Display the next row from the excel for the user to view and select a category for
                 DisplayNextRowLabels();
             }
-
         }
 
         void DisplayNextRowLabels()
@@ -187,10 +144,22 @@ namespace BudgetApp.Views
             }
         }
 
-        void CustomCategoryBtn_Click(object sender, EventArgs e)
+        void Updatebtn_Click(object sender, EventArgs e)
         {
-            CustomCategoryForm customCategoryForm = new CustomCategoryForm();
-            customCategoryForm.Show();
+            //If the user doesn't have anything selected
+            if (dataGridView.CurrentCell == null) { return; }
+
+            //Ensure we can only edit the Categories column
+            if (dataGridView.CurrentCell.ColumnIndex == 3)
+            {
+                int row = dataGridView.CurrentCell.RowIndex;
+
+                transactionList[row].Category = categoryComboBox.Text;
+                dataGridView.CurrentCell.Value = transactionList[row].Category;
+
+                //Return the ComoboBox text to the suggested category for the current transaction
+                categoryComboBox.Text = Transaction.AutoCategorise(transactionList[listIndex]);
+            }
         }
 
         void FinishBtn_Click(object sender, EventArgs e)
@@ -209,24 +178,10 @@ namespace BudgetApp.Views
             Close();
         }
 
-        void Updatebtn_Click(object sender, EventArgs e)
+        void CustomCategoryBtn_Click(object sender, EventArgs e)
         {
-            //If the user doesn't have anything selected
-            if (dataGridView.CurrentCell == null) { return; }
-
-            //Ensure we can only edit the Categories column
-            if (dataGridView.CurrentCell.ColumnIndex == 3)
-            {
-                int row = dataGridView.CurrentCell.RowIndex;
-
-                transactionList[row].Category = categoryComboBox.Text;
-                dataGridView.CurrentCell.Value = transactionList[row].Category;
-
-                //Return the suggested category for the current transaction
-                categoryComboBox.Text = Transaction.AutoCategorise(transactionList[listIndex]);
-            }            
+            CustomCategoryForm customCategoryForm = new CustomCategoryForm();
+            customCategoryForm.Show();
         }
-
-   
     }
 }

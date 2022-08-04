@@ -126,7 +126,6 @@
             this.categoryExpencesChart.Location = new System.Drawing.Point(-40, 160);
             this.categoryExpencesChart.Margin = new System.Windows.Forms.Padding(0);
             this.categoryExpencesChart.Name = "categoryExpencesChart";
-            this.categoryExpencesChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
             this.categoryExpencesChart.RightToLeft = System.Windows.Forms.RightToLeft.No;
             series1.ChartArea = "ChartArea1";
             series1.CustomProperties = "CollectedColor=Black";
@@ -136,9 +135,7 @@
             series1.LabelForeColor = System.Drawing.Color.Empty;
             series1.MarkerColor = System.Drawing.Color.White;
             series1.Name = "Category Totals";
-            series1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.String;
-            series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+            series1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.BrightPastel;
             this.categoryExpencesChart.Series.Add(series1);
             this.categoryExpencesChart.Size = new System.Drawing.Size(1135, 335);
             this.categoryExpencesChart.TabIndex = 2;

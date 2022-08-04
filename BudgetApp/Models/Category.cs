@@ -3,22 +3,22 @@ using System.Linq;
 
 namespace BudgetApp.Models
 {
-    internal class Category
+    public class Category
     {
         public int ID { get; set; }
         public string Name { get; set; }
         public string Tag { get; set; }
 
         //Parameterless Constructor
-        public Category() {}
+        internal Category() {}
 
-        public Category(string categoryName, string tag)
+        internal Category(string categoryName, string tag)
         {
             Name = categoryName;
             Tag = tag;
         }
 
-        public static void SaveDefaultCategories()
+        internal static void SaveDefaultCategories()
         {
             //After the users categories have been loaded from their database into the categoriesList
             //Check if it contains the default categories, if not add them to the database

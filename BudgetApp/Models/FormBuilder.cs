@@ -6,7 +6,7 @@ namespace BudgetApp.Models
 {
     internal class FormBuilder
     {
-        public static void PopulateTransactionColumns(DataGridView dataGridView)
+        internal static void PopulateTransactionColumns(DataGridView dataGridView)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -24,7 +24,7 @@ namespace BudgetApp.Models
             dataGridView.Columns[3].HeaderText = "Category";
         }
 
-        public static void PopulateTransactionRow(DataGridView dataGridView, Transaction transaction)
+        internal static void PopulateTransactionRow(DataGridView dataGridView, Transaction transaction)
         {
             int rowId = dataGridView.Rows.Add();
 
@@ -37,7 +37,7 @@ namespace BudgetApp.Models
 
         }
 
-        public static void PopulateTransactionRows(DataGridView dataGridView, List<Transaction> transactionList)
+        internal static void PopulateTransactionRows(DataGridView dataGridView, List<Transaction> transactionList)
         {
             for (int i = 0; i < transactionList.Count; i++)
             {
@@ -45,7 +45,7 @@ namespace BudgetApp.Models
             }
         }
 
-        public static void PopulateComboBox(ComboBox comoboBox)
+        internal static void PopulateComboBox(ComboBox comoboBox)
         {
             foreach (Category category in SqliteDataAccess.LoadCategories())
             {
