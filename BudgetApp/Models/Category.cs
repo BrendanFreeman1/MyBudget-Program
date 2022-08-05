@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using BudgetApp.Views;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace BudgetApp.Models
 {

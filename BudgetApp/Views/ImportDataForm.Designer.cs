@@ -39,7 +39,7 @@
             this.SaveBtn = new System.Windows.Forms.Button();
             this.CustomCategoryBtn = new System.Windows.Forms.Button();
             this.CurrentTransactionLabel = new System.Windows.Forms.Label();
-            this.Updatebtn = new System.Windows.Forms.Button();
+            this.UpdateBtn = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
@@ -141,7 +141,7 @@
             this.SaveBtn.TabIndex = 14;
             this.SaveBtn.Text = "Save";
             this.SaveBtn.UseVisualStyleBackColor = true;
-            this.SaveBtn.Click += new System.EventHandler(this.FinishBtn_Click);
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
             // CustomCategoryBtn
             // 
@@ -166,17 +166,17 @@
             this.CurrentTransactionLabel.TabIndex = 16;
             this.CurrentTransactionLabel.Text = "Current Transaction:";
             // 
-            // Updatebtn
+            // UpdateBtn
             // 
-            this.Updatebtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.Updatebtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Updatebtn.Location = new System.Drawing.Point(15, 817);
-            this.Updatebtn.Name = "Updatebtn";
-            this.Updatebtn.Size = new System.Drawing.Size(138, 24);
-            this.Updatebtn.TabIndex = 17;
-            this.Updatebtn.Text = "Update Selection";
-            this.Updatebtn.UseVisualStyleBackColor = true;
-            this.Updatebtn.Click += new System.EventHandler(this.Updatebtn_Click);
+            this.UpdateBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.UpdateBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UpdateBtn.Location = new System.Drawing.Point(15, 817);
+            this.UpdateBtn.Name = "UpdateBtn";
+            this.UpdateBtn.Size = new System.Drawing.Size(138, 24);
+            this.UpdateBtn.TabIndex = 17;
+            this.UpdateBtn.Text = "Update Selection";
+            this.UpdateBtn.UseVisualStyleBackColor = true;
+            this.UpdateBtn.Click += new System.EventHandler(this.Updatebtn_Click);
             // 
             // dataGridView
             // 
@@ -212,7 +212,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(1046, 853);
-            this.Controls.Add(this.Updatebtn);
+            this.Controls.Add(this.UpdateBtn);
             this.Controls.Add(this.CurrentTransactionLabel);
             this.Controls.Add(this.CustomCategoryBtn);
             this.Controls.Add(this.SaveBtn);
@@ -245,7 +245,7 @@
         private System.Windows.Forms.Button SaveBtn;
         private System.Windows.Forms.Button CustomCategoryBtn;
         private System.Windows.Forms.Label CurrentTransactionLabel;
-        private System.Windows.Forms.Button Updatebtn;
+        private System.Windows.Forms.Button UpdateBtn;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private static System.Windows.Forms.ComboBox categoryComboBox;

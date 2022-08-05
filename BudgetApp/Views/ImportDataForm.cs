@@ -29,27 +29,7 @@ namespace BudgetApp.Views
             transactionList.Clear();
             TransactionsDGVBuilder.PopulateTransactionColumns(dataGridView);
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
-        }
-
-        internal static void UpdateTransactionsCategories()
-        {
-            //Reload ComboBox with newly added category
-            ComboBoxBuilder.PopulateComboBox(categoryComboBox);
-
-            //When the user added a new Category to AutoCategorise by, we want to update whatever remains in the transactionsList
-
-            //Update the remainder of the list with the new categorisation
-            for (int i = listIndex; i < transactionList.Count; i++)
-            {
-                transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
-            }
-
-            //If the user is at the very last item in the transactionList list
-            if (listIndex >= transactionList.Count) { listIndex = transactionList.Count - 2; }
-
-            //Update the category combobox text with the users new category
-            categoryComboBox.SelectedItem = transactionList[listIndex].Category;
-        }
+        }        
 
         internal void OpenFile()
         {
@@ -163,8 +143,11 @@ namespace BudgetApp.Views
             }
         }
 
-        private void FinishBtn_Click(object sender, EventArgs e)
+        private void SaveBtn_Click(object sender, EventArgs e)
         {
+            //GIVE USER WARNING IF THEY WANT TO SAVE ALL TRANSACTIONS TO DATABASE
+            //USE BOOL TO SEE IF THEY"VE FINISHED GOING THROUGH CURRENT TRANSACTIONSLIST
+            
             foreach (Transaction transaction in transactionList)
             {
                 if(transaction.Category != "Ignore")
@@ -176,13 +159,36 @@ namespace BudgetApp.Views
             //Reload the now updated database and Re-calculate totals
             BudgetApp.ReloadForm();
 
+
+
             Close();
         }
 
         private void CustomCategoryBtn_Click(object sender, EventArgs e)
         {
             CustomCategoryForm customCategoryForm = new CustomCategoryForm();
+            customCategoryForm.FormClosed += new FormClosedEventHandler(UpdateTransactionsCategories);
             customCategoryForm.Show();
+        }
+
+        private void UpdateTransactionsCategories(object sender, FormClosedEventArgs e)
+        {
+            //Reload ComboBox with newly added category
+            ComboBoxBuilder.PopulateComboBox(categoryComboBox);
+
+            //When the user added a new Category to AutoCategorise by, we want to update whatever remains in the transactionsList
+
+            //Update the remainder of the list with the new categorisation
+            for (int i = listIndex; i < transactionList.Count; i++)
+            {
+                transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
+            }
+
+            //If the user is at the very last item in the transactionList list
+            if (listIndex >= transactionList.Count) { listIndex = transactionList.Count - 2; }
+
+            //Update the category combobox text with the users new category
+            categoryComboBox.SelectedItem = transactionList[listIndex].Category;
         }
     }
 }

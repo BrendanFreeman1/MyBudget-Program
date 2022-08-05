@@ -22,9 +22,6 @@ namespace BudgetApp.Views
             //Save the new category to the database
             CategoriesDataAccess.SaveCategory(category);
 
-            //Re-Populate the ComboBox with the updated Categories list
-            ImportDataForm.UpdateTransactionsCategories();
-
             Close();
         }
     }
