@@ -31,16 +31,16 @@ namespace BudgetApp
             LoadDataFromDatabase();
         }
 
-        static void LoadDataFromDatabase()
+        private static void LoadDataFromDatabase()
         {
-            transactionsList = SqliteDataAccess.LoadTransactions();
-            uniqueCategoriesList = SqliteDataAccess.LoadUniqueCategoryList();
+            transactionsList = TransactionsDataAccess.LoadTransactions();
+            uniqueCategoriesList = CategoriesDataAccess.LoadUniqueCategoryList();
 
             //Ensure user has the default categories
             Category.SaveDefaultCategories();
         }
 
-        void Importbtn_Click(object sender, EventArgs e)
+        private void Importbtn_Click(object sender, EventArgs e)
         {
             ImportDataForm importDataForm = new ImportDataForm();
             importDataForm.Show();
@@ -48,7 +48,7 @@ namespace BudgetApp
             importDataForm.OpenFile();           
         }
 
-        void PopulateFormBoxes()
+        private void PopulateFormBoxes()
         {
             if (transactionsList.Count > 0)
             {
@@ -75,7 +75,7 @@ namespace BudgetApp
             YearComboBox.Text = DateTime.Now.Year.ToString();
         }
 
-        void YearComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void YearComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             PopulateMonthBarGraph();
 
@@ -90,7 +90,7 @@ namespace BudgetApp
             YearTotalValue.Text = (expenses + income).ToString("0.##");
         }
 
-        void PopulateMonthBarGraph()
+        private void PopulateMonthBarGraph()
         {
             //Clear values from the chart
             monthChart.Series["Income"].Points.Clear();
@@ -162,10 +162,16 @@ namespace BudgetApp
 
         #endregion
 
-        void ViewTransactionbtn_Click(object sender, EventArgs e)
+        private void ViewTransactionbtn_Click(object sender, EventArgs e)
         {
             AllTransactionsForm allTransactionsForm = new AllTransactionsForm();
             allTransactionsForm.Show();
+        }
+
+        private void ViewCategoriesbtn_Click(object sender, EventArgs e)
+        {
+            AllCategoriesForm allCategoriesForm = new AllCategoriesForm();
+            allCategoriesForm.Show();
         }
     }
 }

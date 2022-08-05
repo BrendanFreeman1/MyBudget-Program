@@ -15,36 +15,36 @@ namespace BudgetApp.Views
             PopulateForm();
         }
 
-        void PopulateForm()
+        private void PopulateForm()
         {
             transactionList.Clear();
-            transactionList = SqliteDataAccess.LoadTransactions();
+            transactionList = TransactionsDataAccess.LoadTransactions();
 
-            FormBuilder.PopulateTransactionColumns(dataGridView);
+            TransactionsDGVBuilder.PopulateTransactionColumns(dataGridView);
 
-            FormBuilder.PopulateTransactionRows(dataGridView, transactionList);          
+            TransactionsDGVBuilder.PopulateTransactionRows(dataGridView, transactionList);
 
-            FormBuilder.PopulateComboBox(categoryComboBox);
+            ComboBoxBuilder.PopulateComboBox(categoryComboBox);
         }
 
-        void UpdateCategorybtn_Click(object sender, EventArgs e)
+        private void UpdateCategorybtn_Click(object sender, EventArgs e)
         {
             int row = dataGridView.CurrentCell.RowIndex;
 
             transactionList[row].Category = categoryComboBox.Text; 
             dataGridView.CurrentRow.Cells[3].Value = transactionList[row].Category;
 
-            SqliteDataAccess.UpdateTransaction(transactionList[row]);
+            TransactionsDataAccess.UpdateTransaction(transactionList[row]);
         }
 
-        void Deletebtn_Click(object sender, EventArgs e)
+        private void Deletebtn_Click(object sender, EventArgs e)
         {
             int row = dataGridView.CurrentCell.RowIndex;
             Transaction transaction = transactionList[row];
 
             transactionList.Remove(transaction);
             dataGridView.Rows.RemoveAt(row);
-            SqliteDataAccess.DeleteTransaction(transaction);
+            TransactionsDataAccess.DeleteTransaction(transaction);
         }
     }
 }

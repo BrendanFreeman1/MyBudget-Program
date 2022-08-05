@@ -16,7 +16,7 @@ namespace BudgetApp.Models
         {
             string defaultCategory = "Other";
 
-            foreach (Category category in SqliteDataAccess.LoadCategories())
+            foreach (Category category in CategoriesDataAccess.LoadCategories())
             {
                 //If the sample text is found within the transactionList description return the corresponding category
                 if (category.Tag != null && transaction.Description.ToLower().Contains(category.Tag))

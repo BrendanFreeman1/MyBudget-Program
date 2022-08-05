@@ -43,12 +43,12 @@ namespace BudgetApp.Models
             };
 
             //Get the names of the categories already in the database
-            List<string> categoryNames = SqliteDataAccess.LoadCategories().Select(c => c.Name).ToList();
+            List<string> categoryNames = CategoriesDataAccess.LoadCategories().Select(c => c.Name).ToList();
 
             //Compair the categories we want to add against what we already have
             foreach (Category defaultCategory in defaultCategories)
             {
-                if (!categoryNames.Contains(defaultCategory.Name)) { SqliteDataAccess.SaveCategory(defaultCategory); }
+                if (!categoryNames.Contains(defaultCategory.Name)) { CategoriesDataAccess.SaveCategory(defaultCategory); }
             }
         }
     }

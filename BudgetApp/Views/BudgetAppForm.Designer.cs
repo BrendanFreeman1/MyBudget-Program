@@ -59,7 +59,8 @@
             this.YearIncomeValue = new System.Windows.Forms.Label();
             this.YearIncomeLabel = new System.Windows.Forms.Label();
             this.YearTotalLabel = new System.Windows.Forms.Label();
-            this.ViewTransactionbtn = new System.Windows.Forms.Button();
+            this.ViewTransactionsbtn = new System.Windows.Forms.Button();
+            this.ViewCategoriesbtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.categoryExpencesChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.monthChart)).BeginInit();
             this.SuspendLayout();
@@ -434,15 +435,25 @@
             this.YearTotalLabel.TabIndex = 20;
             this.YearTotalLabel.Text = "Year Total:";
             // 
-            // ViewTransactionbtn
+            // ViewTransactionsbtn
             // 
-            this.ViewTransactionbtn.Location = new System.Drawing.Point(12, 38);
-            this.ViewTransactionbtn.Name = "ViewTransactionbtn";
-            this.ViewTransactionbtn.Size = new System.Drawing.Size(145, 23);
-            this.ViewTransactionbtn.TabIndex = 24;
-            this.ViewTransactionbtn.Text = "View All Transactions";
-            this.ViewTransactionbtn.UseVisualStyleBackColor = true;
-            this.ViewTransactionbtn.Click += new System.EventHandler(this.ViewTransactionbtn_Click);
+            this.ViewTransactionsbtn.Location = new System.Drawing.Point(12, 38);
+            this.ViewTransactionsbtn.Name = "ViewTransactionsbtn";
+            this.ViewTransactionsbtn.Size = new System.Drawing.Size(145, 23);
+            this.ViewTransactionsbtn.TabIndex = 24;
+            this.ViewTransactionsbtn.Text = "View All Transactions";
+            this.ViewTransactionsbtn.UseVisualStyleBackColor = true;
+            this.ViewTransactionsbtn.Click += new System.EventHandler(this.ViewTransactionbtn_Click);
+            // 
+            // ViewCategoriesbtn
+            // 
+            this.ViewCategoriesbtn.Location = new System.Drawing.Point(12, 67);
+            this.ViewCategoriesbtn.Name = "ViewCategoriesbtn";
+            this.ViewCategoriesbtn.Size = new System.Drawing.Size(145, 23);
+            this.ViewCategoriesbtn.TabIndex = 25;
+            this.ViewCategoriesbtn.Text = "View All Categories";
+            this.ViewCategoriesbtn.UseVisualStyleBackColor = true;
+            this.ViewCategoriesbtn.Click += new System.EventHandler(this.ViewCategoriesbtn_Click);
             // 
             // BudgetApp
             // 
@@ -451,7 +462,8 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1090, 975);
-            this.Controls.Add(this.ViewTransactionbtn);
+            this.Controls.Add(this.ViewCategoriesbtn);
+            this.Controls.Add(this.ViewTransactionsbtn);
             this.Controls.Add(this.YearExpensesValue);
             this.Controls.Add(this.YearExpensesLabel);
             this.Controls.Add(this.YearTotalValue);
@@ -509,7 +521,8 @@
         private System.Windows.Forms.Label YearIncomeValue;
         private System.Windows.Forms.Label YearIncomeLabel;
         private System.Windows.Forms.Label YearTotalLabel;
-        private System.Windows.Forms.Button ViewTransactionbtn;
+        private System.Windows.Forms.Button ViewTransactionsbtn;
+        private System.Windows.Forms.Button ViewCategoriesbtn;
     }
 }
 

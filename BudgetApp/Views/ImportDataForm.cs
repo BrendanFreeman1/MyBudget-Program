@@ -13,13 +13,13 @@ namespace BudgetApp.Views
     internal partial class ImportDataForm : Form
     {
         #region Initialise variables
-        static readonly List<Transaction> transactionList = new List<Transaction>();
-        static int listIndex = 0;
+        private static readonly List<Transaction> transactionList = new List<Transaction>();
+        private static int listIndex = 0;
 
         //Create excel objects
-        static Excel.Application xlApp;
-        static Excel.Workbook xlWorkBook;
-        static Excel.Worksheet xlWorkSheet;
+        private static Excel.Application xlApp;
+        private static Excel.Workbook xlWorkBook;
+        private static Excel.Worksheet xlWorkSheet;
         #endregion
 
         public ImportDataForm()
@@ -27,13 +27,14 @@ namespace BudgetApp.Views
             InitializeComponent();
 
             transactionList.Clear();
-            FormBuilder.PopulateTransactionColumns(dataGridView);
-            FormBuilder.PopulateComboBox(categoryComboBox);
+            TransactionsDGVBuilder.PopulateTransactionColumns(dataGridView);
+            ComboBoxBuilder.PopulateComboBox(categoryComboBox);
         }
+
         internal static void UpdateTransactionsCategories()
         {
             //Reload ComboBox with newly added category
-            FormBuilder.PopulateComboBox(categoryComboBox);
+            ComboBoxBuilder.PopulateComboBox(categoryComboBox);
 
             //When the user added a new Category to AutoCategorise by, we want to update whatever remains in the transactionsList
 
@@ -69,7 +70,7 @@ namespace BudgetApp.Views
             }
         }
 
-        void ImportData(string sFile)
+        private void ImportData(string sFile)
         {
             //Called once an excel file is chosen
             //Gets data from the selected excel, creates transaction objects and puts them into the transactionList
@@ -104,7 +105,7 @@ namespace BudgetApp.Views
             CleanUpExcelObjects();
         }
 
-        void CleanUpExcelObjects()
+        private void CleanUpExcelObjects()
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -117,15 +118,15 @@ namespace BudgetApp.Views
             xlApp.Quit();
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
         }
-        
-        void ConfirmBtn_Click(object sender, EventArgs e)
+
+        private void ConfirmBtn_Click(object sender, EventArgs e)
         {
             if (listIndex < transactionList.Count)
             {
                 //Set transactionList category to the users selection
                 transactionList[listIndex].Category = categoryComboBox.Text;
 
-                FormBuilder.PopulateTransactionRow(dataGridView, transactionList[listIndex]);
+                TransactionsDGVBuilder.DataGridViewTransactionRow(dataGridView, transactionList[listIndex]);
                 listIndex++;
 
                 //Display the next row from the excel for the user to view and select a category for
@@ -133,7 +134,7 @@ namespace BudgetApp.Views
             }
         }
 
-        void DisplayNextRowLabels()
+        private void DisplayNextRowLabels()
         {
             if (listIndex < transactionList.Count)
             {
@@ -144,7 +145,7 @@ namespace BudgetApp.Views
             }
         }
 
-        void Updatebtn_Click(object sender, EventArgs e)
+        private void Updatebtn_Click(object sender, EventArgs e)
         {
             //If the user doesn't have anything selected
             if (dataGridView.CurrentCell == null) { return; }
@@ -162,13 +163,13 @@ namespace BudgetApp.Views
             }
         }
 
-        void FinishBtn_Click(object sender, EventArgs e)
+        private void FinishBtn_Click(object sender, EventArgs e)
         {
             foreach (Transaction transaction in transactionList)
             {
                 if(transaction.Category != "Ignore")
                 {
-                    SqliteDataAccess.SaveTransaction(transaction);
+                    TransactionsDataAccess.SaveTransaction(transaction);
                 }
             }
 
@@ -178,7 +179,7 @@ namespace BudgetApp.Views
             Close();
         }
 
-        void CustomCategoryBtn_Click(object sender, EventArgs e)
+        private void CustomCategoryBtn_Click(object sender, EventArgs e)
         {
             CustomCategoryForm customCategoryForm = new CustomCategoryForm();
             customCategoryForm.Show();

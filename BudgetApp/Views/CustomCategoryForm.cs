@@ -11,7 +11,7 @@ namespace BudgetApp.Views
             InitializeComponent();
         }
 
-        void ConfirmBtn_Click(object sender, EventArgs e)
+        private void ConfirmBtn_Click(object sender, EventArgs e)
         {
             //Create new category object with data from the user input fields
             Category category = new Category(char.ToUpper(categoryNameBox.Text[0]) + categoryNameBox.Text.Substring(1), tagBox.Text.ToLower());
@@ -20,7 +20,7 @@ namespace BudgetApp.Views
             if(category.Tag == "") { category.Tag = null; }
 
             //Save the new category to the database
-            SqliteDataAccess.SaveCategory(category);
+            CategoriesDataAccess.SaveCategory(category);
 
             //Re-Populate the ComboBox with the updated Categories list
             ImportDataForm.UpdateTransactionsCategories();
