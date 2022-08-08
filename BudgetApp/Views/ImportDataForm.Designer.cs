@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            categoryComboBox = new System.Windows.Forms.ComboBox();
+            this.categoryComboBox = new System.Windows.Forms.ComboBox();
             this.confirmBtn = new System.Windows.Forms.Button();
             this.descriptionText = new System.Windows.Forms.Label();
             this.dateText = new System.Windows.Forms.Label();
@@ -47,23 +47,23 @@
             // 
             // categoryComboBox
             // 
-            categoryComboBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            categoryComboBox.FormattingEnabled = true;
-            categoryComboBox.Location = new System.Drawing.Point(896, 42);
-            categoryComboBox.Name = "categoryComboBox";
-            categoryComboBox.Size = new System.Drawing.Size(138, 21);
-            categoryComboBox.Sorted = true;
-            categoryComboBox.TabIndex = 18;
+            this.categoryComboBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.categoryComboBox.FormattingEnabled = true;
+            this.categoryComboBox.Location = new System.Drawing.Point(896, 42);
+            this.categoryComboBox.Name = "categoryComboBox";
+            this.categoryComboBox.Size = new System.Drawing.Size(138, 21);
+            this.categoryComboBox.Sorted = true;
+            this.categoryComboBox.TabIndex = 18;
             // 
             // confirmBtn
             // 
             this.confirmBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.confirmBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.confirmBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.confirmBtn.Location = new System.Drawing.Point(896, 12);
             this.confirmBtn.Name = "confirmBtn";
             this.confirmBtn.Size = new System.Drawing.Size(138, 24);
             this.confirmBtn.TabIndex = 4;
-            this.confirmBtn.Text = "Confirm";
+            this.confirmBtn.Text = "Confirm Category";
             this.confirmBtn.UseVisualStyleBackColor = true;
             this.confirmBtn.Click += new System.EventHandler(this.ConfirmBtn_Click);
             // 
@@ -145,7 +145,7 @@
             // 
             // CustomCategoryBtn
             // 
-            this.CustomCategoryBtn.Location = new System.Drawing.Point(159, 817);
+            this.CustomCategoryBtn.Location = new System.Drawing.Point(15, 817);
             this.CustomCategoryBtn.Name = "CustomCategoryBtn";
             this.CustomCategoryBtn.Size = new System.Drawing.Size(137, 24);
             this.CustomCategoryBtn.TabIndex = 15;
@@ -170,7 +170,7 @@
             // 
             this.UpdateBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.UpdateBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UpdateBtn.Location = new System.Drawing.Point(15, 817);
+            this.UpdateBtn.Location = new System.Drawing.Point(158, 817);
             this.UpdateBtn.Name = "UpdateBtn";
             this.UpdateBtn.Size = new System.Drawing.Size(138, 24);
             this.UpdateBtn.TabIndex = 17;
@@ -223,7 +223,7 @@
             this.Controls.Add(this.dateText);
             this.Controls.Add(this.descriptionText);
             this.Controls.Add(this.confirmBtn);
-            this.Controls.Add(categoryComboBox);
+            this.Controls.Add(this.categoryComboBox);
             this.Controls.Add(this.dataGridView);
             this.Name = "ImportDataForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -248,6 +248,6 @@
         private System.Windows.Forms.Button UpdateBtn;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
-        private static System.Windows.Forms.ComboBox categoryComboBox;
+        private System.Windows.Forms.ComboBox categoryComboBox;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using BudgetApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -76,8 +77,11 @@ namespace BudgetApp.Views
                 Close();
 
                 ErrorForm errorForm = new ErrorForm();
-                errorForm.Show();
+                errorForm.ConfirmBtn.Visible = false;
+                errorForm.CancelBtn.Location = new Point(110, 90);
+                errorForm.CancelBtn.Text = "Close";
                 errorForm.ErrorMessage("Please select a file with the correct format.");
+                errorForm.Show();
             }
 
             DisplayNextRowLabels();
@@ -146,22 +150,29 @@ namespace BudgetApp.Views
         private void SaveBtn_Click(object sender, EventArgs e)
         {
             //GIVE USER WARNING IF THEY WANT TO SAVE ALL TRANSACTIONS TO DATABASE
-            //USE BOOL TO SEE IF THEY"VE FINISHED GOING THROUGH CURRENT TRANSACTIONSLIST
-            
-            foreach (Transaction transaction in transactionList)
+            //USE BOOL TO SEE IF THEY"VE FINISHED GOING THROUGH CURRENT TRANSACTIONSLIST            
+
+            ErrorForm errorForm = new ErrorForm();             
+            errorForm.ErrorMessage("This will save all of the transactions to file\n(Not just the ones that have had their category confirmed)\nAre you sure?");
+            errorForm.Show();
+
+            errorForm.ConfirmBtn.Click += delegate (Object obj, EventArgs ev)
             {
-                if(transaction.Category != "Ignore")
+                foreach (Transaction transaction in transactionList)
                 {
-                    TransactionsDataAccess.SaveTransaction(transaction);
+                    if (transaction.Category != "Ignore")
+                    {
+                        TransactionsDataAccess.SaveTransaction(transaction);
+                    }
                 }
-            }
 
-            //Reload the now updated database and Re-calculate totals
-            BudgetApp.ReloadForm();
+                //Reload the now updated database and Re-calculate totals
+                BudgetApp.ReloadForm();
 
+                Close();
+            };
 
-
-            Close();
+            errorForm.Close();
         }
 
         private void CustomCategoryBtn_Click(object sender, EventArgs e)

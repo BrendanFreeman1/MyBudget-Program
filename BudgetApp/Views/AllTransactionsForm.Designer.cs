@@ -77,7 +77,7 @@
             this.Deletebtn.ForeColor = System.Drawing.Color.Black;
             this.Deletebtn.Location = new System.Drawing.Point(918, 810);
             this.Deletebtn.Name = "Deletebtn";
-            this.Deletebtn.Size = new System.Drawing.Size(138, 23);
+            this.Deletebtn.Size = new System.Drawing.Size(138, 24);
             this.Deletebtn.TabIndex = 4;
             this.Deletebtn.Text = "Delete";
             this.Deletebtn.UseVisualStyleBackColor = true;

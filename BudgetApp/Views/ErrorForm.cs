@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace BudgetApp.Views
@@ -20,6 +13,11 @@ namespace BudgetApp.Views
         internal void ErrorMessage(string message)
         {
             ErrorLabel.Text = message;
+        }
+
+        private void CancelBtn_Click(object sender, System.EventArgs e)
+        {
+            Close();
         }
     }
 }
