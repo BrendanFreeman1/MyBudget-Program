@@ -7,25 +7,27 @@ namespace BudgetApp.Models
     {
         internal static void PopulateCategoryColumns(DataGridView dataGridView)
         {
+            CreateDataGridViewColumn(dataGridView, "#", 40);
             CreateDataGridViewColumn(dataGridView, "Category", 100);
             CreateDataGridViewColumn(dataGridView, "Tag", 200);
         }
 
-        internal static void PopulateCategoryRows(DataGridView dataGridView, List<Category> categgoryList)
-        {
-            for (int i = 0; i < categgoryList.Count; i++)
+        internal static void PopulateCategoryRows(DataGridView dataGridView, List<Category> categoryList)
+        {             
+            for (int i = 0; i < categoryList.Count; i++)
             {
-                DataGridViewCategoryRow(dataGridView, categgoryList[i]);
+                DataGridViewCategoryRow(i, dataGridView, categoryList[i]);
             }
         }
 
-        internal static void DataGridViewCategoryRow(DataGridView dataGridView, Category category)
+        internal static void DataGridViewCategoryRow(int number, DataGridView dataGridView, Category category)
         {
             int rowId = dataGridView.Rows.Add();
             DataGridViewRow row = dataGridView.Rows[rowId];
 
-            row.Cells[0].Value = category.Name;
-            row.Cells[1].Value = category.Tag;
+            row.Cells[0].Value = number;
+            row.Cells[1].Value = category.Name;
+            row.Cells[2].Value = category.Tag;
         }
     }
 }

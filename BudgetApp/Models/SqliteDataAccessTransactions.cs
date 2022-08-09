@@ -27,8 +27,8 @@ namespace BudgetApp.Models
                 }
             }
         }
-
-        internal static void UpdateTransaction(Transaction transaction)
+         
+        internal static void UpdateTransactionCategory(Transaction transaction)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
             {

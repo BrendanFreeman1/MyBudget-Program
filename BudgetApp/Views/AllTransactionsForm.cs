@@ -29,17 +29,17 @@ namespace BudgetApp.Views
 
         private void UpdateCategorybtn_Click(object sender, EventArgs e)
         {
-            int row = dataGridView.CurrentCell.RowIndex;
+            int row = dataGridView.CurrentRow.Index;
 
             transactionList[row].Category = categoryComboBox.Text; 
             dataGridView.CurrentRow.Cells[3].Value = transactionList[row].Category;
 
-            TransactionsDataAccess.UpdateTransaction(transactionList[row]);
+            TransactionsDataAccess.UpdateTransactionCategory(transactionList[row]);
         }
 
         private void Deletebtn_Click(object sender, EventArgs e)
         {
-            int row = dataGridView.CurrentCell.RowIndex;
+            int row = dataGridView.CurrentRow.Index;
             Transaction transaction = transactionList[row];
 
             transactionList.Remove(transaction);

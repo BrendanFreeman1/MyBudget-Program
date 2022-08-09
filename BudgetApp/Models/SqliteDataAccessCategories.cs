@@ -30,7 +30,19 @@ namespace BudgetApp.Models
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
             {
-                cnn.Execute("DELETE FROM categories WHERE ID = @ID", category);
+                cnn.Execute("DELETE FROM Categories WHERE ID = @ID", category);
+            }
+        }
+
+        internal static void UpdateCategory(Category category, bool movingUp)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
+            {
+                int newID = 0;
+
+                if(movingUp) { newID = category.ID - 1; } else { newID = category.ID + 1; }
+
+                cnn.Execute("UPDATE Categories SET (Name, Tag) = (@Name, @Tag) WHERE ID = " + newID, category);
             }
         }
 

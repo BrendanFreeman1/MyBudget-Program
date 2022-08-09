@@ -30,9 +30,13 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AllCategoriesForm));
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.DeleteBtn = new System.Windows.Forms.Button();
             this.CreateCategoryBtn = new System.Windows.Forms.Button();
+            this.CategoriesLabel = new System.Windows.Forms.Label();
+            this.UpBtn = new System.Windows.Forms.Button();
+            this.DownBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,10 +46,7 @@
             this.dataGridView.AllowUserToDeleteRows = false;
             this.dataGridView.AllowUserToResizeColumns = false;
             this.dataGridView.AllowUserToResizeRows = false;
-            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView.BackgroundColor = System.Drawing.Color.Black;
+            this.dataGridView.BackgroundColor = System.Drawing.Color.DimGray;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
@@ -56,7 +57,7 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView.Location = new System.Drawing.Point(13, 12);
             this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
@@ -68,13 +69,14 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             this.dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView.Size = new System.Drawing.Size(322, 618);
+            this.dataGridView.Size = new System.Drawing.Size(363, 618);
             this.dataGridView.TabIndex = 4;
             // 
             // DeleteBtn
             // 
+            this.DeleteBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.DeleteBtn.ForeColor = System.Drawing.Color.Black;
-            this.DeleteBtn.Location = new System.Drawing.Point(420, 607);
+            this.DeleteBtn.Location = new System.Drawing.Point(389, 608);
             this.DeleteBtn.Name = "DeleteBtn";
             this.DeleteBtn.Size = new System.Drawing.Size(138, 23);
             this.DeleteBtn.TabIndex = 5;
@@ -84,8 +86,9 @@
             // 
             // CreateCategoryBtn
             // 
+            this.CreateCategoryBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CreateCategoryBtn.ForeColor = System.Drawing.Color.Black;
-            this.CreateCategoryBtn.Location = new System.Drawing.Point(420, 578);
+            this.CreateCategoryBtn.Location = new System.Drawing.Point(389, 579);
             this.CreateCategoryBtn.Name = "CreateCategoryBtn";
             this.CreateCategoryBtn.Size = new System.Drawing.Size(138, 23);
             this.CreateCategoryBtn.TabIndex = 6;
@@ -93,20 +96,59 @@
             this.CreateCategoryBtn.UseVisualStyleBackColor = true;
             this.CreateCategoryBtn.Click += new System.EventHandler(this.CreateCategorybtn_Click);
             // 
+            // CategoriesLabel
+            // 
+            this.CategoriesLabel.AutoSize = true;
+            this.CategoriesLabel.Location = new System.Drawing.Point(391, 12);
+            this.CategoriesLabel.Name = "CategoriesLabel";
+            this.CategoriesLabel.Size = new System.Drawing.Size(127, 104);
+            this.CategoriesLabel.TabIndex = 7;
+            this.CategoriesLabel.Text = resources.GetString("CategoriesLabel.Text");
+            this.CategoriesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // UpBtn
+            // 
+            this.UpBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.UpBtn.ForeColor = System.Drawing.Color.Black;
+            this.UpBtn.Location = new System.Drawing.Point(389, 129);
+            this.UpBtn.Name = "UpBtn";
+            this.UpBtn.Size = new System.Drawing.Size(138, 23);
+            this.UpBtn.TabIndex = 8;
+            this.UpBtn.Text = "Move Up";
+            this.UpBtn.UseVisualStyleBackColor = true;
+            this.UpBtn.Click += new System.EventHandler(this.UpBtn_Click);
+            // 
+            // DownBtn
+            // 
+            this.DownBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DownBtn.ForeColor = System.Drawing.Color.Black;
+            this.DownBtn.Location = new System.Drawing.Point(389, 158);
+            this.DownBtn.Name = "DownBtn";
+            this.DownBtn.Size = new System.Drawing.Size(138, 23);
+            this.DownBtn.TabIndex = 9;
+            this.DownBtn.Text = "Move Down";
+            this.DownBtn.UseVisualStyleBackColor = true;
+            this.DownBtn.Click += new System.EventHandler(this.DownBtn_Click);
+            // 
             // AllCategoriesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(570, 642);
+            this.ClientSize = new System.Drawing.Size(539, 642);
+            this.Controls.Add(this.DownBtn);
+            this.Controls.Add(this.UpBtn);
+            this.Controls.Add(this.CategoriesLabel);
             this.Controls.Add(this.CreateCategoryBtn);
             this.Controls.Add(this.DeleteBtn);
             this.Controls.Add(this.dataGridView);
             this.ForeColor = System.Drawing.Color.White;
             this.Name = "AllCategoriesForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AllCategoriesForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -115,5 +157,8 @@
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Button DeleteBtn;
         private System.Windows.Forms.Button CreateCategoryBtn;
+        private System.Windows.Forms.Label CategoriesLabel;
+        private System.Windows.Forms.Button UpBtn;
+        private System.Windows.Forms.Button DownBtn;
     }
 }

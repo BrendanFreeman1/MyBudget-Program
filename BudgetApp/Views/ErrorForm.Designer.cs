@@ -39,7 +39,7 @@
             this.ErrorLabel.ForeColor = System.Drawing.Color.White;
             this.ErrorLabel.Location = new System.Drawing.Point(0, 0);
             this.ErrorLabel.Name = "ErrorLabel";
-            this.ErrorLabel.Size = new System.Drawing.Size(361, 126);
+            this.ErrorLabel.Size = new System.Drawing.Size(429, 175);
             this.ErrorLabel.TabIndex = 0;
             this.ErrorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -47,7 +47,7 @@
             // 
             this.CancelBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.CancelBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CancelBtn.Location = new System.Drawing.Point(40, 90);
+            this.CancelBtn.Location = new System.Drawing.Point(60, 137);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(138, 24);
             this.CancelBtn.TabIndex = 18;
@@ -59,7 +59,7 @@
             // 
             this.ConfirmBtn.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.ConfirmBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ConfirmBtn.Location = new System.Drawing.Point(184, 90);
+            this.ConfirmBtn.Location = new System.Drawing.Point(232, 137);
             this.ConfirmBtn.Name = "ConfirmBtn";
             this.ConfirmBtn.Size = new System.Drawing.Size(138, 24);
             this.ConfirmBtn.TabIndex = 19;
@@ -71,13 +71,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(361, 126);
+            this.ClientSize = new System.Drawing.Size(429, 175);
             this.Controls.Add(this.ConfirmBtn);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.ErrorLabel);
             this.Name = "ErrorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ErrorForm";
             this.ResumeLayout(false);
 
         }

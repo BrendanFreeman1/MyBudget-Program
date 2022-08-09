@@ -117,4 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CategoriesLabel.Text" xml:space="preserve">
+    <value>Transactions will be auto 
+categorised by the order 
+of the tags displayed 
+here. Tags higher on 
+the list are prioritized.
+Please reorder this list to 
+adjust which tags
+you want to have priority.</value>
+  </data>
 </root>

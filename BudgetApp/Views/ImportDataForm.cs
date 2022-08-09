@@ -15,7 +15,8 @@ namespace BudgetApp.Views
     {
         #region Initialise variables
         private static readonly List<Transaction> transactionList = new List<Transaction>();
-        private static int listIndex = 0;
+        private static int listIndex;
+        private bool endOfList = false;
 
         //Create excel objects
         private static Excel.Application xlApp;
@@ -27,6 +28,7 @@ namespace BudgetApp.Views
         {
             InitializeComponent();
 
+            listIndex = 0;
             transactionList.Clear();
             TransactionsDGVBuilder.PopulateTransactionColumns(dataGridView);
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
@@ -78,7 +80,7 @@ namespace BudgetApp.Views
 
                 ErrorForm errorForm = new ErrorForm();
                 errorForm.ConfirmBtn.Visible = false;
-                errorForm.CancelBtn.Location = new Point(110, 90);
+                errorForm.CancelBtn.Location = new Point(143, 135);
                 errorForm.CancelBtn.Text = "Close";
                 errorForm.ErrorMessage("Please select a file with the correct format.");
                 errorForm.Show();
@@ -105,13 +107,15 @@ namespace BudgetApp.Views
 
         private void ConfirmBtn_Click(object sender, EventArgs e)
         {
-            if (listIndex < transactionList.Count)
+            if (!endOfList)
             {
                 //Set transactionList category to the users selection
                 transactionList[listIndex].Category = categoryComboBox.Text;
 
                 TransactionsDGVBuilder.DataGridViewTransactionRow(dataGridView, transactionList[listIndex]);
                 listIndex++;
+
+                if (listIndex >= transactionList.Count) { listIndex = transactionList.Count-1; endOfList = true; }
 
                 //Display the next row from the excel for the user to view and select a category for
                 DisplayNextRowLabels();
@@ -120,7 +124,7 @@ namespace BudgetApp.Views
 
         private void DisplayNextRowLabels()
         {
-            if (listIndex < transactionList.Count)
+            if (!endOfList)
             {
                 dateLabel.Text = transactionList[listIndex].Date.ToString();
                 descriptionLabel.Text = transactionList[listIndex].Description;
@@ -132,28 +136,28 @@ namespace BudgetApp.Views
         private void Updatebtn_Click(object sender, EventArgs e)
         {
             //If the user doesn't have anything selected
-            if (dataGridView.CurrentCell == null) { return; }
+            if (dataGridView.CurrentRow == null) { return; }
 
-            //Ensure we can only edit the Categories column
-            if (dataGridView.CurrentCell.ColumnIndex == 3)
-            {
-                int row = dataGridView.CurrentCell.RowIndex;
+            int row = dataGridView.CurrentRow.Index;
 
-                transactionList[row].Category = categoryComboBox.Text;
-                dataGridView.CurrentCell.Value = transactionList[row].Category;
+            transactionList[row].Category = categoryComboBox.Text;
+            dataGridView.CurrentRow.Cells[3].Value = transactionList[row].Category;
 
-                //Return the ComoboBox text to the suggested category for the current transaction
-                categoryComboBox.Text = Transaction.AutoCategorise(transactionList[listIndex]);
-            }
+            //Return the ComoboBox text to the suggested category for the current transaction
+            categoryComboBox.Text = Transaction.AutoCategorise(transactionList[listIndex]);
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            //GIVE USER WARNING IF THEY WANT TO SAVE ALL TRANSACTIONS TO DATABASE
-            //USE BOOL TO SEE IF THEY"VE FINISHED GOING THROUGH CURRENT TRANSACTIONSLIST            
+            ErrorForm errorForm = new ErrorForm();
 
-            ErrorForm errorForm = new ErrorForm();             
-            errorForm.ErrorMessage("This will save all of the transactions to file\n(Not just the ones that have had their category confirmed)\nAre you sure?");
+            if (!endOfList)
+            {
+                errorForm.ErrorMessage("This will save all transactions from the imported CSV file to your database\n(Not just the ones that have had their category confirmed)\nAre you sure?");
+            }else{
+                errorForm.ErrorMessage("This will save all listed transactions to your database, Are you sure?");
+            }
+            
             errorForm.Show();
 
             errorForm.ConfirmBtn.Click += delegate (Object obj, EventArgs ev)
@@ -166,13 +170,12 @@ namespace BudgetApp.Views
                     }
                 }
 
-                //Reload the now updated database and Re-calculate totals
-                BudgetApp.ReloadForm();
-
                 Close();
-            };
 
-            errorForm.Close();
+                //Reload the now updated database and Re-calculate totals on the main form
+                BudgetApp.ReloadForm();
+                errorForm.Close();
+            };            
         }
 
         private void CustomCategoryBtn_Click(object sender, EventArgs e)
@@ -196,7 +199,7 @@ namespace BudgetApp.Views
             }
 
             //If the user is at the very last item in the transactionList list
-            if (listIndex >= transactionList.Count) { listIndex = transactionList.Count - 2; }
+            if (endOfList) { listIndex = transactionList.Count - 2; }
 
             //Update the category combobox text with the users new category
             categoryComboBox.SelectedItem = transactionList[listIndex].Category;
