@@ -13,19 +13,19 @@ namespace BudgetApp.Models
         }
 
         internal static void PopulateCategoryRows(DataGridView dataGridView, List<Category> categoryList)
-        {             
-            for (int i = 0; i < categoryList.Count; i++)
+        {
+            foreach(Category category in categoryList)
             {
-                DataGridViewCategoryRow(i, dataGridView, categoryList[i]);
+                DataGridViewCategoryRow(dataGridView, category);
             }
         }
 
-        internal static void DataGridViewCategoryRow(int number, DataGridView dataGridView, Category category)
+        internal static void DataGridViewCategoryRow( DataGridView dataGridView, Category category)
         {
             int rowId = dataGridView.Rows.Add();
             DataGridViewRow row = dataGridView.Rows[rowId];
 
-            row.Cells[0].Value = number;
+            row.Cells[0].Value = category.ID;
             row.Cells[1].Value = category.Name;
             row.Cells[2].Value = category.Tag;
         }

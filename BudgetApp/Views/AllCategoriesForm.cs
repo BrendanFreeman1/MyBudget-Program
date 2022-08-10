@@ -17,8 +17,11 @@ namespace BudgetApp.Views
 
         private void PopulateForm()
         {
+            CategoriesLabel.Text = "Transactions will be auto\ncategorised by the order\nof the tags displayed\nhere.Please reorder this list\nto adjust which tags you\nwant to have priority.";
+
             categoriesList.Clear();
             dataGridView.Rows.Clear();
+            dataGridView.Columns.Clear();
 
             categoriesList = CategoriesDataAccess.LoadCategories();
             CategoryDGVBuilder.PopulateCategoryColumns(dataGridView);
@@ -30,9 +33,8 @@ namespace BudgetApp.Views
             int row = dataGridView.CurrentRow.Index;
             Category category = categoriesList[row];
 
-            categoriesList.Remove(category);
-            dataGridView.Rows.RemoveAt(row);
             CategoriesDataAccess.DeleteCategory(category);
+            PopulateForm();
         }
 
         private void CreateCategorybtn_Click(object sender, EventArgs e)
@@ -42,7 +44,7 @@ namespace BudgetApp.Views
             customCategoryForm.Show();
         }
 
-        void Child_FormClosed(object sender, FormClosedEventArgs e)
+        private void Child_FormClosed(object sender, FormClosedEventArgs e)
         {
             PopulateForm();
         }
@@ -52,7 +54,7 @@ namespace BudgetApp.Views
             int row = dataGridView.CurrentRow.Index;
 
             //Only proceed if we're not at the first item in the list
-            if(row > 0) { MoveSelected(row, true); }
+            if(row > 0) { MoveSelected(row, row-1); }
         }
 
         private void DownBtn_Click(object sender, EventArgs e)
@@ -60,31 +62,27 @@ namespace BudgetApp.Views
             int row = dataGridView.CurrentRow.Index;
 
             //Only proceed if we're not at the last item in the list
-            if (row < categoriesList.Count-1) MoveSelected(row, false);
+            if (row < categoriesList.Count-1) MoveSelected(row, row+1);
         }
 
-        private void MoveSelected(int row, bool movingUp)
+        private void MoveSelected(int row, int rowToSwap)
         {
-            int rowToSwap;
-
-            if (movingUp) { rowToSwap = row - 1; } else { rowToSwap = row + 1; }
-
+            const int TEMP_ID = -1;
             Category selectedCategory = categoriesList[row];
             Category categoryToSwap = categoriesList[rowToSwap];
 
-            //Swap categories in List
-            categoriesList[row] = categoryToSwap;
-            categoriesList[rowToSwap] = selectedCategory;
+            //ID must be unique so we temporarily set the selected categories ID to a number that will always be unique
+            CategoriesDataAccess.UpdateCategoryID(selectedCategory, TEMP_ID);
+            //Change the ID in our local object as well so the database is looking in the right place when we pass it again
+            selectedCategory.ID = TEMP_ID;
+            //Move the category to swap into the selected categories place now that it is vacant
+            CategoriesDataAccess.UpdateCategoryID(categoryToSwap, row);
+            //Move the selected category from its temp place into the place of the category its swapping with
+            CategoriesDataAccess.UpdateCategoryID(selectedCategory, rowToSwap);
 
-            //Swap categories in database
-            CategoriesDataAccess.UpdateCategory(selectedCategory, movingUp); //Moving up one position
-            CategoriesDataAccess.UpdateCategory(categoryToSwap, !movingUp); //Moving down one position
+            PopulateForm();
 
-            //Redraw DataGridView
-            dataGridView.Rows.Clear();
-            CategoryDGVBuilder.PopulateCategoryRows(dataGridView, categoriesList);
-
-            //Set the selection back to the category the user had selectedCategory previously
+            //Set the selection back to the category the user had selected previously
             dataGridView.CurrentCell = dataGridView.Rows[rowToSwap].Cells[0];
         }
     }

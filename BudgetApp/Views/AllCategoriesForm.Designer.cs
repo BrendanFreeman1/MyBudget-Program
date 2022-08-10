@@ -30,7 +30,6 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AllCategoriesForm));
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.DeleteBtn = new System.Windows.Forms.Button();
             this.CreateCategoryBtn = new System.Windows.Forms.Button();
@@ -101,16 +100,15 @@
             this.CategoriesLabel.AutoSize = true;
             this.CategoriesLabel.Location = new System.Drawing.Point(391, 12);
             this.CategoriesLabel.Name = "CategoriesLabel";
-            this.CategoriesLabel.Size = new System.Drawing.Size(127, 104);
+            this.CategoriesLabel.Size = new System.Drawing.Size(0, 13);
             this.CategoriesLabel.TabIndex = 7;
-            this.CategoriesLabel.Text = resources.GetString("CategoriesLabel.Text");
             this.CategoriesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UpBtn
             // 
             this.UpBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.UpBtn.ForeColor = System.Drawing.Color.Black;
-            this.UpBtn.Location = new System.Drawing.Point(389, 129);
+            this.UpBtn.Location = new System.Drawing.Point(389, 103);
             this.UpBtn.Name = "UpBtn";
             this.UpBtn.Size = new System.Drawing.Size(138, 23);
             this.UpBtn.TabIndex = 8;
@@ -122,7 +120,7 @@
             // 
             this.DownBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.DownBtn.ForeColor = System.Drawing.Color.Black;
-            this.DownBtn.Location = new System.Drawing.Point(389, 158);
+            this.DownBtn.Location = new System.Drawing.Point(389, 132);
             this.DownBtn.Name = "DownBtn";
             this.DownBtn.Size = new System.Drawing.Size(138, 23);
             this.DownBtn.TabIndex = 9;

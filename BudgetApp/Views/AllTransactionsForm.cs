@@ -18,12 +18,12 @@ namespace BudgetApp.Views
         private void PopulateForm()
         {
             transactionList.Clear();
+            dataGridView.Columns.Clear();
+            dataGridView.Rows.Clear();
+
             transactionList = TransactionsDataAccess.LoadTransactions();
-
             TransactionsDGVBuilder.PopulateTransactionColumns(dataGridView);
-
             TransactionsDGVBuilder.PopulateTransactionRows(dataGridView, transactionList);
-
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
         }
 
@@ -33,8 +33,10 @@ namespace BudgetApp.Views
 
             transactionList[row].Category = categoryComboBox.Text; 
             dataGridView.CurrentRow.Cells[3].Value = transactionList[row].Category;
-
             TransactionsDataAccess.UpdateTransactionCategory(transactionList[row]);
+
+            //Set the selection back to the category the user had selected previously
+            dataGridView.CurrentCell = dataGridView.Rows[row].Cells[0];
         }
 
         private void Deletebtn_Click(object sender, EventArgs e)

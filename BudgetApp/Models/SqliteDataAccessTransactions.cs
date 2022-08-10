@@ -12,8 +12,7 @@ namespace BudgetApp.Models
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
             {
-                var output = cnn.Query<Transaction>("SELECT * FROM Transactions", new DynamicParameters());
-                return output.ToList();
+                return cnn.Query<Transaction>("SELECT * FROM Transactions", new DynamicParameters()).ToList();
             }
         }
 

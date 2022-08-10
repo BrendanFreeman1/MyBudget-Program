@@ -13,8 +13,7 @@ namespace BudgetApp.Models
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
             {
-                var output = cnn.Query<Category>("SELECT * FROM Categories", new DynamicParameters());
-                return output.ToList();
+                return cnn.Query<Category>("SELECT * FROM Categories", new DynamicParameters()).ToList();
             }
         }
 
@@ -34,15 +33,11 @@ namespace BudgetApp.Models
             }
         }
 
-        internal static void UpdateCategory(Category category, bool movingUp)
+        internal static void UpdateCategoryID(Category category, int newID)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
             {
-                int newID = 0;
-
-                if(movingUp) { newID = category.ID - 1; } else { newID = category.ID + 1; }
-
-                cnn.Execute("UPDATE Categories SET (Name, Tag) = (@Name, @Tag) WHERE ID = " + newID, category);
+                cnn.Execute("UPDATE Categories SET ID = " + newID + " WHERE ID = @ID", category);
             }
         }
 
