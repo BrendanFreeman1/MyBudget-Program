@@ -20,6 +20,7 @@ namespace BudgetApp
         {
             InitializeComponent();
             ReloadForm();
+            SetDateTimePickers();
 
             if (!Settings.Default.messageShown)
             {
@@ -37,24 +38,23 @@ namespace BudgetApp
         internal static void ReloadForm()
         {
             LoadDataFromDatabase();
-            PopulateFormsBoxes();
-            PopulateYearLabels();
+            PopulateYearComboBox();
+            PopulateDefinedDateTotals();
             PopulateCategoryGraph();
-            PopulateDateTotals();
+            PopulateYearTotals();
             PopulateMonthBarGraph();
         }
 
         private static void LoadDataFromDatabase()
         {
             transactionsList = TransactionsDataAccess.LoadTransactions();
-            uniqueCategoriesList = CategoriesDataAccess.LoadUniqueCategoryList();
 
             //Ensure user has the default categories
+            uniqueCategoriesList = CategoriesDataAccess.LoadUniqueCategoryList();
             Category.SaveDefaultCategories();
         }
 
-
-        private static void PopulateFormsBoxes()
+        private static void SetDateTimePickers()
         {
             if (transactionsList.Count > 0)
             {
@@ -65,37 +65,43 @@ namespace BudgetApp
                 //Set DateTimePickers dates
                 FromDateTimePicker.Value = transactionsList.First().Date;
                 ToDateTimePicker.Value = transactionsList.Last().Date;
+            }
+        }
 
-                //Populate YearComoboBox
+        private static void PopulateYearComboBox()
+        {
+            if (transactionsList.Count > 0)
+            {
                 int currentYear = transactionsList.First().Date.Year;
                 int lastYear = transactionsList.Last().Date.Year;
+
                 //Add all the years between the first and last to the YearComboBox
                 while (currentYear <= lastYear)
                 {
                     YearComboBox.Items.Add(currentYear.ToString());
                     currentYear++;
                 }
-            }
 
-            //Set the YearComboBox to the current year
-            YearComboBox.Text = DateTime.Now.Year.ToString();
+                //Set the YearComboBox to the most recent year
+                YearComboBox.Text = lastYear.ToString();
+            }            
         }
 
         #region DateTime Pickers
 
         private void FromDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            PopulateDateTotals();
+            PopulateDefinedDateTotals();
             PopulateCategoryGraph();
         }
 
         private void ToDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            PopulateDateTotals();
+            PopulateDefinedDateTotals();
             PopulateCategoryGraph();
         }
 
-        private static void PopulateDateTotals()
+        private static void PopulateDefinedDateTotals()
         {
             double income = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, "Income");
             double expenses = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, null) - income;
@@ -113,12 +119,14 @@ namespace BudgetApp
             //Add the totals per category to the chart, Except for the 'Ignore' and 'Income' Categories
             foreach (string categoryName in uniqueCategoriesList)
             {
-                double categoryTotal = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, categoryName);
-
-                //Expenses
-                if (categoryTotal != 0 && categoryName != "Ignore" && categoryName != "Income")
+                if(categoryName != "Ignore" && categoryName != "Income")
                 {
-                    categoryExpencesChart.Series["Category Totals"].Points.AddXY(categoryName, categoryTotal * -1);
+                    double categoryTotal = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, categoryName);
+                    
+                    if (categoryTotal != 0)
+                    {
+                        categoryExpencesChart.Series["Category Totals"].Points.AddXY(categoryName, categoryTotal * -1);
+                    }
                 }
             }
         }
@@ -128,7 +136,7 @@ namespace BudgetApp
         private void YearComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             PopulateMonthBarGraph();
-            PopulateYearLabels();
+            PopulateYearTotals();
         }
 
         private static void PopulateMonthBarGraph()
@@ -159,7 +167,7 @@ namespace BudgetApp
             }
         }
 
-        private static void PopulateYearLabels()
+        private static void PopulateYearTotals()
         {
             DateTime yearStart = new DateTime(int.Parse(YearComboBox.Text), 1, 1);
             DateTime yearEnd = yearStart.AddMonths(13).AddDays(-1);
@@ -177,8 +185,6 @@ namespace BudgetApp
         {
             ImportDataForm importDataForm = new ImportDataForm();
             importDataForm.Show();
-
-            importDataForm.OpenFile();
         }
 
         private void ViewTransactionbtn_Click(object sender, EventArgs e)

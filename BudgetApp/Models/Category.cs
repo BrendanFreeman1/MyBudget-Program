@@ -41,7 +41,12 @@ namespace BudgetApp.Models
                 new Category ("Pets", null),
                 new Category ("Transportation", null),
                 new Category ("Travel", null),
-                new Category ("Utilities", null)
+                new Category ("Utilities", null),
+                new Category ("Utilities", "water"),
+                new Category ("Utilities", "electricity"),
+                new Category ("Home", "mortgage"),
+                new Category ("Home", "rent"),
+                new Category ("Everyday", "shopping")
             };
 
             //Get the names of the categories already in the database

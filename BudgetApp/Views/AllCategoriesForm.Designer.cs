@@ -36,6 +36,7 @@
             this.CategoriesLabel = new System.Windows.Forms.Label();
             this.UpBtn = new System.Windows.Forms.Button();
             this.DownBtn = new System.Windows.Forms.Button();
+            this.CloseBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +46,7 @@
             this.dataGridView.AllowUserToDeleteRows = false;
             this.dataGridView.AllowUserToResizeColumns = false;
             this.dataGridView.AllowUserToResizeRows = false;
-            this.dataGridView.BackgroundColor = System.Drawing.Color.DimGray;
+            this.dataGridView.BackgroundColor = System.Drawing.Color.Black;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
@@ -75,11 +76,11 @@
             // 
             this.DeleteBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.DeleteBtn.ForeColor = System.Drawing.Color.Black;
-            this.DeleteBtn.Location = new System.Drawing.Point(389, 608);
+            this.DeleteBtn.Location = new System.Drawing.Point(389, 538);
             this.DeleteBtn.Name = "DeleteBtn";
             this.DeleteBtn.Size = new System.Drawing.Size(138, 23);
             this.DeleteBtn.TabIndex = 5;
-            this.DeleteBtn.Text = "Delete";
+            this.DeleteBtn.Text = "Delete Selection";
             this.DeleteBtn.UseVisualStyleBackColor = true;
             this.DeleteBtn.Click += new System.EventHandler(this.Deletebtn_Click);
             // 
@@ -87,7 +88,7 @@
             // 
             this.CreateCategoryBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CreateCategoryBtn.ForeColor = System.Drawing.Color.Black;
-            this.CreateCategoryBtn.Location = new System.Drawing.Point(389, 579);
+            this.CreateCategoryBtn.Location = new System.Drawing.Point(389, 509);
             this.CreateCategoryBtn.Name = "CreateCategoryBtn";
             this.CreateCategoryBtn.Size = new System.Drawing.Size(138, 23);
             this.CreateCategoryBtn.TabIndex = 6;
@@ -128,12 +129,25 @@
             this.DownBtn.UseVisualStyleBackColor = true;
             this.DownBtn.Click += new System.EventHandler(this.DownBtn_Click);
             // 
+            // CloseBtn
+            // 
+            this.CloseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CloseBtn.ForeColor = System.Drawing.Color.Black;
+            this.CloseBtn.Location = new System.Drawing.Point(389, 607);
+            this.CloseBtn.Name = "CloseBtn";
+            this.CloseBtn.Size = new System.Drawing.Size(138, 23);
+            this.CloseBtn.TabIndex = 10;
+            this.CloseBtn.Text = "Close";
+            this.CloseBtn.UseVisualStyleBackColor = true;
+            this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
+            // 
             // AllCategoriesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(539, 642);
+            this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.DownBtn);
             this.Controls.Add(this.UpBtn);
             this.Controls.Add(this.CategoriesLabel);
@@ -158,5 +172,6 @@
         private System.Windows.Forms.Label CategoriesLabel;
         private System.Windows.Forms.Button UpBtn;
         private System.Windows.Forms.Button DownBtn;
+        private System.Windows.Forms.Button CloseBtn;
     }
 }

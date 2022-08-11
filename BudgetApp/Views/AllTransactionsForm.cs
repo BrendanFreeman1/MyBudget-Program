@@ -48,5 +48,15 @@ namespace BudgetApp.Views
             dataGridView.Rows.RemoveAt(row);
             TransactionsDataAccess.DeleteTransaction(transaction);
         }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

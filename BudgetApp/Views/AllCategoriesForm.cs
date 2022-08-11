@@ -65,6 +65,11 @@ namespace BudgetApp.Views
             if (row < categoriesList.Count-1) MoveSelected(row, row+1);
         }
 
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
         private void MoveSelected(int row, int rowToSwap)
         {
             const int TEMP_ID = -1;
@@ -85,5 +90,7 @@ namespace BudgetApp.Views
             //Set the selection back to the category the user had selected previously
             dataGridView.CurrentCell = dataGridView.Rows[rowToSwap].Cells[0];
         }
+
+
     }
 }

@@ -6,6 +6,8 @@ namespace BudgetApp.Models
 {
     public class Transaction
     {
+        private static List<Category> categoriesList = new List<Category>();
+        
         public int ID { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }
@@ -14,9 +16,10 @@ namespace BudgetApp.Models
 
         internal static string AutoCategorise(Transaction transaction)
         {
+            categoriesList = CategoriesDataAccess.LoadCategories();
             string defaultCategory = "Other";
 
-            foreach (Category category in CategoriesDataAccess.LoadCategories())
+            foreach (Category category in categoriesList)
             {
                 //If the sample text is found within the transactionList description return the corresponding category
                 if (category.Tag != null && transaction.Description.ToLower().Contains(category.Tag))

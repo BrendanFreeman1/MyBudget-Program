@@ -21,15 +21,15 @@ namespace BudgetApp.Models
         {
             for (int i = 0; i < transactionList.Count; i++)
             {
-                DataGridViewTransactionRow(dataGridView, transactionList[i]);
+                int rowId = dataGridView.Rows.Add();
+                PopulateRow(dataGridView, transactionList[i], rowId);
             }
         }
 
-        internal static void DataGridViewTransactionRow(DataGridView dataGridView, Transaction transaction)
+        internal static void PopulateRow(DataGridView dataGridView, Transaction transaction, int rowIndex)
         {
-            int rowId = dataGridView.Rows.Add();
-            DataGridViewRow row = dataGridView.Rows[rowId];
-
+            DataGridViewRow row = dataGridView.Rows[rowIndex];
+            
             row.Cells[0].Value = transaction.Date;
             row.Cells[1].Value = transaction.Description;
             row.Cells[2].Value = transaction.Value;

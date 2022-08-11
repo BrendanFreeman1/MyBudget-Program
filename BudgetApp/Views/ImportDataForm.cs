@@ -15,8 +15,6 @@ namespace BudgetApp.Views
     {
         #region Initialise variables
         private static readonly List<Transaction> transactionList = new List<Transaction>();
-        private static int listIndex;
-        private bool endOfList = false;
 
         //Create excel objects
         private static Excel.Application xlApp;
@@ -27,14 +25,24 @@ namespace BudgetApp.Views
         public ImportDataForm()
         {
             InitializeComponent();
+            PopulateForm();            
+        }
 
-            listIndex = 0;
+        private void PopulateForm()
+        {
+            //Clear our list of transactions
             transactionList.Clear();
-            TransactionsDGVBuilder.PopulateTransactionColumns(dataGridView);
+            //Populate the Category combobox
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
-        }        
+            //Populate the columns in our DataGridView
+            TransactionsDGVBuilder.PopulateTransactionColumns(dataGridView);
+            //Open the users file, and if successful, extract the data from it into our transactions list
+            OpenFile();
+            //Populate our DataGridView with the transations data
+            TransactionsDGVBuilder.PopulateTransactionRows(dataGridView, transactionList);
+        }
 
-        internal void OpenFile()
+        private void OpenFile()
         {
             //Set the file name to null to begin with
             openFileDialog.FileName = "";
@@ -56,11 +64,11 @@ namespace BudgetApp.Views
         private void ImportData(string sFile)
         {
             //Called once an excel file is chosen
-            //Gets data from the selected excel, creates transaction objects and puts them into the transactionList
-            int row = 2; //Start from second row
+            //Gets data from the selected excel, creates transaction objects and puts them into the transactionList            
             xlApp = new Excel.Application(); //Excel app object
             xlWorkBook = xlApp.Workbooks.Open(sFile); //Workbook to open the excel file
             xlWorkSheet = xlWorkBook.ActiveSheet; //Gets the excels active sheet   
+            int row = 2; //Start from second row
 
             try
             {
@@ -86,8 +94,6 @@ namespace BudgetApp.Views
                 errorForm.Show();
             }
 
-            DisplayNextRowLabels();
-
             CleanUpExcelObjects();
         }
 
@@ -105,34 +111,6 @@ namespace BudgetApp.Views
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
         }
 
-        private void ConfirmBtn_Click(object sender, EventArgs e)
-        {
-            if (!endOfList)
-            {
-                //Set transactionList category to the users selection
-                transactionList[listIndex].Category = categoryComboBox.Text;
-
-                TransactionsDGVBuilder.DataGridViewTransactionRow(dataGridView, transactionList[listIndex]);
-                listIndex++;
-
-                if (listIndex >= transactionList.Count) { listIndex = transactionList.Count-1; endOfList = true; }
-
-                //Display the next row from the excel for the user to view and select a category for
-                DisplayNextRowLabels();
-            }
-        }
-
-        private void DisplayNextRowLabels()
-        {
-            if (!endOfList)
-            {
-                dateLabel.Text = transactionList[listIndex].Date.ToString();
-                descriptionLabel.Text = transactionList[listIndex].Description;
-                valueLabel.Text = transactionList[listIndex].Value.ToString();
-                categoryComboBox.SelectedItem = transactionList[listIndex].Category;
-            }
-        }
-
         private void Updatebtn_Click(object sender, EventArgs e)
         {
             //If the user doesn't have anything selected
@@ -141,23 +119,14 @@ namespace BudgetApp.Views
             int row = dataGridView.CurrentRow.Index;
 
             transactionList[row].Category = categoryComboBox.Text;
-            dataGridView.CurrentRow.Cells[3].Value = transactionList[row].Category;
-
-            //Return the ComoboBox text to the suggested category for the current transaction
-            categoryComboBox.Text = Transaction.AutoCategorise(transactionList[listIndex]);
+            TransactionsDGVBuilder.PopulateRow(dataGridView, transactionList[row], row);
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
             ErrorForm errorForm = new ErrorForm();
 
-            if (!endOfList)
-            {
-                errorForm.ErrorMessage("This will save all transactions from the imported CSV file to your database\n(Not just the ones that have had their category confirmed)\nAre you sure?");
-            }else{
-                errorForm.ErrorMessage("This will save all listed transactions to your database, Are you sure?");
-            }
-            
+            errorForm.ErrorMessage("This will save all transactions not categorised 'Ignore' to your database\n\nAre you sure?");            
             errorForm.Show();
 
             errorForm.ConfirmBtn.Click += delegate (Object obj, EventArgs ev)
@@ -178,6 +147,13 @@ namespace BudgetApp.Views
             };            
         }
 
+        private void ViewAllCategoriesBtn_Click(object sender, EventArgs e)
+        {
+            AllCategoriesForm allCategoriesForm = new AllCategoriesForm();
+            allCategoriesForm.FormClosed += new FormClosedEventHandler(UpdateTransactionsCategories);
+            allCategoriesForm.Show();
+        }
+
         private void CustomCategoryBtn_Click(object sender, EventArgs e)
         {
             CustomCategoryForm customCategoryForm = new CustomCategoryForm();
@@ -190,19 +166,20 @@ namespace BudgetApp.Views
             //Reload ComboBox with newly added category
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
 
-            //When the user added a new Category to AutoCategorise by, we want to update whatever remains in the transactionsList
+            //We only want to update items in the list that match the newly created category
+            List<Category> categoriesList = CategoriesDataAccess.LoadCategories(); ;//Get the categories from the database
+            Category newCategory = categoriesList[categoriesList.Count - 1]; //Get the newly created category
 
-            //Update the remainder of the list with the new categorisation
-            for (int i = listIndex; i < transactionList.Count; i++)
+            //Update our transactions list and DataGridView
+            for (int i = 0; i < transactionList.Count; i++)
             {
-                transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
+                //Only proceed if the autocategorisation matches the new category
+                if (Transaction.AutoCategorise(transactionList[i]) == newCategory.Name)
+                {
+                    transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
+                    TransactionsDGVBuilder.PopulateRow(dataGridView, transactionList[i], i);
+                }
             }
-
-            //If the user is at the very last item in the transactionList list
-            if (endOfList) { listIndex = transactionList.Count - 2; }
-
-            //Update the category combobox text with the users new category
-            categoryComboBox.SelectedItem = transactionList[listIndex].Category;
         }
     }
 }
