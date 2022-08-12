@@ -46,13 +46,14 @@ namespace BudgetApp.Models
             List<Category> categoriesList = LoadCategories();
             List<string> uniqueCategoriesList = new List<string>();
 
-            //Get the names of the categories in the database
+            //Get the names of each category in the database
             List<string> categoryNames = categoriesList.Select(c => c.Name).ToList();
-            //Populate the unique Categories List
             foreach (string name in categoryNames)
             {
-                //Only add the name if its not already in the uniqueCategoriesList
-                if (!uniqueCategoriesList.Contains(name)) { uniqueCategoriesList.Add(name); }
+                if (!uniqueCategoriesList.Contains(name)) 
+                { 
+                    uniqueCategoriesList.Add(name); 
+                }
             }
 
             return uniqueCategoriesList;

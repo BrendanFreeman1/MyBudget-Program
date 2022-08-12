@@ -16,7 +16,6 @@ namespace BudgetApp.Views
         #region Initialise variables
         private static readonly List<Transaction> transactionList = new List<Transaction>();
 
-        //Create excel objects
         private static Excel.Application xlApp;
         private static Excel.Workbook xlWorkBook;
         private static Excel.Worksheet xlWorkSheet;
@@ -30,21 +29,17 @@ namespace BudgetApp.Views
 
         private void PopulateForm()
         {
-            //Clear our list of transactions
             transactionList.Clear();
-            //Populate the Category combobox
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
-            //Populate the columns in our DataGridView
             TransactionsDGVBuilder.PopulateTransactionColumns(dataGridView);
-            //Open the users file, and if successful, extract the data from it into our transactions list
+
             OpenFile();
-            //Populate our DataGridView with the transations data
             TransactionsDGVBuilder.PopulateTransactionRows(dataGridView, transactionList);
         }
 
         private void OpenFile()
         {
-            //Set the file name to null to begin with
+            //Set the file name to an empty string to begin with
             openFileDialog.FileName = "";
             //Restrict the file types we can attempt to open
             openFileDialog.Filter = "Excel File|*.xlsx;*.xls;*.csv";
@@ -52,8 +47,7 @@ namespace BudgetApp.Views
             //If the user has selected a file and pressed 'Open' and not 'Cancel'
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                //If the file name has now been updated from null to something
-                //Open a new ImportDataForm and run the ImportData method on that file
+                //If the file name has now been updated from empty to something
                 if (openFileDialog.FileName.Trim() != "")
                 {
                     ImportData(openFileDialog.FileName);
@@ -62,12 +56,10 @@ namespace BudgetApp.Views
         }
 
         private void ImportData(string sFile)
-        {
-            //Called once an excel file is chosen
-            //Gets data from the selected excel, creates transaction objects and puts them into the transactionList            
-            xlApp = new Excel.Application(); //Excel app object
-            xlWorkBook = xlApp.Workbooks.Open(sFile); //Workbook to open the excel file
-            xlWorkSheet = xlWorkBook.ActiveSheet; //Gets the excels active sheet   
+        {           
+            xlApp = new Excel.Application(); 
+            xlWorkBook = xlApp.Workbooks.Open(sFile);
+            xlWorkSheet = xlWorkBook.ActiveSheet;
             int row = 2; //Start from second row
 
             try
@@ -75,7 +67,6 @@ namespace BudgetApp.Views
                 //While there are still rows in the excel with data
                 while (xlWorkSheet.Cells[row, 1].value != null)
                 {
-                    //Populate Transactions list
                     transactionList.Add(Transaction.GetTransactionDataFromExcel(row, xlWorkSheet));
 
                     row++;
@@ -84,14 +75,8 @@ namespace BudgetApp.Views
             }
             catch //Not an acceptable way to handle exceptions, think of a better way!!!!?!?!!?!?!!!
             {
+                MessageBox.Show("Please select a file with the correct format", "Incorrect CSV Format", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Close();
-
-                ErrorForm errorForm = new ErrorForm();
-                errorForm.ConfirmBtn.Visible = false;
-                errorForm.CancelBtn.Location = new Point(143, 135);
-                errorForm.CancelBtn.Text = "Close";
-                errorForm.ErrorMessage("Please select a file with the correct format.");
-                errorForm.Show();
             }
 
             CleanUpExcelObjects();
@@ -113,7 +98,6 @@ namespace BudgetApp.Views
 
         private void Updatebtn_Click(object sender, EventArgs e)
         {
-            //If the user doesn't have anything selected
             if (dataGridView.CurrentRow == null) { return; }
 
             int row = dataGridView.CurrentRow.Index;
@@ -141,7 +125,6 @@ namespace BudgetApp.Views
 
                 Close();
 
-                //Reload the now updated database and Re-calculate totals on the main form
                 BudgetApp.ReloadForm();
                 errorForm.Close();
             };            
@@ -163,14 +146,13 @@ namespace BudgetApp.Views
 
         private void UpdateTransactionsCategories(object sender, FormClosedEventArgs e)
         {
-            //Reload ComboBox with newly added category
+            //Reload our ComboBox with the newly added category
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
 
             //We only want to update items in the list that match the newly created category
-            List<Category> categoriesList = CategoriesDataAccess.LoadCategories(); ;//Get the categories from the database
+            List<Category> categoriesList = CategoriesDataAccess.LoadCategories();
             Category newCategory = categoriesList[categoriesList.Count - 1]; //Get the newly created category
 
-            //Update our transactions list and DataGridView
             for (int i = 0; i < transactionList.Count; i++)
             {
                 //Only proceed if the autocategorisation matches the new category

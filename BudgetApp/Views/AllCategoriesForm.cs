@@ -34,17 +34,18 @@ namespace BudgetApp.Views
             Category category = categoriesList[row];
 
             CategoriesDataAccess.DeleteCategory(category);
-            PopulateForm();
+            categoriesList.Remove(category);
+            dataGridView.Rows.RemoveAt(row);
         }
 
         private void CreateCategorybtn_Click(object sender, EventArgs e)
         {
             CustomCategoryForm customCategoryForm = new CustomCategoryForm();
-            customCategoryForm.FormClosed += new FormClosedEventHandler(Child_FormClosed);
+            customCategoryForm.FormClosed += new FormClosedEventHandler(CreateCategoryForm_Closed);
             customCategoryForm.Show();
         }
 
-        private void Child_FormClosed(object sender, FormClosedEventArgs e)
+        private void CreateCategoryForm_Closed(object sender, FormClosedEventArgs e)
         {
             PopulateForm();
         }
@@ -52,16 +53,12 @@ namespace BudgetApp.Views
         private void UpBtn_Click(object sender, EventArgs e)
         {
             int row = dataGridView.CurrentRow.Index;
-
-            //Only proceed if we're not at the first item in the list
             if(row > 0) { MoveSelected(row, row-1); }
         }
 
         private void DownBtn_Click(object sender, EventArgs e)
         {
             int row = dataGridView.CurrentRow.Index;
-
-            //Only proceed if we're not at the last item in the list
             if (row < categoriesList.Count-1) MoveSelected(row, row+1);
         }
 
@@ -84,13 +81,24 @@ namespace BudgetApp.Views
             CategoriesDataAccess.UpdateCategoryID(categoryToSwap, row);
             //Move the selected category from its temp place into the place of the category its swapping with
             CategoriesDataAccess.UpdateCategoryID(selectedCategory, rowToSwap);
+            
+            
+            //Programatically find an ID that is unique before assigning it
+            //Create Try block to handle the 'Not Unique Exception' error
 
-            PopulateForm();
+
+            PopulateForm();            //Remove from list and datagridview instead
 
             //Set the selection back to the category the user had selected previously
             dataGridView.CurrentCell = dataGridView.Rows[rowToSwap].Cells[0];
         }
-
-
     }
 }
+
+
+//TODO ON MONDAY
+
+//Update the MoveSelected method so that it doesnt produce unique ID errors any more
+//Update the moveSelected method so that it doesnt redraw the whole form with each move, only changes the items that are moved
+//In the importdataform work out a solution to sorting the columns breaking the category updating, Apply this fix to the other forms with datagridviews.
+//Add database file and table creation if the user does not already have a file to use, for both the transactions and categories.

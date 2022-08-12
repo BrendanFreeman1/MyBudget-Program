@@ -24,10 +24,7 @@ namespace BudgetApp
 
             if (!Settings.Default.messageShown)
             {
-                MessageForm messageForm = new MessageForm();
-                messageForm.Message("Welcome to the MyBudget App");
-                messageForm.TopMost = true;
-                messageForm.Show();
+                MessageBox.Show("Welcome to the MyBudget App", "My Budget", MessageBoxButtons.OK, MessageBoxIcon.None);
 
                 //Ensure this will only run on the users first use of the app
                 Settings.Default.messageShown = true;
@@ -48,21 +45,16 @@ namespace BudgetApp
         private static void LoadDataFromDatabase()
         {
             transactionsList = TransactionsDataAccess.LoadTransactions();
-
-            //Ensure user has the default categories
             uniqueCategoriesList = CategoriesDataAccess.LoadUniqueCategoryList();
             Category.SaveDefaultCategories();
         }
 
         private static void SetDateTimePickers()
         {
-            if (transactionsList.Count > 0)
+            if (transactionsList != null)
             {
-                //Populate Date Pickers
-                //Sort the transations list by date
                 transactionsList.Sort((i, j) => DateTime.Compare(i.Date, j.Date));
 
-                //Set DateTimePickers dates
                 FromDateTimePicker.Value = transactionsList.First().Date;
                 ToDateTimePicker.Value = transactionsList.Last().Date;
             }
@@ -70,19 +62,17 @@ namespace BudgetApp
 
         private static void PopulateYearComboBox()
         {
-            if (transactionsList.Count > 0)
+            if (transactionsList != null)
             {
                 int currentYear = transactionsList.First().Date.Year;
                 int lastYear = transactionsList.Last().Date.Year;
 
-                //Add all the years between the first and last to the YearComboBox
                 while (currentYear <= lastYear)
                 {
                     YearComboBox.Items.Add(currentYear.ToString());
                     currentYear++;
                 }
 
-                //Set the YearComboBox to the most recent year
                 YearComboBox.Text = lastYear.ToString();
             }            
         }
@@ -113,10 +103,8 @@ namespace BudgetApp
 
         private static void PopulateCategoryGraph()
         {
-            //Clear values from the chart
             categoryExpencesChart.Series["Category Totals"].Points.Clear();
 
-            //Add the totals per category to the chart, Except for the 'Ignore' and 'Income' Categories
             foreach (string categoryName in uniqueCategoriesList)
             {
                 if(categoryName != "Ignore" && categoryName != "Income")
@@ -141,12 +129,10 @@ namespace BudgetApp
 
         private static void PopulateMonthBarGraph()
         {
-            //Clear values from the chart
             monthChart.Series["Income"].Points.Clear();
             monthChart.Series["Expenses"].Points.Clear();
             monthChart.Series["Net"].Points.Clear();
 
-            //For each month add the month and the totals to the chart
             for (int i = 1; i <= 12; i++)
             {
                 string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i);
@@ -183,8 +169,8 @@ namespace BudgetApp
         #region Button Click Events
         private void Importbtn_Click(object sender, EventArgs e)
         {
-            ImportDataForm importDataForm = new ImportDataForm();
-            importDataForm.Show();
+            ImportDataForm importDataForm = new ImportDataForm();            
+            if(!importDataForm.IsDisposed) { importDataForm.Show(); }
         }
 
         private void ViewTransactionbtn_Click(object sender, EventArgs e)

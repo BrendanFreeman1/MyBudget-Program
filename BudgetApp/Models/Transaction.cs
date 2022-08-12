@@ -17,11 +17,11 @@ namespace BudgetApp.Models
         internal static string AutoCategorise(Transaction transaction)
         {
             categoriesList = CategoriesDataAccess.LoadCategories();
-            string defaultCategory = "Other";
+            const string DEFAULT_CATEGORY = "Other";
 
             foreach (Category category in categoriesList)
             {
-                //If the sample text is found within the transactionList description return the corresponding category
+                //If the Tag is found within the transactions description, return the corresponding category
                 if (category.Tag != null && transaction.Description.ToLower().Contains(category.Tag))
                 {
                     return category.Name;
@@ -29,13 +29,13 @@ namespace BudgetApp.Models
             }
 
             //If nothing is found return "Other" as the category
-            return defaultCategory; 
+            return DEFAULT_CATEGORY; 
         }
 
         internal static double Total(List<Transaction> transactions)
         {
             double total = 0;
-            //Add up the values for each transaction in the list past in.
+
             foreach(Transaction transaction in transactions)
             {
                 total += transaction.Value;
@@ -72,7 +72,6 @@ namespace BudgetApp.Models
         {
             Transaction transaction = new Transaction();
 
-            //DATE
             //Excel is feeding some of the dates as DateTime objects(day of month > 12) and some as strings(day of month <= 12).
             var currentDate = xlWorkSheet.Cells[row, 1].value;
             if (currentDate is string)
@@ -86,10 +85,8 @@ namespace BudgetApp.Models
                 transaction.Date = DateTime.Parse(currentDate.ToString("MM/dd/yyyy"));
             }
 
-            //DESCRIPTION
             transaction.Description = xlWorkSheet.Cells[row, 2].value;
 
-            //VALUE
             if (xlWorkSheet.Cells[row, 3].value != null)
             {
                 transaction.Value = xlWorkSheet.Cells[row, 3].value; //Credit 
@@ -99,7 +96,6 @@ namespace BudgetApp.Models
                 transaction.Value = xlWorkSheet.Cells[row, 4].value; //Debit
             }
 
-            //CATEGORY
             transaction.Category = AutoCategorise(transaction);
 
             return transaction;

@@ -51,12 +51,7 @@ namespace BudgetApp.Views
 
         private void CloseBtn_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            Close();
         }
     }
 }

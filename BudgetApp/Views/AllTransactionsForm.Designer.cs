@@ -100,7 +100,6 @@
             this.categoryComboBox.Size = new System.Drawing.Size(138, 21);
             this.categoryComboBox.Sorted = true;
             this.categoryComboBox.TabIndex = 19;
-            this.categoryComboBox.SelectedIndexChanged += new System.EventHandler(this.categoryComboBox_SelectedIndexChanged);
             // 
             // CloseBtn
             // 
