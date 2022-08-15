@@ -33,11 +33,12 @@ namespace BudgetApp.Models
             }
         }
 
-        internal static void UpdateCategoryID(Category category, int newID)
-        {
+        internal static void UpdateCategoryID(Category category, int newId)
+        {            
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
             {
-                cnn.Execute("UPDATE Categories SET ID = " + newID + " WHERE ID = @ID", category);
+                cnn.Execute("UPDATE Categories SET Name = @Name WHERE ID = " + newId, category);
+                cnn.Execute("UPDATE Categories SET Tag = @Tag WHERE ID = " + newId, category);
             }
         }
 

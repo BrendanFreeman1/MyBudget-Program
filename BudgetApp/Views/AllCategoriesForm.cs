@@ -69,25 +69,13 @@ namespace BudgetApp.Views
 
         private void MoveSelected(int row, int rowToSwap)
         {
-            const int TEMP_ID = -1;
-            Category selectedCategory = categoriesList[row];
+            Category selectedCategory = categoriesList[row];           
             Category categoryToSwap = categoriesList[rowToSwap];
 
-            //ID must be unique so we temporarily set the selected categories ID to a number that will always be unique
-            CategoriesDataAccess.UpdateCategoryID(selectedCategory, TEMP_ID);
-            //Change the ID in our local object as well so the database is looking in the right place when we pass it again
-            selectedCategory.ID = TEMP_ID;
-            //Move the category to swap into the selected categories place now that it is vacant
-            CategoriesDataAccess.UpdateCategoryID(categoryToSwap, row);
-            //Move the selected category from its temp place into the place of the category its swapping with
-            CategoriesDataAccess.UpdateCategoryID(selectedCategory, rowToSwap);
-            
-            
-            //Programatically find an ID that is unique before assigning it
-            //Create Try block to handle the 'Not Unique Exception' error
+            CategoriesDataAccess.UpdateCategoryID(selectedCategory, categoryToSwap.ID);
+            CategoriesDataAccess.UpdateCategoryID(categoryToSwap, selectedCategory.ID);
 
-
-            PopulateForm();            //Remove from list and datagridview instead
+            PopulateForm();            //swap in list and datagridview instead
 
             //Set the selection back to the category the user had selected previously
             dataGridView.CurrentCell = dataGridView.Rows[rowToSwap].Cells[0];
@@ -98,7 +86,5 @@ namespace BudgetApp.Views
 
 //TODO ON MONDAY
 
-//Update the MoveSelected method so that it doesnt produce unique ID errors any more
-//Update the moveSelected method so that it doesnt redraw the whole form with each move, only changes the items that are moved
 //In the importdataform work out a solution to sorting the columns breaking the category updating, Apply this fix to the other forms with datagridviews.
 //Add database file and table creation if the user does not already have a file to use, for both the transactions and categories.

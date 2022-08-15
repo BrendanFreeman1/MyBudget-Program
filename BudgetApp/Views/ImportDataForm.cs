@@ -96,14 +96,9 @@ namespace BudgetApp.Views
             System.Runtime.InteropServices.Marshal.ReleaseComObject(xlApp);
         }
 
-        private void Updatebtn_Click(object sender, EventArgs e)
+        private void UpdateCategorybtn_Click(object sender, EventArgs e)
         {
-            if (dataGridView.CurrentRow == null) { return; }
-
-            int row = dataGridView.CurrentRow.Index;
-
-            transactionList[row].Category = categoryComboBox.Text;
-            TransactionsDGVBuilder.PopulateRow(dataGridView, transactionList[row], row);
+            Transaction.UpdateTransactionCategory(dataGridView, transactionList, categoryComboBox.Text);
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
@@ -159,7 +154,7 @@ namespace BudgetApp.Views
                 if (Transaction.AutoCategorise(transactionList[i]) == newCategory.Name)
                 {
                     transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
-                    TransactionsDGVBuilder.PopulateRow(dataGridView, transactionList[i], i);
+                    TransactionsDGVBuilder.PopulateTransactionRow(dataGridView, transactionList[i], i);
                 }
             }
         }

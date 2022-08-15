@@ -16,15 +16,15 @@ namespace BudgetApp.Models
         {
             foreach(Category category in categoryList)
             {
-                DataGridViewCategoryRow(dataGridView, category);
+                int rowIndex = dataGridView.Rows.Add();
+                
+                PopulateCategoryRow(dataGridView, category, rowIndex);
             }
         }
 
-        internal static void DataGridViewCategoryRow( DataGridView dataGridView, Category category)
+        internal static void PopulateCategoryRow(DataGridView dataGridView, Category category, int rowIndex)
         {
-            int rowId = dataGridView.Rows.Add();
-            DataGridViewRow row = dataGridView.Rows[rowId];
-
+            DataGridViewRow row = dataGridView.Rows[rowIndex];
             row.Cells[0].Value = category.ID;
             row.Cells[1].Value = category.Name;
             row.Cells[2].Value = category.Tag;

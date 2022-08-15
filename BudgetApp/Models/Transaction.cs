@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace BudgetApp.Models
@@ -14,6 +15,11 @@ namespace BudgetApp.Models
         public double Value { get; set; }
         public string Category { get; set; }
 
+        /// <summary>
+        /// Attempts to find the 'Tag' value of a category within the description value of the transaction passed in. If found assigns that transaction with the corresponding category name.
+        /// </summary>
+        /// <param name="transaction"></param>
+        /// <returns>A string representing a Category. If no category is found, returns "Other"</returns>
         internal static string AutoCategorise(Transaction transaction)
         {
             categoriesList = CategoriesDataAccess.LoadCategories();
@@ -21,7 +27,7 @@ namespace BudgetApp.Models
 
             foreach (Category category in categoriesList)
             {
-                //If the Tag is found within the transactions description, return the corresponding category
+                //If the Tag is found within the transactionsList description, return the corresponding category
                 if (category.Tag != null && transaction.Description.ToLower().Contains(category.Tag))
                 {
                     return category.Name;
@@ -32,25 +38,22 @@ namespace BudgetApp.Models
             return DEFAULT_CATEGORY; 
         }
 
-        internal static double Total(List<Transaction> transactions)
-        {
-            double total = 0;
-
-            foreach(Transaction transaction in transactions)
-            {
-                total += transaction.Value;
-            }
-
-            return total;
-        }
-
-        internal static double Total(List<Transaction> transactions, DateTime startDate, DateTime endDate, string category)
+        /// <summary>
+        /// Gets the total of all values of the transactions in the transactionsList that correspond to the category and fall between the dates(inclusive) passed in.
+        /// If category is null, it will inslude all transactions in the list.
+        /// </summary>
+        /// <param name="transactionsList"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="category"></param>
+        /// <returns>A double representing the total value of all transactions of the specified category from the start to end date.</returns>
+        internal static double Total(List<Transaction> transactionsList, DateTime startDate, DateTime endDate, string category)
         {
             double total = 0;
             startDate = startDate.Date + new TimeSpan(00, 00, 00);
             endDate = endDate.Date + new TimeSpan(23, 59, 59);
 
-            foreach (Transaction transaction in transactions)
+            foreach (Transaction transaction in transactionsList)
             {
                 if (transaction.Date >= startDate && transaction.Date <= endDate)
                 {
@@ -59,7 +62,8 @@ namespace BudgetApp.Models
                         total += transaction.Value;
                     }
 
-                    if(category == null)
+
+                    if (category == null)
                     {
                         total += transaction.Value;
                     }
@@ -68,6 +72,12 @@ namespace BudgetApp.Models
             return total;
         }
 
+        /// <summary>
+        /// Extracts data from the worksheet passed in into a transaction object.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="xlWorkSheet"></param>
+        /// <returns>A Transaction object</returns>
         internal static Transaction GetTransactionDataFromExcel(int row, Excel.Worksheet xlWorkSheet)
         {
             Transaction transaction = new Transaction();
@@ -99,6 +109,50 @@ namespace BudgetApp.Models
             transaction.Category = AutoCategorise(transaction);
 
             return transaction;
+        }
+
+       
+        /// <summary>
+        /// Checks if the user has a row selected and if so will update the category value in the DataGridView, our transactionsList and the users database.
+        /// </summary>
+        /// <param name="dataGridView"></param>
+        /// <param name="transactionList"></param>
+        /// <param name="category"></param>
+        internal static void UpdateTransactionCategory(DataGridView dataGridView, List<Transaction> transactionList, string category)
+        {
+            if (dataGridView.CurrentRow == null) { return; }
+
+            int row = dataGridView.CurrentRow.Index;
+            string description = dataGridView.Rows[row].Cells[1].Value.ToString();
+
+            Transaction currentTransaction = GetTransactionFromDescription(transactionList, description);
+
+            if (currentTransaction != null)
+            {
+                currentTransaction.Category = category;
+                TransactionsDGVBuilder.PopulateTransactionRow(dataGridView, currentTransaction, row);
+                TransactionsDataAccess.UpdateTransactionCategory(currentTransaction);
+            }
+
+            dataGridView.CurrentCell = dataGridView.Rows[row].Cells[0];
+        }
+
+        /// <summary>
+        /// Search through all transactionsList passed in (If nothing is passed in it will seach all transactionsList stored in user database)
+        /// and return the transaction whoes description value matches the description passed into the method.
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns>Returns null if no corresponding object is found</returns>
+        private static Transaction GetTransactionFromDescription(List<Transaction> transactionList, string description)
+        {
+            if(transactionList == null) { transactionList = TransactionsDataAccess.LoadTransactions(); }            
+            
+            foreach(Transaction transaction in transactionList)
+            {
+                if(transaction.Description == description) { return transaction; }
+            }
+
+            return null;
         }
     }
 }

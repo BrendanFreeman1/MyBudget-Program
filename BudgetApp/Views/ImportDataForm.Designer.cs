@@ -31,7 +31,7 @@
             this.categoryComboBox = new System.Windows.Forms.ComboBox();
             this.SaveBtn = new System.Windows.Forms.Button();
             this.CustomCategoryBtn = new System.Windows.Forms.Button();
-            this.UpdateBtn = new System.Windows.Forms.Button();
+            this.UpdateCategoryBtn = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.ViewAllCategoriesBtn = new System.Windows.Forms.Button();
@@ -67,16 +67,16 @@
             this.CustomCategoryBtn.UseVisualStyleBackColor = true;
             this.CustomCategoryBtn.Click += new System.EventHandler(this.CustomCategoryBtn_Click);
             // 
-            // UpdateBtn
+            // UpdateCategoryBtn
             // 
-            this.UpdateBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UpdateBtn.Location = new System.Drawing.Point(1023, 12);
-            this.UpdateBtn.Name = "UpdateBtn";
-            this.UpdateBtn.Size = new System.Drawing.Size(138, 24);
-            this.UpdateBtn.TabIndex = 17;
-            this.UpdateBtn.Text = "Update Selection";
-            this.UpdateBtn.UseVisualStyleBackColor = true;
-            this.UpdateBtn.Click += new System.EventHandler(this.Updatebtn_Click);
+            this.UpdateCategoryBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UpdateCategoryBtn.Location = new System.Drawing.Point(1023, 12);
+            this.UpdateCategoryBtn.Name = "UpdateCategoryBtn";
+            this.UpdateCategoryBtn.Size = new System.Drawing.Size(138, 24);
+            this.UpdateCategoryBtn.TabIndex = 17;
+            this.UpdateCategoryBtn.Text = "Update Selection";
+            this.UpdateCategoryBtn.UseVisualStyleBackColor = true;
+            this.UpdateCategoryBtn.Click += new System.EventHandler(this.UpdateCategorybtn_Click);
             // 
             // dataGridView
             // 
@@ -119,7 +119,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(1173, 853);
             this.Controls.Add(this.ViewAllCategoriesBtn);
-            this.Controls.Add(this.UpdateBtn);
+            this.Controls.Add(this.UpdateCategoryBtn);
             this.Controls.Add(this.CustomCategoryBtn);
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.categoryComboBox);
@@ -135,7 +135,7 @@
         #endregion
         private System.Windows.Forms.Button SaveBtn;
         private System.Windows.Forms.Button CustomCategoryBtn;
-        private System.Windows.Forms.Button UpdateBtn;
+        private System.Windows.Forms.Button UpdateCategoryBtn;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ComboBox categoryComboBox;

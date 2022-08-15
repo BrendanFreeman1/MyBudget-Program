@@ -22,11 +22,11 @@ namespace BudgetApp.Models
             for (int i = 0; i < transactionList.Count; i++)
             {
                 int rowId = dataGridView.Rows.Add();
-                PopulateRow(dataGridView, transactionList[i], rowId);
+                PopulateTransactionRow(dataGridView, transactionList[i], rowId);
             }
         }
 
-        internal static void PopulateRow(DataGridView dataGridView, Transaction transaction, int rowIndex)
+        internal static void PopulateTransactionRow(DataGridView dataGridView, Transaction transaction, int rowIndex)
         {
             DataGridViewRow row = dataGridView.Rows[rowIndex];
             
