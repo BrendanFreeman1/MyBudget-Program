@@ -4,12 +4,11 @@ using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 
-
 namespace BudgetApp.Models
 {
     internal class CategoriesDataAccess : SqliteDataAccess
     {   
-        internal static List<Category> LoadCategories()
+        internal static List<Category> LoadAllCategories()
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
             {
@@ -33,22 +32,29 @@ namespace BudgetApp.Models
             }
         }
 
-        internal static void UpdateCategoryID(Category category, int newId)
+        /// <summary>
+        /// Changes the Name and Tag values of the category that matches the id passed in.
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="id"></param>
+        internal static void UpdateCategory(Category category, int id)
         {            
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
             {
-                cnn.Execute("UPDATE Categories SET Name = @Name WHERE ID = " + newId, category);
-                cnn.Execute("UPDATE Categories SET Tag = @Tag WHERE ID = " + newId, category);
+                cnn.Execute("UPDATE Categories SET Name = @Name WHERE ID = " + id, category);
+                cnn.Execute("UPDATE Categories SET Tag = @Tag WHERE ID = " + id, category);
             }
         }
 
+        /// <summary>
+        /// Gets the users categories without any repeats.
+        /// </summary>
+        /// <returns>A list of strings representing each category in the users database</returns>
         internal static List<string> LoadUniqueCategoryList()
         {
-            List<Category> categoriesList = LoadCategories();
             List<string> uniqueCategoriesList = new List<string>();
+            List<string> categoryNames = LoadAllCategories().Select(c => c.Name).ToList();
 
-            //Get the names of each category in the database
-            List<string> categoryNames = categoriesList.Select(c => c.Name).ToList();
             foreach (string name in categoryNames)
             {
                 if (!uniqueCategoriesList.Contains(name)) 

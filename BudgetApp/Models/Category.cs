@@ -7,7 +7,7 @@ namespace BudgetApp.Models
 {
     public class Category
     {
-        public int ID { get; set; }
+        public int ID { get; }
         public string Name { get; set; }
         public string Tag { get; set; }
 
@@ -20,12 +20,12 @@ namespace BudgetApp.Models
             Tag = tag;
         }
 
+        
+        /// <summary>
+        /// Adds default categories to the users database
+        /// </summary>
         internal static void SaveDefaultCategories()
         {
-            //After the users categories have been loaded from their database into the categoriesList
-            //Check if it contains the default categories, if not add them to the database
-            //Should only work on the users intial use of this app
-
             List<Category> defaultCategories = new List<Category>
             {
                 new Category ("Children", null),
@@ -49,13 +49,14 @@ namespace BudgetApp.Models
                 new Category ("Everyday", "shopping")
             };
 
-            //Get the names of the categories already in the database
-            List<string> categoryNames = CategoriesDataAccess.LoadCategories().Select(c => c.Name).ToList();
+            List<string> categoryNames = CategoriesDataAccess.LoadAllCategories().Select(c => c.Name).ToList();
 
-            //Compair the categories we want to add against what we already have
             foreach (Category defaultCategory in defaultCategories)
             {
-                if (!categoryNames.Contains(defaultCategory.Name)) { CategoriesDataAccess.SaveCategory(defaultCategory); }
+                if (!categoryNames.Contains(defaultCategory.Name)) 
+                { 
+                    CategoriesDataAccess.SaveCategory(defaultCategory); 
+                }
             }
         }
     }

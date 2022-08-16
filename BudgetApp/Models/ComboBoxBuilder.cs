@@ -7,7 +7,7 @@ namespace BudgetApp.Models
     {
         internal static void PopulateComboBox(ComboBox comoboBox)
         {
-            List<Category> categoriesList = CategoriesDataAccess.LoadCategories();
+            List<Category> categoriesList = CategoriesDataAccess.LoadAllCategories();
 
             foreach (Category category in categoriesList)
             {

@@ -23,9 +23,9 @@ namespace BudgetApp.Views
             dataGridView.Rows.Clear();
             dataGridView.Columns.Clear();
 
-            categoriesList = CategoriesDataAccess.LoadCategories();
-            CategoryDGVBuilder.PopulateCategoryColumns(dataGridView);
-            CategoryDGVBuilder.PopulateCategoryRows(dataGridView, categoriesList);
+            categoriesList = CategoriesDataAccess.LoadAllCategories();
+            CategoryDGVBuilder.CreateCategoryColumns(dataGridView);
+            CategoryDGVBuilder.CreateCategoryRows(dataGridView, categoriesList);
         }
 
         private void Deletebtn_Click(object sender, EventArgs e)
@@ -72,19 +72,13 @@ namespace BudgetApp.Views
             Category selectedCategory = categoriesList[row];           
             Category categoryToSwap = categoriesList[rowToSwap];
 
-            CategoriesDataAccess.UpdateCategoryID(selectedCategory, categoryToSwap.ID);
-            CategoriesDataAccess.UpdateCategoryID(categoryToSwap, selectedCategory.ID);
+            CategoriesDataAccess.UpdateCategory(selectedCategory, categoryToSwap.ID);
+            CategoriesDataAccess.UpdateCategory(categoryToSwap, selectedCategory.ID);
 
-            PopulateForm();            //swap in list and datagridview instead
+            PopulateForm();            //swap in list and datagridview instead of reloading entire form
 
-            //Set the selection back to the category the user had selected previously
+            //Set the selection back to the previous selection
             dataGridView.CurrentCell = dataGridView.Rows[rowToSwap].Cells[0];
         }
     }
 }
-
-
-//TODO ON MONDAY
-
-//In the importdataform work out a solution to sorting the columns breaking the category updating, Apply this fix to the other forms with datagridviews.
-//Add database file and table creation if the user does not already have a file to use, for both the transactions and categories.

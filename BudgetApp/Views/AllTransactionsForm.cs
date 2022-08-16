@@ -21,9 +21,9 @@ namespace BudgetApp.Views
             dataGridView.Columns.Clear();
             dataGridView.Rows.Clear();
 
-            transactionList = TransactionsDataAccess.LoadTransactions();
-            TransactionsDGVBuilder.PopulateTransactionColumns(dataGridView);
-            TransactionsDGVBuilder.PopulateTransactionRows(dataGridView, transactionList);
+            transactionList = TransactionsDataAccess.LoadAllTransactions();
+            TransactionsDGVBuilder.CreateTransactionColumns(dataGridView);
+            TransactionsDGVBuilder.CreateTransactionRows(dataGridView, transactionList);
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
         }
 

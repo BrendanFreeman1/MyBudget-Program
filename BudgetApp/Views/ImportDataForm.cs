@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -31,10 +32,10 @@ namespace BudgetApp.Views
         {
             transactionList.Clear();
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
-            TransactionsDGVBuilder.PopulateTransactionColumns(dataGridView);
+            TransactionsDGVBuilder.CreateTransactionColumns(dataGridView);
 
             OpenFile();
-            TransactionsDGVBuilder.PopulateTransactionRows(dataGridView, transactionList);
+            TransactionsDGVBuilder.CreateTransactionRows(dataGridView, transactionList);
         }
 
         private void OpenFile()
@@ -52,6 +53,10 @@ namespace BudgetApp.Views
                 {
                     ImportData(openFileDialog.FileName);
                 }
+            }
+            else 
+            { 
+                Close(); 
             }
         }
 
@@ -105,7 +110,7 @@ namespace BudgetApp.Views
         {
             ErrorForm errorForm = new ErrorForm();
 
-            errorForm.ErrorMessage("This will save all transactions not categorised 'Ignore' to your database\n\nAre you sure?");            
+            errorForm.ErrorMessage("This will save all transactions not categorised 'Ignore' to your database\nAre you sure?");            
             errorForm.Show();
 
             errorForm.ConfirmBtn.Click += delegate (Object obj, EventArgs ev)
@@ -141,17 +146,15 @@ namespace BudgetApp.Views
 
         private void UpdateTransactionsCategories(object sender, FormClosedEventArgs e)
         {
-            //Reload our ComboBox with the newly added category
+            //Reload ComboBox with the newly added category
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
 
-            //We only want to update items in the list that match the newly created category
-            List<Category> categoriesList = CategoriesDataAccess.LoadCategories();
-            Category newCategory = categoriesList[categoriesList.Count - 1]; //Get the newly created category
+            Category theNewCategory = CategoriesDataAccess.LoadAllCategories().Last();
 
             for (int i = 0; i < transactionList.Count; i++)
             {
                 //Only proceed if the autocategorisation matches the new category
-                if (Transaction.AutoCategorise(transactionList[i]) == newCategory.Name)
+                if (Transaction.AutoCategorise(transactionList[i]) == theNewCategory.Name)
                 {
                     transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
                     TransactionsDGVBuilder.PopulateTransactionRow(dataGridView, transactionList[i], i);

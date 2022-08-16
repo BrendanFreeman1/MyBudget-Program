@@ -8,7 +8,7 @@ namespace BudgetApp.Models
 {
     internal class TransactionsDataAccess : SqliteDataAccess
     {
-        internal static List<Transaction> LoadTransactions()
+        internal static List<Transaction> LoadAllTransactions()
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
             {
@@ -26,7 +26,15 @@ namespace BudgetApp.Models
                 }
             }
         }
-         
+
+        internal static void DeleteTransaction(Transaction transaction)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
+            {
+                cnn.Execute("DELETE FROM Transactions WHERE ID = @ID", transaction);
+            }
+        }
+
         internal static void UpdateTransactionCategory(Transaction transaction)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
@@ -35,14 +43,6 @@ namespace BudgetApp.Models
                 {
                     cnn.Execute("UPDATE Transactions SET Category = @Category WHERE ID = @ID", transaction);
                 }
-            }
-        }
-
-        internal static void DeleteTransaction(Transaction transaction)
-        {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
-            {
-                cnn.Execute("DELETE FROM Transactions WHERE ID = @ID", transaction);
             }
         }
     }

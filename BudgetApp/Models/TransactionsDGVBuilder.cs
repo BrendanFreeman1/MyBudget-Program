@@ -9,7 +9,7 @@ namespace BudgetApp.Models
 {
     internal class TransactionsDGVBuilder : DGVBuilder
     {
-        internal static void PopulateTransactionColumns(DataGridView dataGridView)
+        internal static void CreateTransactionColumns(DataGridView dataGridView)
         {
             CreateDataGridViewColumn(dataGridView, "Date", 75);
             CreateDataGridViewColumn(dataGridView, "Description", 740);
@@ -17,7 +17,7 @@ namespace BudgetApp.Models
             CreateDataGridViewColumn(dataGridView, "Category", 110);
         }
 
-        internal static void PopulateTransactionRows(DataGridView dataGridView, List<Transaction> transactionList)
+        internal static void CreateTransactionRows(DataGridView dataGridView, List<Transaction> transactionList)
         {
             for (int i = 0; i < transactionList.Count; i++)
             {

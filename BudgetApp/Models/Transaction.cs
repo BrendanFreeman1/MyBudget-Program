@@ -8,8 +8,8 @@ namespace BudgetApp.Models
     public class Transaction
     {
         private static List<Category> categoriesList = new List<Category>();
-        
-        public int ID { get; set; }
+
+        public int ID;
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public double Value { get; set; }
@@ -22,7 +22,7 @@ namespace BudgetApp.Models
         /// <returns>A string representing a Category. If no category is found, returns "Other"</returns>
         internal static string AutoCategorise(Transaction transaction)
         {
-            categoriesList = CategoriesDataAccess.LoadCategories();
+            categoriesList = CategoriesDataAccess.LoadAllCategories();
             const string DEFAULT_CATEGORY = "Other";
 
             foreach (Category category in categoriesList)
@@ -145,7 +145,7 @@ namespace BudgetApp.Models
         /// <returns>Returns null if no corresponding object is found</returns>
         private static Transaction GetTransactionFromDescription(List<Transaction> transactionList, string description)
         {
-            if(transactionList == null) { transactionList = TransactionsDataAccess.LoadTransactions(); }            
+            if(transactionList == null) { transactionList = TransactionsDataAccess.LoadAllTransactions(); }            
             
             foreach(Transaction transaction in transactionList)
             {

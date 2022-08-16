@@ -26,7 +26,7 @@ namespace BudgetApp
             {
                 MessageBox.Show("Welcome to the MyBudget App", "My Budget", MessageBoxButtons.OK, MessageBoxIcon.None);
 
-                //Ensure this will only run on the users first use of the app
+                //Ensures this will only run on the users first use of the app
                 Settings.Default.messageShown = true;
                 Settings.Default.Save();
             }
@@ -44,10 +44,12 @@ namespace BudgetApp
 
         private static void LoadDataFromDatabase()
         {
-            transactionsList = TransactionsDataAccess.LoadTransactions();
+            transactionsList = TransactionsDataAccess.LoadAllTransactions();
             uniqueCategoriesList = CategoriesDataAccess.LoadUniqueCategoryList();
             Category.SaveDefaultCategories();
         }
+
+        #region DateTime Pickers and Category Graph
 
         private static void SetDateTimePickers()
         {
@@ -59,25 +61,6 @@ namespace BudgetApp
                 ToDateTimePicker.Value = transactionsList.Last().Date;
             }
         }
-
-        private static void PopulateYearComboBox()
-        {
-            if (transactionsList != null)
-            {
-                int currentYear = transactionsList.First().Date.Year;
-                int lastYear = transactionsList.Last().Date.Year;
-
-                while (currentYear <= lastYear)
-                {
-                    YearComboBox.Items.Add(currentYear.ToString());
-                    currentYear++;
-                }
-
-                YearComboBox.Text = lastYear.ToString();
-            }            
-        }
-
-        #region DateTime Pickers
 
         private void FromDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
@@ -120,6 +103,25 @@ namespace BudgetApp
         }
 
         #endregion
+
+        #region Year ComboBox and Year Total Graph
+
+        private static void PopulateYearComboBox()
+        {
+            if (transactionsList != null)
+            {
+                int currentYear = transactionsList.First().Date.Year;
+                int lastYear = transactionsList.Last().Date.Year;
+
+                while (currentYear <= lastYear)
+                {
+                    YearComboBox.Items.Add(currentYear.ToString());
+                    currentYear++;
+                }
+
+                YearComboBox.Text = lastYear.ToString();
+            }
+        }
 
         private void YearComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -165,6 +167,8 @@ namespace BudgetApp
             YearExpensesValue.Text = (expenses * -1).ToString("0.##");
             YearTotalValue.Text = (expenses + income).ToString("0.##");
         }
+
+        #endregion
 
         #region Button Click Events
         private void Importbtn_Click(object sender, EventArgs e)
