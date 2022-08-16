@@ -7,7 +7,7 @@ namespace BudgetApp.Views
 {
     public partial class AllCategoriesForm : Form
     {
-        List<Category> categoriesList = new List<Category>();
+        private List<Category> categoriesList = new List<Category>();
 
         public AllCategoriesForm()
         {

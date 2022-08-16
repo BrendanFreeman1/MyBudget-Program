@@ -125,8 +125,11 @@
             this.Controls.Add(this.Deletebtn);
             this.Controls.Add(this.dataGridView);
             this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "AllTransactionsForm";
-            this.Text = "AllTransactionsForm";
+            this.Text = "Transactions";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
 

@@ -7,7 +7,7 @@ namespace BudgetApp.Views
 {
     public partial class AllTransactionsForm : Form
     {
-        List<Transaction> transactionList = new List<Transaction>();
+        private List<Transaction> transactionList = new List<Transaction>();
 
         public AllTransactionsForm()
         {
@@ -29,7 +29,7 @@ namespace BudgetApp.Views
 
         private void UpdateCategorybtn_Click(object sender, EventArgs e)
         {
-            Transaction.UpdateTransactionCategory(dataGridView, transactionList, categoryComboBox.Text);
+            Transaction.UpdateTransactionCategory(dataGridView, transactionList, categoryComboBox.Text, true);
         }
 
         private void Deletebtn_Click(object sender, EventArgs e)

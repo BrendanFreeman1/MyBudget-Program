@@ -11,15 +11,13 @@ namespace BudgetApp
 {
     internal partial class BudgetApp : Form
     {
-        #region Initialise Variables
-        private static List<Transaction> transactionsList = new List<Transaction>();
-        private static List<string> uniqueCategoriesList = new List<string>();          
-        #endregion
+        private List<Transaction> transactionsList = new List<Transaction>();
+        private List<string> uniqueCategoriesList = new List<string>();
 
         public BudgetApp()
         {
             InitializeComponent();
-            ReloadForm();
+            PopulateForm();
             SetDateTimePickers();
 
             if (!Settings.Default.messageShown)
@@ -32,7 +30,7 @@ namespace BudgetApp
             }
         }
 
-        internal static void ReloadForm()
+        private void PopulateForm()
         {
             LoadDataFromDatabase();
             PopulateYearComboBox();
@@ -42,7 +40,7 @@ namespace BudgetApp
             PopulateMonthBarGraph();
         }
 
-        private static void LoadDataFromDatabase()
+        private void LoadDataFromDatabase()
         {
             transactionsList = TransactionsDataAccess.LoadAllTransactions();
             uniqueCategoriesList = CategoriesDataAccess.LoadUniqueCategoryList();
@@ -51,7 +49,7 @@ namespace BudgetApp
 
         #region DateTime Pickers and Category Graph
 
-        private static void SetDateTimePickers()
+        private void SetDateTimePickers()
         {
             if (transactionsList != null)
             {
@@ -74,7 +72,7 @@ namespace BudgetApp
             PopulateCategoryGraph();
         }
 
-        private static void PopulateDefinedDateTotals()
+        private void PopulateDefinedDateTotals()
         {
             double income = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, "Income");
             double expenses = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, null) - income;
@@ -84,7 +82,7 @@ namespace BudgetApp
             NetValue.Text = (expenses + income).ToString("0.##");
         }
 
-        private static void PopulateCategoryGraph()
+        private void PopulateCategoryGraph()
         {
             categoryExpencesChart.Series["Category Totals"].Points.Clear();
 
@@ -106,7 +104,7 @@ namespace BudgetApp
 
         #region Year ComboBox and Year Total Graph
 
-        private static void PopulateYearComboBox()
+        private void PopulateYearComboBox()
         {
             if (transactionsList != null)
             {
@@ -129,7 +127,7 @@ namespace BudgetApp
             PopulateYearTotals();
         }
 
-        private static void PopulateMonthBarGraph()
+        private void PopulateMonthBarGraph()
         {
             monthChart.Series["Income"].Points.Clear();
             monthChart.Series["Expenses"].Points.Clear();
@@ -155,7 +153,7 @@ namespace BudgetApp
             }
         }
 
-        private static void PopulateYearTotals()
+        private void PopulateYearTotals()
         {
             DateTime yearStart = new DateTime(int.Parse(YearComboBox.Text), 1, 1);
             DateTime yearEnd = yearStart.AddMonths(13).AddDays(-1);
@@ -173,20 +171,28 @@ namespace BudgetApp
         #region Button Click Events
         private void Importbtn_Click(object sender, EventArgs e)
         {
-            ImportDataForm importDataForm = new ImportDataForm();            
-            if(!importDataForm.IsDisposed) { importDataForm.Show(); }
+            ImportDataForm importDataForm = new ImportDataForm();
+            importDataForm.FormClosed += new FormClosedEventHandler(ReloadForm);
+            if (!importDataForm.IsDisposed) { importDataForm.Show(); }
         }
 
-        private void ViewTransactionbtn_Click(object sender, EventArgs e)
+        private void ViewTransactionsBtn_Click(object sender, EventArgs e)
         {
             AllTransactionsForm allTransactionsForm = new AllTransactionsForm();
+            allTransactionsForm.FormClosed += new FormClosedEventHandler(ReloadForm);
             allTransactionsForm.Show();
         }
 
-        private void ViewCategoriesbtn_Click(object sender, EventArgs e)
+        private void ViewCategoriesBtn_Click(object sender, EventArgs e)
         {
             AllCategoriesForm allCategoriesForm = new AllCategoriesForm();
+            allCategoriesForm.FormClosed += new FormClosedEventHandler(ReloadForm);
             allCategoriesForm.Show();
+        }
+
+        private void ReloadForm(object sender, FormClosedEventArgs e)
+        {
+            PopulateForm();
         }
         #endregion
     }

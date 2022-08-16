@@ -67,6 +67,11 @@ namespace BudgetApp.Views
             xlWorkSheet = xlWorkBook.ActiveSheet;
             int row = 2; //Start from second row
 
+            //Need to work out running on seperate thread 
+            ErrorForm errorForm = new ErrorForm();
+            errorForm.ErrorMessage("Loading...");
+            errorForm.Show();
+
             try
             {
                 //While there are still rows in the excel with data
@@ -88,7 +93,7 @@ namespace BudgetApp.Views
         }
 
         private void CleanUpExcelObjects()
-        {
+        {   
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
@@ -103,7 +108,7 @@ namespace BudgetApp.Views
 
         private void UpdateCategorybtn_Click(object sender, EventArgs e)
         {
-            Transaction.UpdateTransactionCategory(dataGridView, transactionList, categoryComboBox.Text);
+            Transaction.UpdateTransactionCategory(dataGridView, transactionList, categoryComboBox.Text, false);
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
@@ -125,7 +130,6 @@ namespace BudgetApp.Views
 
                 Close();
 
-                BudgetApp.ReloadForm();
                 errorForm.Close();
             };            
         }

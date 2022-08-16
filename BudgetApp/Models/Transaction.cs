@@ -9,7 +9,7 @@ namespace BudgetApp.Models
     {
         private static List<Category> categoriesList = new List<Category>();
 
-        public int ID;
+        public int ID { get; }
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public double Value { get; set; }
@@ -118,9 +118,9 @@ namespace BudgetApp.Models
         /// <param name="dataGridView"></param>
         /// <param name="transactionList"></param>
         /// <param name="category"></param>
-        internal static void UpdateTransactionCategory(DataGridView dataGridView, List<Transaction> transactionList, string category)
+        internal static Transaction UpdateTransactionCategory(DataGridView dataGridView, List<Transaction> transactionList, string category, bool updateDatabase)
         {
-            if (dataGridView.CurrentRow == null) { return; }
+            if (dataGridView.CurrentRow == null) { return null; }
 
             int row = dataGridView.CurrentRow.Index;
             string description = dataGridView.Rows[row].Cells[1].Value.ToString();
@@ -131,15 +131,17 @@ namespace BudgetApp.Models
             {
                 currentTransaction.Category = category;
                 TransactionsDGVBuilder.PopulateTransactionRow(dataGridView, currentTransaction, row);
-                TransactionsDataAccess.UpdateTransactionCategory(currentTransaction);
+                if(updateDatabase) { TransactionsDataAccess.UpdateTransactionCategory(currentTransaction); }
             }
 
             dataGridView.CurrentCell = dataGridView.Rows[row].Cells[0];
+
+            return currentTransaction;
         }
 
         /// <summary>
-        /// Search through all transactionsList passed in (If nothing is passed in it will seach all transactionsList stored in user database)
-        /// and return the transaction whoes description value matches the description passed into the method.
+        /// Search through the transactionsList passed in (If nothing is passed in it will seach all transactionsList stored in user database)
+        /// and return the transaction whoes description value matches the description passed into the method. Presumes each transaction has a unique description value.
         /// </summary>
         /// <param name="description"></param>
         /// <returns>Returns null if no corresponding object is found</returns>

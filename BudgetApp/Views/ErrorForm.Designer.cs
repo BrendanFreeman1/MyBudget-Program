@@ -77,6 +77,7 @@
             this.Controls.Add(this.ErrorLabel);
             this.Name = "ErrorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.TopMost = true;
             this.ResumeLayout(false);
 
         }
