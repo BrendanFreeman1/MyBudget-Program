@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -125,18 +126,41 @@ namespace BudgetApp.Models
             int row = dataGridView.CurrentRow.Index;
             string description = dataGridView.Rows[row].Cells[1].Value.ToString();
 
-            Transaction currentTransaction = GetTransactionFromDescription(transactionList, description);
+            Transaction currentTransaction = GetTransactionFromDescription(transactionList, description); // Use ID instead?
 
             if (currentTransaction != null)
             {
-                currentTransaction.Category = category;
-                TransactionsDGVBuilder.PopulateTransactionRow(dataGridView, currentTransaction, row);
-                if(updateDatabase) { TransactionsDataAccess.UpdateTransactionCategory(currentTransaction); }
+                if(category == "Ignore")
+                {
+                    TransactionsDataAccess.DeleteTransaction(currentTransaction);
+                    transactionList.Remove(currentTransaction);
+                    dataGridView.Rows.RemoveAt(row);
+                }
+                else 
+                {
+                    currentTransaction.Category = category;
+                    TransactionsDGVBuilder.PopulateTransactionRow(dataGridView, currentTransaction, row);
+                    if (updateDatabase) { TransactionsDataAccess.UpdateTransactionCategory(currentTransaction); }
+                }
             }
 
             dataGridView.CurrentCell = dataGridView.Rows[row].Cells[0];
 
             return currentTransaction;
+        }
+
+        internal static void UpdateAllTransactionsCategory(DataGridView dataGridView, List<Transaction> transactionList)
+        {
+            Category theNewCategory = CategoriesDataAccess.LoadAllCategories().Last();
+
+            for (int i = 0; i < transactionList.Count; i++)
+            {
+                string autoCategory = AutoCategorise(transactionList[i]);
+                if (autoCategory == theNewCategory.Name)
+                {
+                    transactionList[i].Category = autoCategory;
+                }
+            }
         }
 
         /// <summary>

@@ -108,6 +108,7 @@ namespace BudgetApp
         {
             if (transactionsList != null)
             {
+                transactionsList.Sort((i, j) => DateTime.Compare(i.Date, j.Date));
                 int currentYear = transactionsList.First().Date.Year;
                 int lastYear = transactionsList.Last().Date.Year;
 
@@ -156,7 +157,7 @@ namespace BudgetApp
         private void PopulateYearTotals()
         {
             DateTime yearStart = new DateTime(int.Parse(YearComboBox.Text), 1, 1);
-            DateTime yearEnd = yearStart.AddMonths(13).AddDays(-1);
+            DateTime yearEnd = yearStart.AddMonths(12).AddDays(-1);
 
             double income = Transaction.Total(transactionsList, yearStart, yearEnd, "Income");
             double expenses = Transaction.Total(transactionsList, yearStart, yearEnd, null) - income;

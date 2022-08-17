@@ -8,14 +8,10 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace BudgetApp.Views
 {
-    /// <summary>
-    /// Takes data from the selected excel form as seperate 'Transaction' objects
-    /// Allows the user to categorise each transaction, saves them to a list, Saves the finished list to the users database
-    /// </summary>
     internal partial class ImportDataForm : Form
     {
         #region Initialise variables
-        private static readonly List<Transaction> transactionList = new List<Transaction>();
+        private static readonly List<Transaction> transactionsList = new List<Transaction>();
 
         private static Excel.Application xlApp;
         private static Excel.Workbook xlWorkBook;
@@ -30,12 +26,12 @@ namespace BudgetApp.Views
 
         private void PopulateForm()
         {
-            transactionList.Clear();
+            transactionsList.Clear();
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
             TransactionsDGVBuilder.CreateTransactionColumns(dataGridView);
 
             OpenFile();
-            TransactionsDGVBuilder.CreateTransactionRows(dataGridView, transactionList);
+            TransactionsDGVBuilder.CreateTransactionRows(dataGridView, transactionsList);
         }
 
         private void OpenFile()
@@ -77,7 +73,7 @@ namespace BudgetApp.Views
                 //While there are still rows in the excel with data
                 while (xlWorkSheet.Cells[row, 1].value != null)
                 {
-                    transactionList.Add(Transaction.GetTransactionDataFromExcel(row, xlWorkSheet));
+                    transactionsList.Add(Transaction.GetTransactionDataFromExcel(row, xlWorkSheet));
 
                     row++;
                 }
@@ -108,7 +104,7 @@ namespace BudgetApp.Views
 
         private void UpdateCategorybtn_Click(object sender, EventArgs e)
         {
-            Transaction.UpdateTransactionCategory(dataGridView, transactionList, categoryComboBox.Text, false);
+            Transaction.UpdateTransactionCategory(dataGridView, transactionsList, categoryComboBox.Text, false);
         }
 
         private void SaveBtn_Click(object sender, EventArgs e)
@@ -120,7 +116,7 @@ namespace BudgetApp.Views
 
             errorForm.ConfirmBtn.Click += delegate (Object obj, EventArgs ev)
             {
-                foreach (Transaction transaction in transactionList)
+                foreach (Transaction transaction in transactionsList)
                 {
                     if (transaction.Category != "Ignore")
                     {
@@ -152,18 +148,11 @@ namespace BudgetApp.Views
         {
             //Reload ComboBox with the newly added category
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
+            
+            Transaction.UpdateAllTransactionsCategory(dataGridView, transactionsList);
 
-            Category theNewCategory = CategoriesDataAccess.LoadAllCategories().Last();
-
-            for (int i = 0; i < transactionList.Count; i++)
-            {
-                //Only proceed if the autocategorisation matches the new category
-                if (Transaction.AutoCategorise(transactionList[i]) == theNewCategory.Name)
-                {
-                    transactionList[i].Category = Transaction.AutoCategorise(transactionList[i]);
-                    TransactionsDGVBuilder.PopulateTransactionRow(dataGridView, transactionList[i], i);
-                }
-            }
+            dataGridView.Rows.Clear();
+            TransactionsDGVBuilder.CreateTransactionRows(dataGridView, transactionsList);
         }
     }
 }

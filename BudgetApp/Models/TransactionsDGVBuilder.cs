@@ -19,6 +19,8 @@ namespace BudgetApp.Models
 
         internal static void CreateTransactionRows(DataGridView dataGridView, List<Transaction> transactionList)
         {
+            dataGridView.Rows.Clear();
+
             for (int i = 0; i < transactionList.Count; i++)
             {
                 int rowId = dataGridView.Rows.Add();
