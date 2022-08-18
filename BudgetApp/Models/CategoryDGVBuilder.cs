@@ -12,9 +12,9 @@ namespace BudgetApp.Models
             CreateDataGridViewColumn(dataGridView, "Tag", 200);
         }
 
-        internal static void CreateCategoryRows(DataGridView dataGridView, List<Category> categoryList)
+        internal static void CreateCategoryRows(DataGridView dataGridView, List<Category> categoriesList)
         {
-            foreach(Category category in categoryList)
+            foreach(Category category in categoriesList)
             {
                 int rowIndex = dataGridView.Rows.Add();               
                 PopulateCategoryRow(dataGridView, category, rowIndex);

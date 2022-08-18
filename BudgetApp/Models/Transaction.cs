@@ -17,7 +17,7 @@ namespace BudgetApp.Models
         public string Category { get; set; }
 
         /// <summary>
-        /// Attempts to find the 'Tag' value of a category within the description value of the transaction passed in. If found assigns that transaction with the corresponding category name.
+        /// Attempts to find the Tag value of a category within the id value of the transaction passed in. If found returns the Name value of that category.
         /// </summary>
         /// <param name="transaction"></param>
         /// <returns>A string representing a Category. If no category is found, returns "Other"</returns>
@@ -28,7 +28,7 @@ namespace BudgetApp.Models
 
             foreach (Category category in categoriesList)
             {
-                //If the Tag is found within the transactionsList description, return the corresponding category
+                //If the Tag is found within the transactionsList id, return the corresponding category
                 if (category.Tag != null && transaction.Description.ToLower().Contains(category.Tag))
                 {
                     return category.Name;
@@ -41,13 +41,13 @@ namespace BudgetApp.Models
 
         /// <summary>
         /// Gets the total of all values of the transactions in the transactionsList that correspond to the category and fall between the dates(inclusive) passed in.
-        /// If category is null, it will inslude all transactions in the list.
+        /// If category is null, returns the total of all transactions in the list.
         /// </summary>
         /// <param name="transactionsList"></param>
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <param name="category"></param>
-        /// <returns>A double representing the total value of all transactions of the specified category from the start to end date.</returns>
+        /// <returns>A double representing the total value of all transactions of the specified category from the start to end date(inclusive)</returns>
         internal static double Total(List<Transaction> transactionsList, DateTime startDate, DateTime endDate, string category)
         {
             double total = 0;
@@ -111,29 +111,28 @@ namespace BudgetApp.Models
 
             return transaction;
         }
-
        
         /// <summary>
-        /// Checks if the user has a row selected and if so will update the category value in the DataGridView, our transactionsList and the users database.
+        /// Gets the transaction object in the selected row and updates it with the passed category value in the dataGridView, transactionsList and the users database.
         /// </summary>
         /// <param name="dataGridView"></param>
-        /// <param name="transactionList"></param>
+        /// <param name="transactionsList"></param>
         /// <param name="category"></param>
-        internal static Transaction UpdateTransactionCategory(DataGridView dataGridView, List<Transaction> transactionList, string category, bool updateDatabase)
+        internal static Transaction UpdateTransactionCategory(DataGridView dataGridView, List<Transaction> transactionsList, string category, bool updateDatabase)
         {
             if (dataGridView.CurrentRow == null) { return null; }
 
             int row = dataGridView.CurrentRow.Index;
-            string description = dataGridView.Rows[row].Cells[1].Value.ToString();
 
-            Transaction currentTransaction = GetTransactionFromDescription(transactionList, description); // Use ID instead?
+            int ID = (int)dataGridView.Rows[row].Cells[0].Value;
+            Transaction currentTransaction = GetTransactionFromID(transactionsList, ID);
 
             if (currentTransaction != null)
             {
                 if(category == "Ignore")
                 {
                     TransactionsDataAccess.DeleteTransaction(currentTransaction);
-                    transactionList.Remove(currentTransaction);
+                    transactionsList.Remove(currentTransaction);
                     dataGridView.Rows.RemoveAt(row);
                 }
                 else 
@@ -144,38 +143,42 @@ namespace BudgetApp.Models
                 }
             }
 
-            dataGridView.CurrentCell = dataGridView.Rows[row].Cells[0];
+            dataGridView.CurrentCell = dataGridView.Rows[row].Cells[1]; 
 
             return currentTransaction;
         }
 
-        internal static void UpdateAllTransactionsCategory(DataGridView dataGridView, List<Transaction> transactionList)
+        /// <summary>
+        /// The transactionsList is autocategorised with just the passed category
+        /// </summary>
+        /// <param name="transactionsList"></param>
+        /// <param name="updateDataBase"></param>
+        internal static void UpdateAllTransactionsCategory(List<Transaction> transactionsList, Category category, bool updateDataBase)
         {
-            Category theNewCategory = CategoriesDataAccess.LoadAllCategories().Last();
-
-            for (int i = 0; i < transactionList.Count; i++)
+            foreach(Transaction transaction in transactionsList)
             {
-                string autoCategory = AutoCategorise(transactionList[i]);
-                if (autoCategory == theNewCategory.Name)
+                string autoCategory = AutoCategorise(transaction);
+                if (autoCategory == category.Name)
                 {
-                    transactionList[i].Category = autoCategory;
+                    transaction.Category = autoCategory;
+                    if(updateDataBase) { TransactionsDataAccess.UpdateTransactionCategory(transaction); }
                 }
             }
         }
 
         /// <summary>
         /// Search through the transactionsList passed in (If nothing is passed in it will seach all transactionsList stored in user database)
-        /// and return the transaction whoes description value matches the description passed into the method. Presumes each transaction has a unique description value.
+        /// and return the transaction whoes id value matches the id passed in.
         /// </summary>
-        /// <param name="description"></param>
+        /// <param name="id"></param>
         /// <returns>Returns null if no corresponding object is found</returns>
-        private static Transaction GetTransactionFromDescription(List<Transaction> transactionList, string description)
+        private static Transaction GetTransactionFromID(List<Transaction> transactionsList, int id)
         {
-            if(transactionList == null) { transactionList = TransactionsDataAccess.LoadAllTransactions(); }            
+            if(transactionsList == null) { transactionsList = TransactionsDataAccess.LoadAllTransactions(); }            
             
-            foreach(Transaction transaction in transactionList)
+            foreach(Transaction transaction in transactionsList)
             {
-                if(transaction.Description == description) { return transaction; }
+                if(transaction.ID == id) { return transaction; }
             }
 
             return null;

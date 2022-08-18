@@ -94,12 +94,12 @@ namespace BudgetApp.Views
         {
             //Reload ComboBox with the newly added category
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
+            Category theNewCategory = CategoriesDataAccess.LoadAllCategories().Last();
 
-            Transaction.UpdateAllTransactionsCategory(dataGridView, transactionsList);
+            Transaction.UpdateAllTransactionsCategory(transactionsList, theNewCategory, true);
 
             dataGridView.Rows.Clear();
             TransactionsDGVBuilder.CreateTransactionRows(dataGridView, transactionsList);
-
         }
     }
 }

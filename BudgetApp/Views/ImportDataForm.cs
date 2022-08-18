@@ -148,8 +148,9 @@ namespace BudgetApp.Views
         {
             //Reload ComboBox with the newly added category
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
-            
-            Transaction.UpdateAllTransactionsCategory(dataGridView, transactionsList);
+            Category theNewCategory = CategoriesDataAccess.LoadAllCategories().Last();
+
+            Transaction.UpdateAllTransactionsCategory(transactionsList, theNewCategory, false);
 
             dataGridView.Rows.Clear();
             TransactionsDGVBuilder.CreateTransactionRows(dataGridView, transactionsList);
