@@ -63,9 +63,10 @@ namespace BudgetApp.Views
             xlWorkSheet = xlWorkBook.ActiveSheet;
             int row = 2; //Start from second row
 
-            //Need to work out running on seperate thread 
             ErrorForm errorForm = new ErrorForm();
             errorForm.ErrorMessage("Loading...");
+            errorForm.CancelBtn.Visible = false;
+            errorForm.ConfirmBtn.Visible = false;
             errorForm.Show();
 
             try
@@ -85,6 +86,7 @@ namespace BudgetApp.Views
                 Close();
             }
 
+            errorForm.Close();
             CleanUpExcelObjects();
         }
 

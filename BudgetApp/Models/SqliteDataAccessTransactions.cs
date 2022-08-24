@@ -10,7 +10,7 @@ namespace BudgetApp.Models
     {
         internal static List<Transaction> LoadAllTransactions()
         {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
+            using (IDbConnection cnn = new SQLiteConnection(GetConnectionString("transactions")))
             {
                 return cnn.Query<Transaction>("SELECT * FROM Transactions", new DynamicParameters()).ToList();
             }
@@ -18,7 +18,7 @@ namespace BudgetApp.Models
 
         internal static void SaveTransaction(Transaction transaction)
         {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
+            using (IDbConnection cnn = new SQLiteConnection(GetConnectionString("transactions")))
             {
                 if (transaction.Category != "Ignore")
                 {
@@ -29,7 +29,7 @@ namespace BudgetApp.Models
 
         internal static void DeleteTransaction(Transaction transaction)
         {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
+            using (IDbConnection cnn = new SQLiteConnection(GetConnectionString("transactions")))
             {
                 cnn.Execute("DELETE FROM Transactions WHERE ID = @ID", transaction);
             }
@@ -37,7 +37,7 @@ namespace BudgetApp.Models
 
         internal static void UpdateTransactionCategory(Transaction transaction)
         {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("transactions")))
+            using (IDbConnection cnn = new SQLiteConnection(GetConnectionString("transactions")))
             {
                 if (transaction.Category != "Ignore")
                 {

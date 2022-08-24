@@ -17,12 +17,14 @@ namespace BudgetApp
         public BudgetApp()
         {
             InitializeComponent();
+            CreateDatabaseFiles();
             PopulateForm();
-            SetDateTimePickers();
 
             if (!Settings.Default.messageShown)
             {
                 MessageBox.Show("Welcome to the MyBudget App", "My Budget", MessageBoxButtons.OK, MessageBoxIcon.None);
+                
+                Category.SaveDefaultCategories();
 
                 //Ensures this will only run on the users first use of the app
                 Settings.Default.messageShown = true;
@@ -30,28 +32,39 @@ namespace BudgetApp
             }
         }
 
+        private void CreateDatabaseFiles()
+        {
+            const string TRANSACTIONS_TABLE = "CREATE TABLE Transactions (ID INTEGER NOT NULL UNIQUE, Date TEXT NOT NULL, Description TEXT NOT NULL, Value REAL NOT NULL DEFAULT 0.00, Category TEXT NOT NULL DEFAULT 'Ignore', PRIMARY KEY(ID AUTOINCREMENT))";
+            const string CATERGORIES_TABLE = "CREATE TABLE Categories (ID INTEGER NOT NULL, Name TEXT NOT NULL, Tag	TEXT, PRIMARY KEY(ID AUTOINCREMENT))";
+
+            SqliteDataAccess.CreateDatabaseFile("transactions", TRANSACTIONS_TABLE);
+            SqliteDataAccess.CreateDatabaseFile("categories", CATERGORIES_TABLE);
+        }
+
         private void PopulateForm()
         {
             LoadDataFromDatabase();
-            PopulateYearComboBox();
-            PopulateDefinedDateTotals();
-            PopulateCategoryGraph();
-            PopulateYearTotals();
-            PopulateMonthBarGraph();
+            if(transactionsList.Count > 0)
+            {
+                PopulateYearComboBox();
+                PopulateDefinedDateTotals();
+                PopulateCategoryGraph();
+                PopulateYearTotals();
+                PopulateMonthBarGraph();
+                SetDateTimePickers();
+            }
         }
 
         private void LoadDataFromDatabase()
         {
             transactionsList = TransactionsDataAccess.LoadAllTransactions();
-            uniqueCategoriesList = CategoriesDataAccess.LoadUniqueCategoryList();
-            Category.SaveDefaultCategories();
         }
 
         #region DateTime Pickers and Category Graph
 
         private void SetDateTimePickers()
         {
-            if (transactionsList != null)
+            if (transactionsList.Count > 0)
             {
                 transactionsList.Sort((i, j) => DateTime.Compare(i.Date, j.Date));
 
@@ -84,8 +97,9 @@ namespace BudgetApp
 
         private void PopulateCategoryGraph()
         {
+            uniqueCategoriesList = CategoriesDataAccess.LoadUniqueCategoryList();
             categoryExpencesChart.Series["Category Totals"].Points.Clear();
-
+            
             foreach (string categoryName in uniqueCategoriesList)
             {
                 if(categoryName != "Ignore" && categoryName != "Income")
@@ -106,20 +120,17 @@ namespace BudgetApp
 
         private void PopulateYearComboBox()
         {
-            if (transactionsList != null)
+            transactionsList.Sort((i, j) => DateTime.Compare(i.Date, j.Date));
+            int currentYear = transactionsList.First().Date.Year;
+            int lastYear = transactionsList.Last().Date.Year;
+
+            while (currentYear <= lastYear)
             {
-                transactionsList.Sort((i, j) => DateTime.Compare(i.Date, j.Date));
-                int currentYear = transactionsList.First().Date.Year;
-                int lastYear = transactionsList.Last().Date.Year;
-
-                while (currentYear <= lastYear)
-                {
-                    YearComboBox.Items.Add(currentYear.ToString());
-                    currentYear++;
-                }
-
-                YearComboBox.Text = lastYear.ToString();
+                YearComboBox.Items.Add(currentYear.ToString());
+                currentYear++;
             }
+
+            YearComboBox.Text = lastYear.ToString();
         }
 
         private void YearComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -151,7 +162,7 @@ namespace BudgetApp
                 monthChart.Series["Income"].Points.AddXY(month, monthIncome);
                 monthChart.Series["Expenses"].Points.AddY(monthExpenses);
                 monthChart.Series["Net"].Points.AddY(monthNet);
-            }
+            }          
         }
 
         private void PopulateYearTotals()

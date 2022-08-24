@@ -28,7 +28,7 @@ namespace BudgetApp.Models
 
             foreach (Category category in categoriesList)
             {
-                //If the Tag is found within the transactionsList id, return the corresponding category
+                //If the Tag is found within the transactionsList Description, return the corresponding category
                 if (category.Tag != null && transaction.Description.ToLower().Contains(category.Tag))
                 {
                     return category.Name;
@@ -63,8 +63,7 @@ namespace BudgetApp.Models
                         total += transaction.Value;
                     }
 
-
-                    if (category == null)
+                    else if (category == null)
                     {
                         total += transaction.Value;
                     }
@@ -111,13 +110,15 @@ namespace BudgetApp.Models
 
             return transaction;
         }
-       
+
         /// <summary>
-        /// Gets the transaction object in the selected row and updates it with the passed category value in the dataGridView, transactionsList and the users database.
+        /// Gets the transaction object in the selected row and updates it with the passed category value in the dataGridView, transactionsList and the users database if updateDatabase is true. 
+        /// If updating the category to 'Ignore', deletes the transaction from the dataGridView, the transactionsList and the users database if updateDatabase is true.
         /// </summary>
         /// <param name="dataGridView"></param>
         /// <param name="transactionsList"></param>
         /// <param name="category"></param>
+        /// <returns>The currently selected Transaction in the DataGridView with its Category value updated to the category passed in. If nothing is selected returns null.</returns>
         internal static Transaction UpdateTransactionCategory(DataGridView dataGridView, List<Transaction> transactionsList, string category, bool updateDatabase)
         {
             if (dataGridView.CurrentRow == null) { return null; }
@@ -149,7 +150,7 @@ namespace BudgetApp.Models
         }
 
         /// <summary>
-        /// The transactionsList is autocategorised with just the passed category
+        /// The transactionsList passed in is autocategorised with the category passed in. Updates the transactionsList and the users database if updateDatabase is true.
         /// </summary>
         /// <param name="transactionsList"></param>
         /// <param name="updateDataBase"></param>

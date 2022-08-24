@@ -10,7 +10,7 @@ namespace BudgetApp.Models
     {   
         internal static List<Category> LoadAllCategories()
         {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
+            using (IDbConnection cnn = new SQLiteConnection(GetConnectionString("categories")))
             {
                 return cnn.Query<Category>("SELECT * FROM Categories", new DynamicParameters()).ToList();
             }
@@ -18,7 +18,7 @@ namespace BudgetApp.Models
 
         internal static void SaveCategory(Category category)
         {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
+            using (IDbConnection cnn = new SQLiteConnection(GetConnectionString("categories")))
             {
                 cnn.Execute("INSERT INTO Categories (Name, Tag) VALUES (@Name, @Tag)", category);
             }
@@ -26,7 +26,7 @@ namespace BudgetApp.Models
 
         internal static void DeleteCategory(Category category)
         {
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
+            using (IDbConnection cnn = new SQLiteConnection(GetConnectionString("categories")))
             {
                 cnn.Execute("DELETE FROM Categories WHERE ID = @ID", category);
             }
@@ -39,7 +39,7 @@ namespace BudgetApp.Models
         /// <param name="id"></param>
         internal static void UpdateCategory(Category category, int id)
         {            
-            using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString("categories")))
+            using (IDbConnection cnn = new SQLiteConnection(GetConnectionString("categories")))
             {
                 cnn.Execute("UPDATE Categories SET Name = @Name WHERE ID = " + id, category);
                 cnn.Execute("UPDATE Categories SET Tag = @Tag WHERE ID = " + id, category);

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.DeleteBtn = new System.Windows.Forms.Button();
             this.CreateCategoryBtn = new System.Windows.Forms.Button();
@@ -46,16 +46,16 @@
             this.dataGridView.AllowUserToDeleteRows = false;
             this.dataGridView.AllowUserToResizeColumns = false;
             this.dataGridView.AllowUserToResizeRows = false;
-            this.dataGridView.BackgroundColor = System.Drawing.Color.Black;
+            this.dataGridView.BackgroundColor = System.Drawing.Color.DimGray;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView.Location = new System.Drawing.Point(13, 12);
             this.dataGridView.MultiSelect = false;
@@ -63,19 +63,19 @@
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowHeadersWidth = 4;
             this.dataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView.Size = new System.Drawing.Size(363, 618);
+            this.dataGridView.Size = new System.Drawing.Size(363, 587);
             this.dataGridView.TabIndex = 4;
             // 
             // DeleteBtn
             // 
             this.DeleteBtn.ForeColor = System.Drawing.Color.Black;
-            this.DeleteBtn.Location = new System.Drawing.Point(389, 559);
+            this.DeleteBtn.Location = new System.Drawing.Point(13, 607);
             this.DeleteBtn.Name = "DeleteBtn";
             this.DeleteBtn.Size = new System.Drawing.Size(138, 23);
             this.DeleteBtn.TabIndex = 5;
@@ -86,7 +86,7 @@
             // CreateCategoryBtn
             // 
             this.CreateCategoryBtn.ForeColor = System.Drawing.Color.Black;
-            this.CreateCategoryBtn.Location = new System.Drawing.Point(389, 509);
+            this.CreateCategoryBtn.Location = new System.Drawing.Point(238, 607);
             this.CreateCategoryBtn.Name = "CreateCategoryBtn";
             this.CreateCategoryBtn.Size = new System.Drawing.Size(138, 23);
             this.CreateCategoryBtn.TabIndex = 6;
@@ -97,7 +97,7 @@
             // CategoriesLabel
             // 
             this.CategoriesLabel.AutoSize = true;
-            this.CategoriesLabel.Location = new System.Drawing.Point(391, 12);
+            this.CategoriesLabel.Location = new System.Drawing.Point(384, 11);
             this.CategoriesLabel.Name = "CategoriesLabel";
             this.CategoriesLabel.Size = new System.Drawing.Size(0, 13);
             this.CategoriesLabel.TabIndex = 7;
@@ -106,7 +106,7 @@
             // UpBtn
             // 
             this.UpBtn.ForeColor = System.Drawing.Color.Black;
-            this.UpBtn.Location = new System.Drawing.Point(389, 103);
+            this.UpBtn.Location = new System.Drawing.Point(382, 102);
             this.UpBtn.Name = "UpBtn";
             this.UpBtn.Size = new System.Drawing.Size(138, 23);
             this.UpBtn.TabIndex = 8;
@@ -117,7 +117,7 @@
             // DownBtn
             // 
             this.DownBtn.ForeColor = System.Drawing.Color.Black;
-            this.DownBtn.Location = new System.Drawing.Point(389, 132);
+            this.DownBtn.Location = new System.Drawing.Point(382, 131);
             this.DownBtn.Name = "DownBtn";
             this.DownBtn.Size = new System.Drawing.Size(138, 23);
             this.DownBtn.TabIndex = 9;
@@ -128,7 +128,7 @@
             // CloseBtn
             // 
             this.CloseBtn.ForeColor = System.Drawing.Color.Black;
-            this.CloseBtn.Location = new System.Drawing.Point(389, 607);
+            this.CloseBtn.Location = new System.Drawing.Point(382, 607);
             this.CloseBtn.Name = "CloseBtn";
             this.CloseBtn.Size = new System.Drawing.Size(138, 23);
             this.CloseBtn.TabIndex = 10;
@@ -141,7 +141,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(539, 642);
+            this.ClientSize = new System.Drawing.Size(527, 642);
             this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.DownBtn);
             this.Controls.Add(this.UpBtn);
