@@ -26,7 +26,7 @@ namespace BudgetApp
                 
                 Category.SaveDefaultCategories();
 
-                //Ensures this will only run on the users first use of the app
+                //Ensures this method will only run on the users first use of the app
                 Settings.Default.messageShown = true;
                 Settings.Default.Save();
             }

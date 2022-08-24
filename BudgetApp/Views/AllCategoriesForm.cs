@@ -30,6 +30,8 @@ namespace BudgetApp.Views
 
         private void Deletebtn_Click(object sender, EventArgs e)
         {
+            if(dataGridView.CurrentRow == null) return;
+
             int row = dataGridView.CurrentRow.Index;
             Category category = categoriesList[row];
 
@@ -75,7 +77,14 @@ namespace BudgetApp.Views
             CategoriesDataAccess.UpdateCategory(selectedCategory, categoryToSwap.ID);
             CategoriesDataAccess.UpdateCategory(categoryToSwap, selectedCategory.ID);
 
-            PopulateForm();            //swap in list and datagridview instead of reloading entire form
+            CategoryDGVBuilder.PopulateCategoryRow(dataGridView, categoryToSwap, row);
+            CategoryDGVBuilder.PopulateCategoryRow(dataGridView, selectedCategory, rowToSwap);
+
+            Category temp = categoriesList[rowToSwap];
+            categoriesList[rowToSwap] = selectedCategory;
+            categoriesList[row] = temp;
+
+            //PopulateForm();            //swap in list and datagridview instead of reloading entire form
 
             //Set the selection back to the previous selection
             dataGridView.CurrentCell = dataGridView.Rows[rowToSwap].Cells[0];
