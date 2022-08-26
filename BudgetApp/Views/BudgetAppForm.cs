@@ -44,7 +44,9 @@ namespace BudgetApp
         private void PopulateForm()
         {
             LoadDataFromDatabase();
-            if(transactionsList.Count > 0)
+            ClearForm();
+
+            if (transactionsList.Count > 0)
             {
                 PopulateYearComboBox();
                 PopulateDefinedDateTotals();
@@ -55,22 +57,36 @@ namespace BudgetApp
             }
         }
 
+        private void ClearForm()
+        {
+            categoryExpencesChart.Series["Category Totals"].Points.Clear();
+
+            IncomeValue.Text = null;
+            ExpensesValue.Text = null;
+            NetValue.Text = null;
+
+
+            monthChart.Series["Income"].Points.Clear();
+            monthChart.Series["Expenses"].Points.Clear();
+            monthChart.Series["Net"].Points.Clear();
+
+            YearIncomeValue.Text = null;
+            YearExpensesValue.Text = null;
+            YearTotalValue.Text = null;
+        }
+
         private void LoadDataFromDatabase()
         {
             transactionsList = TransactionsDataAccess.LoadAllTransactions();
         }
 
         #region DateTime Pickers and Category Graph
-
         private void SetDateTimePickers()
         {
-            if (transactionsList.Count > 0)
-            {
                 transactionsList.Sort((i, j) => DateTime.Compare(i.Date, j.Date));
 
                 FromDateTimePicker.Value = transactionsList.First().Date;
                 ToDateTimePicker.Value = transactionsList.Last().Date;
-            }
         }
 
         private void FromDateTimePicker_ValueChanged(object sender, EventArgs e)
@@ -90,8 +106,10 @@ namespace BudgetApp
             double income = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, "Income");
             double expenses = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, null) - income;
 
+            if (expenses < 0) expenses = expenses * -1;
+
             IncomeValue.Text = income.ToString("0.##");
-            ExpensesValue.Text = (expenses * -1).ToString("0.##");
+            ExpensesValue.Text = (expenses).ToString("0.##");
             NetValue.Text = (expenses + income).ToString("0.##");
         }
 
@@ -113,11 +131,9 @@ namespace BudgetApp
                 }
             }
         }
-
         #endregion
 
         #region Year ComboBox and Year Total Graph
-
         private void PopulateYearComboBox()
         {
             transactionsList.Sort((i, j) => DateTime.Compare(i.Date, j.Date));
@@ -157,7 +173,7 @@ namespace BudgetApp
 
                 //Limit the chart to positive numbers
                 if (monthNet < 0) monthNet = 0;
-                monthExpenses *= -1;
+                if(monthExpenses < 0) monthExpenses *= -1;
 
                 monthChart.Series["Income"].Points.AddXY(month, monthIncome);
                 monthChart.Series["Expenses"].Points.AddY(monthExpenses);
@@ -173,11 +189,13 @@ namespace BudgetApp
             double income = Transaction.Total(transactionsList, yearStart, yearEnd, "Income");
             double expenses = Transaction.Total(transactionsList, yearStart, yearEnd, null) - income;
 
+            //Limit values to positive numbers
+            if (expenses < 0) expenses = expenses * -1;
+
             YearIncomeValue.Text = income.ToString("0.##");
-            YearExpensesValue.Text = (expenses * -1).ToString("0.##");
+            YearExpensesValue.Text = expenses.ToString("0.##");
             YearTotalValue.Text = (expenses + income).ToString("0.##");
         }
-
         #endregion
 
         #region Button Click Events

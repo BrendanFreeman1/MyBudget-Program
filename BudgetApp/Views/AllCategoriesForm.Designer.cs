@@ -37,6 +37,7 @@
             this.UpBtn = new System.Windows.Forms.Button();
             this.DownBtn = new System.Windows.Forms.Button();
             this.CloseBtn = new System.Windows.Forms.Button();
+            this.LoadDefaultBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,7 +98,7 @@
             // CategoriesLabel
             // 
             this.CategoriesLabel.AutoSize = true;
-            this.CategoriesLabel.Location = new System.Drawing.Point(384, 11);
+            this.CategoriesLabel.Location = new System.Drawing.Point(384, 49);
             this.CategoriesLabel.Name = "CategoriesLabel";
             this.CategoriesLabel.Size = new System.Drawing.Size(0, 13);
             this.CategoriesLabel.TabIndex = 7;
@@ -106,7 +107,7 @@
             // UpBtn
             // 
             this.UpBtn.ForeColor = System.Drawing.Color.Black;
-            this.UpBtn.Location = new System.Drawing.Point(382, 102);
+            this.UpBtn.Location = new System.Drawing.Point(382, 140);
             this.UpBtn.Name = "UpBtn";
             this.UpBtn.Size = new System.Drawing.Size(138, 23);
             this.UpBtn.TabIndex = 8;
@@ -117,7 +118,7 @@
             // DownBtn
             // 
             this.DownBtn.ForeColor = System.Drawing.Color.Black;
-            this.DownBtn.Location = new System.Drawing.Point(382, 131);
+            this.DownBtn.Location = new System.Drawing.Point(382, 169);
             this.DownBtn.Name = "DownBtn";
             this.DownBtn.Size = new System.Drawing.Size(138, 23);
             this.DownBtn.TabIndex = 9;
@@ -136,12 +137,24 @@
             this.CloseBtn.UseVisualStyleBackColor = true;
             this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
+            // LoadDefaultBtn
+            // 
+            this.LoadDefaultBtn.ForeColor = System.Drawing.Color.Black;
+            this.LoadDefaultBtn.Location = new System.Drawing.Point(382, 12);
+            this.LoadDefaultBtn.Name = "LoadDefaultBtn";
+            this.LoadDefaultBtn.Size = new System.Drawing.Size(138, 23);
+            this.LoadDefaultBtn.TabIndex = 11;
+            this.LoadDefaultBtn.Text = "Load Default Categories";
+            this.LoadDefaultBtn.UseVisualStyleBackColor = true;
+            this.LoadDefaultBtn.Click += new System.EventHandler(this.LoadDefaultBtn_Click);
+            // 
             // AllCategoriesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(527, 642);
+            this.Controls.Add(this.LoadDefaultBtn);
             this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.DownBtn);
             this.Controls.Add(this.UpBtn);
@@ -171,5 +184,6 @@
         private System.Windows.Forms.Button UpBtn;
         private System.Windows.Forms.Button DownBtn;
         private System.Windows.Forms.Button CloseBtn;
+        private System.Windows.Forms.Button LoadDefaultBtn;
     }
 }

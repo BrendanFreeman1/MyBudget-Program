@@ -78,7 +78,6 @@ namespace BudgetApp.Views
 
                     row++;
                 }
-
             }
             catch //Not an acceptable way to handle exceptions, think of a better way!!!!?!?!!?!?!!!
             {
@@ -106,6 +105,7 @@ namespace BudgetApp.Views
 
         private void UpdateCategorybtn_Click(object sender, EventArgs e)
         {
+            //Not working
             Transaction.UpdateTransactionCategory(dataGridView, transactionsList, categoryComboBox.Text, false);
         }
 
@@ -152,7 +152,7 @@ namespace BudgetApp.Views
             ComboBoxBuilder.PopulateComboBox(categoryComboBox);
             Category theNewCategory = CategoriesDataAccess.LoadAllCategories().Last();
 
-            Transaction.UpdateAllTransactionsCategory(transactionsList, theNewCategory, false);
+            Transaction.UpdateEachTransactionsCategory(transactionsList, theNewCategory, false);
 
             dataGridView.Rows.Clear();
             TransactionsDGVBuilder.CreateTransactionRows(dataGridView, transactionsList);

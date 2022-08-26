@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -9,8 +10,9 @@ namespace BudgetApp.Models
     public class Transaction
     {
         private static List<Category> categoriesList = new List<Category>();
+        private static int tempID = 0;
 
-        public int ID { get; }
+        public int ID { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public double Value { get; set; }
@@ -81,6 +83,8 @@ namespace BudgetApp.Models
         internal static Transaction GetTransactionDataFromExcel(int row, Excel.Worksheet xlWorkSheet)
         {
             Transaction transaction = new Transaction();
+
+            transaction.ID = Interlocked.Increment(ref tempID);
 
             //Excel is feeding some of the dates as DateTime objects(day of month > 12) and some as strings(day of month <= 12).
             var currentDate = xlWorkSheet.Cells[row, 1].value;
@@ -154,7 +158,7 @@ namespace BudgetApp.Models
         /// </summary>
         /// <param name="transactionsList"></param>
         /// <param name="updateDataBase"></param>
-        internal static void UpdateAllTransactionsCategory(List<Transaction> transactionsList, Category category, bool updateDataBase)
+        internal static void UpdateEachTransactionsCategory(List<Transaction> transactionsList, Category category, bool updateDataBase)
         {
             foreach(Transaction transaction in transactionsList)
             {

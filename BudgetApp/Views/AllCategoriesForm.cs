@@ -54,14 +54,21 @@ namespace BudgetApp.Views
 
         private void UpBtn_Click(object sender, EventArgs e)
         {
-            int row = dataGridView.CurrentRow.Index;
-            if(row > 0) { MoveSelected(row, row-1); }
+            if(dataGridView.CurrentRow != null)
+            {
+                int row = dataGridView.CurrentRow.Index;
+                if (row > 0) { MoveSelected(row, row - 1); }
+            }
+
         }
 
         private void DownBtn_Click(object sender, EventArgs e)
         {
-            int row = dataGridView.CurrentRow.Index;
-            if (row < categoriesList.Count-1) MoveSelected(row, row+1);
+            if (dataGridView.CurrentRow != null)
+            {
+                int row = dataGridView.CurrentRow.Index;
+                if (row < categoriesList.Count - 1) MoveSelected(row, row + 1);
+            }
         }
 
         private void CloseBtn_Click(object sender, EventArgs e)
@@ -80,14 +87,18 @@ namespace BudgetApp.Views
             CategoryDGVBuilder.PopulateCategoryRow(dataGridView, categoryToSwap, row);
             CategoryDGVBuilder.PopulateCategoryRow(dataGridView, selectedCategory, rowToSwap);
 
-            Category temp = categoriesList[rowToSwap];
-            categoriesList[rowToSwap] = selectedCategory;
-            categoriesList[row] = temp;
-
-            //PopulateForm();            //swap in list and datagridview instead of reloading entire form
+            categoriesList.Clear();
+            categoriesList = CategoriesDataAccess.LoadAllCategories();
 
             //Set the selection back to the previous selection
             dataGridView.CurrentCell = dataGridView.Rows[rowToSwap].Cells[0];
+        }
+
+        private void LoadDefaultBtn_Click(object sender, EventArgs e)
+        {
+            Category.SaveDefaultCategories();
+
+            PopulateForm();
         }
     }
 }

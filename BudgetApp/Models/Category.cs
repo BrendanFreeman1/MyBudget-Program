@@ -19,7 +19,6 @@ namespace BudgetApp.Models
             Name = categoryName;
             Tag = tag;
         }
-
         
         /// <summary>
         /// Adds default categories to the users database
