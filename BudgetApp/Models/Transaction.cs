@@ -179,14 +179,41 @@ namespace BudgetApp.Models
         /// <returns>Returns null if no corresponding object is found</returns>
         private static Transaction GetTransactionFromID(List<Transaction> transactionsList, int id)
         {
-            if(transactionsList == null) { transactionsList = TransactionsDataAccess.LoadAllTransactions(); }            
+            if(transactionsList == null) { transactionsList = TransactionsDataAccess.LoadAllTransactions(); }
+
+            //Because the ID numbers are all wack the lastIndex passed needs to the the max ID in the list, not just the count of the list.
+            //which means the list needs to be sorted by ID first, is that really less expensive?
             
-            foreach(Transaction transaction in transactionsList)
+            int index =  BinarySearch(transactionsList, id, 0, transactionsList[transactionsList.Count - 1].ID);
+            if(index == -1) { return null; }
+
+            return transactionsList[index];
+        }
+
+        private static int BinarySearch(List<Transaction> transactionsList, int idToSearchFor, int firstIndex, int lastIndex)
+        {
+            if (lastIndex >= firstIndex)
             {
-                if(transaction.ID == id) { return transaction; }
+                int mid = ((lastIndex - firstIndex) / 2) + firstIndex;
+
+                //Middle
+                if (idToSearchFor == transactionsList[mid].ID)
+                    return mid;
+                //Left of mid
+                if (idToSearchFor < transactionsList[mid].ID)
+                    return BinarySearch(transactionsList, firstIndex, mid - 1, idToSearchFor);
+                //Right of mid    
+                return BinarySearch(transactionsList, mid + 1, lastIndex, idToSearchFor);
             }
 
-            return null;
+            //Not found
+            return -1;
         }
     }
 }
+
+//MONDAY
+//Work out binary search problem
+//Redo resume
+//Apply for junior job
+//Add sub categories to app
