@@ -11,13 +11,13 @@ namespace BudgetApp.Models
     {
         internal static void CreateTransactionColumns(DataGridView dataGridView)
         {
-            CreateDataGridViewColumn(dataGridView, "", 0);
+            CreateDataGridViewColumn(dataGridView, "ID", 50);
             CreateDataGridViewColumn(dataGridView, "Date", 75);
             CreateDataGridViewColumn(dataGridView, "Description", 740);
             CreateDataGridViewColumn(dataGridView, "Value", 70);
             CreateDataGridViewColumn(dataGridView, "Category", 110);
 
-            dataGridView.Columns[0].Visible = false;
+            //dataGridView.Columns[0].Visible = false;
         }
 
         internal static void CreateTransactionRows(DataGridView dataGridView, List<Transaction> transactionsList)

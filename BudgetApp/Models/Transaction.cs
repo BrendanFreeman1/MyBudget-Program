@@ -115,6 +115,24 @@ namespace BudgetApp.Models
             return transaction;
         }
 
+                /// <summary>
+        /// The transactionsList passed in is autocategorised with the category passed in. Updates the transactionsList and the users database if updateDatabase is true.
+        /// </summary>
+        /// <param name="transactionsList"></param>
+        /// <param name="updateDataBase"></param>
+        internal static void UpdateEachTransactionsCategory(List<Transaction> transactionsList, Category category, bool updateDataBase)
+        {
+            foreach(Transaction transaction in transactionsList)
+            {
+                string autoCategory = AutoCategorise(transaction);
+                if (autoCategory == category.Name)
+                {
+                    transaction.Category = autoCategory;
+                    if(updateDataBase) { TransactionsDataAccess.UpdateTransactionCategory(transaction); }
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the transaction object in the selected row and updates it with the passed category value in the dataGridView, transactionsList and the users database if updateDatabase is true. 
         /// If updating the category to 'Ignore', deletes the transaction from the dataGridView, the transactionsList and the users database if updateDatabase is true.
@@ -128,8 +146,7 @@ namespace BudgetApp.Models
             if (dataGridView.CurrentRow == null) { return null; }
 
             int row = dataGridView.CurrentRow.Index;
-
-            int ID = (int)dataGridView.Rows[row].Cells[0].Value;
+            int ID = (int)dataGridView.CurrentRow.Cells[0].Value;
             Transaction currentTransaction = GetTransactionFromID(transactionsList, ID);
 
             if (currentTransaction != null)
@@ -154,65 +171,36 @@ namespace BudgetApp.Models
         }
 
         /// <summary>
-        /// The transactionsList passed in is autocategorised with the category passed in. Updates the transactionsList and the users database if updateDatabase is true.
-        /// </summary>
-        /// <param name="transactionsList"></param>
-        /// <param name="updateDataBase"></param>
-        internal static void UpdateEachTransactionsCategory(List<Transaction> transactionsList, Category category, bool updateDataBase)
-        {
-            foreach(Transaction transaction in transactionsList)
-            {
-                string autoCategory = AutoCategorise(transaction);
-                if (autoCategory == category.Name)
-                {
-                    transaction.Category = autoCategory;
-                    if(updateDataBase) { TransactionsDataAccess.UpdateTransactionCategory(transaction); }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Search through the transactionsList passed in (If nothing is passed in it will seach all transactionsList stored in user database)
-        /// and return the transaction whoes id value matches the id passed in.
+        /// Search through the transactionsList passed in and return the transaction whoes id value matches the id passed in.
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Returns null if no corresponding object is found</returns>
         private static Transaction GetTransactionFromID(List<Transaction> transactionsList, int id)
-        {
-            if(transactionsList == null) { transactionsList = TransactionsDataAccess.LoadAllTransactions(); }
-
-            //Because the ID numbers are all wack the lastIndex passed needs to the the max ID in the list, not just the count of the list.
-            //which means the list needs to be sorted by ID first, is that really less expensive?
-            
-            int index =  BinarySearch(transactionsList, id, 0, transactionsList[transactionsList.Count - 1].ID);
+        {            
+            int index =  BinarySearch(transactionsList, id, 0, transactionsList.Count-1);
             if(index == -1) { return null; }
 
             return transactionsList[index];
         }
 
-        private static int BinarySearch(List<Transaction> transactionsList, int idToSearchFor, int firstIndex, int lastIndex)
+        private static int BinarySearch(List<Transaction> transactionsList, int idToSearchFor, int first, int last)
         {
-            if (lastIndex >= firstIndex)
+            if (last >= first)
             {
-                int mid = ((lastIndex - firstIndex) / 2) + firstIndex;
-
-                //Middle
-                if (idToSearchFor == transactionsList[mid].ID)
-                    return mid;
-                //Left of mid
-                if (idToSearchFor < transactionsList[mid].ID)
-                    return BinarySearch(transactionsList, firstIndex, mid - 1, idToSearchFor);
-                //Right of mid    
-                return BinarySearch(transactionsList, mid + 1, lastIndex, idToSearchFor);
+                int mid = ((last - first) / 2) + first;
+                //mid
+                if (idToSearchFor == transactionsList[mid].ID) return mid;
+                //left
+                if (idToSearchFor > transactionsList[mid].ID) return BinarySearch(transactionsList, idToSearchFor, first, mid - 1);
+                //right   
+                return BinarySearch(transactionsList, idToSearchFor, mid + 1, last);
             }
 
-            //Not found
             return -1;
         }
     }
 }
 
-//MONDAY
 //Work out binary search problem
 //Redo resume
 //Apply for junior job
