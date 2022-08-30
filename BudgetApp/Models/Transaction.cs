@@ -176,32 +176,14 @@ namespace BudgetApp.Models
         /// <param name="id"></param>
         /// <returns>Returns null if no corresponding object is found</returns>
         private static Transaction GetTransactionFromID(List<Transaction> transactionsList, int id)
-        {            
-            int index =  BinarySearch(transactionsList, id, 0, transactionsList.Count-1);
-            if(index == -1) { return null; }
-
-            return transactionsList[index];
-        }
-
-        private static int BinarySearch(List<Transaction> transactionsList, int idToSearchFor, int first, int last)
         {
-            if (last >= first)
+            foreach (Transaction transaction in transactionsList)
             {
-                int mid = ((last - first) / 2) + first;
-                //mid
-                if (idToSearchFor == transactionsList[mid].ID) return mid;
-                //left
-                if (idToSearchFor > transactionsList[mid].ID) return BinarySearch(transactionsList, idToSearchFor, first, mid - 1);
-                //right   
-                return BinarySearch(transactionsList, idToSearchFor, mid + 1, last);
+                if (transaction.ID == id) return transaction;
             }
 
-            return -1;
+            return null;
         }
     }
 }
 
-//Work out binary search problem
-//Redo resume
-//Apply for junior job
-//Add sub categories to app
