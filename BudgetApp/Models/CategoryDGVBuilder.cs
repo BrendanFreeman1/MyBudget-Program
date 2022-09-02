@@ -7,9 +7,11 @@ namespace BudgetApp.Models
     {
         internal static void CreateCategoryColumns(DataGridView dataGridView)
         {
-            CreateDataGridViewColumn(dataGridView, "#", 40);
+            CreateDataGridViewColumn(dataGridView, "", 0);
             CreateDataGridViewColumn(dataGridView, "Category", 100);
-            CreateDataGridViewColumn(dataGridView, "Tag", 200);
+            CreateDataGridViewColumn(dataGridView, "Tag", 240);
+
+            dataGridView.Columns[0].Visible = false;
         }
 
         internal static void CreateCategoryRows(DataGridView dataGridView, List<Category> categoriesList)
