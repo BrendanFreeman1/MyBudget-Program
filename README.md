@@ -26,7 +26,7 @@
 <div>
   <h3> Illustrations </h3>
     <p>Landing Form</p>
-    <img src="https://user-images.githubusercontent.com/17680671/189026309-a4b1e526-c749-4b66-8721-a36fdaaf61f6.png">
+    <img src="">
     <p>Import Form</p>
     <img src="https://user-images.githubusercontent.com/17680671/189026348-91dcab6b-00e2-4590-afa0-42b6431183bd.png">
     <p>All Transactions Form</p>
@@ -46,28 +46,25 @@
   
 <div>
   <h3> Features </h3>
-    <p>
-      <p> * Create custom categories to auto-categorise transactions by. Set a string that is used to search through each transactions description
-      and the corresponding category it'll be set to if that string is found in a transactions description. Save them to your local database. </p>
-      <p> * Imprort a CSV file of your transactions (must be in the correct Date | Description | Credit | Debit format), manually set categories for
-      transactions and save them all to a local database.</p>            
-      <p> * View all transactions saved to the database or set a date range to view by. Update the category of individual transactions or delete unwanted
-      transactions. </p>
-      <p> * View all categories save to the database, change the order of the categories to change their priority in auto-categorising transactions (once a
-      'Tag' has been found in a transactions descrption it returns its corresponding category and no further 'Tags' are checked for). Delete unwanted
-      categories. </p>
-      <p> * Values on landing page update whenever new data is added or removed from the database. </p>
-      <p> * Select date range to display data for on the categories graph. </p>
-      <p> * Select specific year to display data for on the year graph. </p>
-      
-    </p>
-    <p>
-      <h4> Future Features </h4>
-      <p> * Add Exact figures below graphs </p>
-      <p> * Add sub-categories - to be added to each category (Utilites could have Water|Electricy|Mobile|Internet ect) and allow the user to view the break
-      down of each categories sub-categories on the categories graph. </p>
-      <p> * Add net worth and debt trackers so users can view their change over time. </p>            
-      <p> * Add investing form for users to calculate years to retirement given an expected networth at retirement, yearly returns from investments and
-      current income minus expenses. </p>
-    </p>
+    <p> * Create custom categories to auto-categorise transactions by. Set a string that is used to search through each transactions description
+    and the corresponding category it'll be set to if that string is found in a transactions description. Save them to your local database. </p>
+    <p> * Imprort a CSV file of your transactions (must be in the correct Date | Description | Credit | Debit format), manually set categories for
+    transactions and save them all to a local database.</p>            
+    <p> * View all transactions saved to the database or set a date range to view by. Update the category of individual transactions or delete unwanted
+    transactions. </p>
+    <p> * View all categories save to the database, change the order of the categories to change their priority in auto-categorising transactions (once a
+    'Tag' has been found in a transactions descrption it returns its corresponding category and no further 'Tags' are checked for). Delete unwanted
+    categories. </p>
+    <p> * Values on landing page update whenever new data is added or removed from the database. </p>
+    <p> * Select date range to display data for on the categories graph. </p>
+    <p> * Select specific year to display data for on the year graph. </p>
+</div>      
+<div>
+  <h4> Future Features </h4>
+  <p> * Add Exact figures below graphs </p>
+  <p> * Add sub-categories - to be added to each category (Utilites could have Water|Electricy|Mobile|Internet ect) and allow the user to view the break
+  down of each categories sub-categories on the categories graph. </p>
+  <p> * Add net worth and debt trackers so users can view their change over time. </p>            
+  <p> * Add investing form for users to calculate years to retirement given an expected networth at retirement, yearly returns from investments and
+  current income minus expenses. </p>
 </div>
