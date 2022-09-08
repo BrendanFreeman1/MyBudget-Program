@@ -60,6 +60,7 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridView.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.dataGridView.Location = new System.Drawing.Point(12, 70);
             this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";

@@ -105,12 +105,13 @@ namespace BudgetApp
         {
             double income = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, "Income");
             double expenses = Transaction.Total(transactionsList, FromDateTimePicker.Value, ToDateTimePicker.Value, null) - income;
+            NetValue.Text = (expenses + income).ToString("0.##");
 
             if (expenses < 0) expenses = expenses * -1;
 
             IncomeValue.Text = income.ToString("0.##");
             ExpensesValue.Text = (expenses).ToString("0.##");
-            NetValue.Text = (expenses + income).ToString("0.##");
+            
         }
 
         private void PopulateCategoryGraph()
@@ -188,13 +189,14 @@ namespace BudgetApp
 
             double income = Transaction.Total(transactionsList, yearStart, yearEnd, "Income");
             double expenses = Transaction.Total(transactionsList, yearStart, yearEnd, null) - income;
+            YearTotalValue.Text = (expenses + income).ToString("0.##");
 
             //Limit values to positive numbers
             if (expenses < 0) expenses = expenses * -1;
 
             YearIncomeValue.Text = income.ToString("0.##");
             YearExpensesValue.Text = expenses.ToString("0.##");
-            YearTotalValue.Text = (expenses + income).ToString("0.##");
+            
         }
         #endregion
 
