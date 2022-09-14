@@ -174,7 +174,7 @@ namespace BudgetApp.Models
         /// Search through the transactionsList passed in and return the transaction whoes id value matches the id passed in.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Returns null if no corresponding object is found</returns>
+        /// <returns>Returns transaction object or null if no corresponding object is found</returns>
         private static Transaction GetTransactionFromID(List<Transaction> transactionsList, int id)
         {
             foreach (Transaction transaction in transactionsList)

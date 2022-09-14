@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace BudgetApp.Models
 {
-    internal class CategoryDGVBuilder: DGVBuilder
+    internal class CategoryDGVBuilder : DGVBuilder
     {
         internal static void CreateCategoryColumns(DataGridView dataGridView)
         {
