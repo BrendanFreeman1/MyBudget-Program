@@ -115,7 +115,7 @@ namespace BudgetApp.Models
             return transaction;
         }
 
-                /// <summary>
+        /// <summary>
         /// The transactionsList passed in is autocategorised with the category passed in. Updates the transactionsList and the users database if updateDatabase is true.
         /// </summary>
         /// <param name="transactionsList"></param>
