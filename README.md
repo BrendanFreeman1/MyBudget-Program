@@ -72,7 +72,7 @@
 </div>  
 
 <div>
-  <h4> Future Features </h4>
+  <h3> Future Features </h3>
   <ul>
     <li> Add Exact figures below graphs </li>
     <li> Add sub-categories - to be added to each category (Utilites could have Water|Electricy|Mobile|Internet ect) and allow the user to view the break
