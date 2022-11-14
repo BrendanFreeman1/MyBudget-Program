@@ -17,10 +17,19 @@
 <div>
 
 <div align="left">
-  <h3> Technologies </h3>
-  <P>'My Budget' was built in the .NET Framework using Windows Forms in Visual Studio.</p>
-  <P> * Code: C#</p>
-  <P> * Database: SQLite</p>
+  <h2>Built With</h2>
+  <h3>Languages</h3>
+  <ul>
+   <li>C#</li>
+   <li>SQLite</li>
+  </ul>
+
+  <h3> Tools </h3>
+  <ul>
+   <li>Visual Studio</li>
+   <li>Git</li>
+   <li>GitHub</li>
+  </ul>
 </div>
 
 <div>
@@ -46,25 +55,30 @@
   
 <div>
   <h3> Features </h3>
-    <p> * Create custom categories to auto-categorise transactions by. Set a string that is used to search through each transactions description
-    and the corresponding category it'll be set to if that string is found in a transactions description. Save them to your local database. </p>
-    <p> * Imprort a CSV file of your transactions (must be in the correct Date | Description | Credit | Debit format), manually set categories for
-    transactions and save them all to a local database.</p>            
-    <p> * View all transactions saved to the database or set a date range to view by. Update the category of individual transactions or delete unwanted
-    transactions. </p>
-    <p> * View all categories save to the database, change the order of the categories to change their priority in auto-categorising transactions (once a
+  <ul>
+    <li> Create custom categories to auto-categorise transactions by. Set a string that is used to search through each transactions description
+    and the corresponding category it'll be set to if that string is found in a transactions description. Save them to your local database. </li>
+    <li> Imprort a CSV file of your transactions (must be in the correct Date | Description | Credit | Debit format), manually set categories for
+    transactions and save them all to a local database.</li>            
+    <li> View all transactions saved to the database or set a date range to view by. Update the category of individual transactions or delete unwanted
+    transactions. </li>
+    <li> View all categories save to the database, change the order of the categories to change their priority in auto-categorising transactions (once a
     'Tag' has been found in a transactions descrption it returns its corresponding category and no further 'Tags' are checked for). Delete unwanted
-    categories. </p>
-    <p> * Values on landing page update whenever new data is added or removed from the database. </p>
-    <p> * Select date range to display data for on the categories graph. </p>
-    <p> * Select specific year to display data for on the year graph. </p>
-</div>      
+    categories. </li>
+    <li> Values on landing page update whenever new data is added or removed from the database. </li>
+    <li> Select date range to display data for on the categories graph. </li>
+    <li> Select specific year to display data for on the year graph. </li>
+  </ul>
+</div>  
+
 <div>
   <h4> Future Features </h4>
-  <p> * Add Exact figures below graphs </p>
-  <p> * Add sub-categories - to be added to each category (Utilites could have Water|Electricy|Mobile|Internet ect) and allow the user to view the break
-  down of each categories sub-categories on the categories graph. </p>
-  <p> * Add net worth and debt trackers so users can view their change over time. </p>            
-  <p> * Add investing form for users to calculate years to retirement given an expected networth at retirement, yearly returns from investments and
-  current income minus expenses. </p>
+  <ul>
+    <li> Add Exact figures below graphs </li>
+    <li> Add sub-categories - to be added to each category (Utilites could have Water|Electricy|Mobile|Internet ect) and allow the user to view the break
+    down of each categories sub-categories on the categories graph. </li>
+    <li> Add net worth and debt trackers so users can view their change over time. </li>            
+    <li> Add investing form for users to calculate years to retirement given an expected networth at retirement, yearly returns from investments and
+    current income minus expenses. </li>
+  </ul>
 </div>
